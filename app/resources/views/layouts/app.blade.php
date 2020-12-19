@@ -39,4 +39,11 @@
 
         @livewireScripts
     </body>
+<footer align="center">
+    A collaboration between Leeds University & Elder Studios
+    <div id="footer_logos">
+        <img style="display: inline; margin: 0 5px;" title="leeds_logo" src="img/leedsLogo.webp" alt="Leeds Logo " width="150" height="50" />
+        <img style="display: inline; margin: 0 5px;" title="elder_logo" src="img/elderLogo.png" alt="Elder Studios Logo" width="150" height="50" />
+    </div>
+</footer>
 </html>
