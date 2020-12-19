@@ -17,7 +17,7 @@ class BookingsController extends Controller
                 'name' => request('name'),
                 'seat' => request(' seat'),
                 'duration' => request('duration'),
-                'specReq' => request('SpecReq'),
+                'extra_requirements' => request('extra_requirements'),
             ],
         );
     }
@@ -44,7 +44,7 @@ class BookingsController extends Controller
 
         $booking->save();
 
-        return redirect('/')->with('mssg','Order Created Successfully');
+        return redirect('/dashboard')->with('mssg','Booking Created Successfully');
 
     }
 

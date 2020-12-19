@@ -15,10 +15,10 @@
                         <p class="start_date"> Start Date - {{ $Booking->start_time}}</p>
                         <p class="end_time"> End Time - {{ $Booking->end_time}}</p>
                         <ul>
-                            @if($Booking->specReq != null)
+                            @if($Booking->extra_requirements != null)
                             <p class="toppings"> Special Requirements:</p>
-                            @foreach( $Booking->specReq as $specReq )
-                            <li>{{$specReq}}</li>
+                            @foreach( $Booking->extra_requirements as $extra_requirements )
+                            <li>{{$extra_requirements}}</li>
                             @endforeach
                             @endif
                         </ul>

@@ -33,11 +33,17 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1608389940223</updated>
-      <workItem from="1608389942317" duration="1421000" />
+      <workItem from="1608389942317" duration="3249000" />
     </task>
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
+  </component>
+  <component name="WindowStateProjectService">
+    <state x="667" y="224" width="585" height="592" key="find.popup" timestamp="1608392913761">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="667" y="224" width="585" height="592" key="find.popup/0.0.1920.1040/9.-1080.1920.1040@0.0.1920.1040" timestamp="1608392913761" />
   </component>
 </project>

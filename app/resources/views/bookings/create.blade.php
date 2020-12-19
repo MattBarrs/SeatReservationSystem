@@ -46,8 +46,8 @@
                        <fieldset>
                             <label>Extra Requirements</label>
                             <br/>
-                            <input type="checkbox" name="extra_requirements[]" id="1" value="Disabled Seat">Disabled Seat<br/>
-                            <input type="checkbox" name="extra_requirements[]" id="2" value="Visually Impaired">Visually Impaired<br/>
+                            <input type="checkbox" name="extra_requirements[]" value="Disabled Seat">Disabled Seat<br/>
+                            <input type="checkbox" name="extra_requirements[]" value="Visually Impaired">Visually Impaired<br/>
                         </fieldset>
                         <br/><br/>
 
