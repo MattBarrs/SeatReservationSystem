@@ -14,9 +14,9 @@
                     <div class="title"> List of Rooms</div>
                     @foreach($rooms as $room)
                     <div class="booking-item">
-                        <img src="/img/bookingIcon.png" alt="booking-item" style="width:5%;height:5%;">
+                        <img src="/img/roomIcon.png" alt="room-item" style="width:5%;height:5%;">
                         <h4>
-                            <a href="/rooms/{{ $room->id }}"> {{ $room->roomName }} - {{$room->close}} </a>
+                            <a href="/rooms/{{ $room->id }}"> {{ $room->room_name }} - {{$room->open_time}} </a>
                         </h4>
                     </div>
                     @endforeach

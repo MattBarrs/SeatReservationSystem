@@ -14,7 +14,7 @@ class CreateRoomTable extends Migration
     public function up()
     {
         Schema::create('rooms', function (Blueprint $table) {
-            $table->id('roomID');
+            $table->id('id');
             $table->string('room_name');
             $table->time('close_time');
             $table->time('open_time');
@@ -32,6 +32,6 @@ class CreateRoomTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('room');
+        Schema::dropIfExists('rooms');
     }
 }

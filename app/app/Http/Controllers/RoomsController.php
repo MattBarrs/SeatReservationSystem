@@ -24,7 +24,7 @@ class RoomsController extends Controller
     public function show($id)
     {
         $room = Rooms::findOrFail($id);
-        return view('rooms.show',['Booking' => $room]);
+        return view('rooms.show',['Room' => $room]);
     }
 
     public function  create(){
@@ -34,15 +34,14 @@ class RoomsController extends Controller
     public function store(){
         $room = new Rooms();
 
-//        $room->booking_code = request('booking_code');
         $room->room_name = request('roomName');
         $room->open_time = request('open_time');
         $room->close_time = request('close_time');
         $room->booking_code = "ABC";
+        //        $room->booking_code = request('booking_code');
         $room->reference_length = 10.0;
         $room->floor_plan = "s";
 //        request(file('floor_plan'));
-
 
 
         $room->save();

@@ -10,27 +10,13 @@
             <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg">
                 <div class="wrapper booking-details">
                     <div>
-                        <div class="title"  > Booking For - {{ $Booking->name}}</div>
-                        <p class="seat"> Seat - {{ $Booking->seat}}</p>
-                        <p class="date"> Date - {{ $Booking->date}}</p>
-                        <p class="startTime"> Start Time - {{ $Booking->startTime}}</p>
-                        <p class="duration"> Duration - {{ $Booking->duration}}</p>
+                        <div class="title"  > Room - {{ $Room->room_name}}</div>
+                        <p class="opens"> Opens - {{ $Room->open_time }}</p>
+                        <p class="closes"> Closes - {{ $Room->close_time }}</p>
+                        <p class="startTime"> Booking Code - {{ $Room->booking_code}}</p>
 
-                        <ul>
-                            @if($Booking->extra_requirements != null)
-                            <p class="toppings"> Special Requirements:</p>
-                            @foreach( $Booking->extra_requirements as $extra_requirements )
-                            <li>{{$extra_requirements}}</li>
-                            @endforeach
-                            @endif
-                        </ul>
-                        <form action="{{ route('bookings.delete', $Booking->id) }}" method="POST">
-                            @csrf
-                            @method('DELETE')
-                            <button>Delete Booking</button>
-                        </form>
                     </div>
-                    <a href="{{ route('bookings.index') }} " class="back"> <- Back to all bookings</a>
+                    <a href="{{ route('rooms.index') }} " class="back"> <- Back to all Rooms</a>
                 </div>
             </div>
         </div>

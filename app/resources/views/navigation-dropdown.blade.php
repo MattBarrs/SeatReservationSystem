@@ -24,11 +24,14 @@
                     </x-jet-nav-link>
 
 
-                    @if(Auth::user()->currentTeam()== "Jane's Team")
-                        <x-jet-nav-link href="{{ route('rooms.create') }}" :active="request()->routeIs('rooms.create')">
-                            {{ __('Create Room') }}
-                        </x-jet-nav-link>
-                    @endif
+                    @foreach (Auth::user()->allTeams() as $team)
+                        @if( $team->name == "SuperUser's Team")
+                            <x-jet-nav-link href="{{ route('rooms.create') }}" :active="request()->routeIs('rooms.create')">
+                                {{ __('Create Room') }}
+                            </x-jet-nav-link>
+                            @break
+                        @endif
+                    @endforeach
 
                 </div>
             </div>
