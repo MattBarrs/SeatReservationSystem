@@ -11,12 +11,22 @@
                 <div class="flex-center position-ref full-height" style="align-content: middle">
 
 
-                    <div class="content">
-                        <img src="/img/bookingIcon.png" alt="bookingIcon" height="200px" width="200px">
+                    <div class="content" >
+                        <a href="{{ route('bookings.create') }}"><img src="/img/bookingIcon.png" alt="bookingIcon" height="200px" width="200px" style="margin-left:auto;margin-right:auto"></a>
                         <div class="title m-b-md">
-                            Booking System
+                            <br/>Booking System
                         </div>
-                        <p class="mssg">{{ session('mssg') }}</p>
+
+                        @if( session('mssg') == "Booking Created Successfully" )
+                            <div class = "successAlertMessage"  style="margin-left:auto;margin-right:auto;" >
+                                <p class="mssg" >{{ session('mssg') }}</p>
+                            </div>
+                        @elseif ( session('mssg') == "Booking Creation Failed" )
+                            <div class = "failAlertMessage">
+                                <p class="mssg">{{ session('mssg') }}</p>
+                            </div>
+                        @endif
+                        <br/>
                         <a href="{{ route('bookings.create') }}">Book A seat</a>
                     </div>
                 </div>

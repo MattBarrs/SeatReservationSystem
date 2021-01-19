@@ -17,7 +17,8 @@ class CreateBookingsTable extends Migration
             $table->id();
             $table->string('roomID');
             $table->string('seatID');
-            $table->datetime("start_time");
+            $table->date("start_date");
+            $table->time("start_time");
             $table->time('end_time');
             $table->json('extra_requirements')->nullable();
             $table->timestamps();

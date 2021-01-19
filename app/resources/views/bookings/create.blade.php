@@ -13,24 +13,61 @@
                     <form action="{{ route('bookings.index') }}" method="POST">
                         @csrf
 
-                        <label for ="roomCode">Room Code:
-                            <div class="tooltip">What's this?
-                                <span class="tooltiptext">
-                                    Please ask your local admim or staff if you do not the room code
-                                </span>
+                        <label for ="roomCode">Room Code</label>
+
+                        <input type="text" id = "roomCode" name = "roomCode" value="{{ old('roomCode') }}">
+                        <img src="/img/question.png" class="inline" alt="RoomCode Tooltip" title="Please ask your local admim or staff if you do not the room code" style="width:2%;height:2%;"></a>
+
+                        @foreach ($errors->get('roomCode') as $message)
+                            <div class="alert alert-danger">
+                                <ul>
+                                    <li class="failAlertMessage"> {{ $message }}</li>
+                                </ul>
                             </div>
-                        </label>
-                        <input type="text" id = "roomCode" name = "roomCode">
+                        @endforeach
+
                         <br/><br/>
 
-                        <label for ="start_time">Pick Start: </label>
-                        <input type="datetime-local" id="start_time" name="start_time" min="2020-11-01" max="2030-12-31">
-                        <br/><br/>
+                        <label for ="start_date">Pick Date </label>
+                        <input type="date" id="start_date" name="start_date" min="2020-11-01" max="2030-12-31" value="{{ old('start_date') }}">
+                        @foreach ($errors->get('start_date') as $message)
+                        <div class="alert alert-danger">
+                            <ul>
+                                <li class="failAlertMessage"> {{ $message }}</li>
+                            </ul>
+                        </div>
+                        @endforeach
 
-                        <label for ="end_time">Pick End:</label>
-                        <input type="time" id="end_time" name="end_time" min="2020-11-01" max="2030-12-31">
+                        <table style="width:50% align:left;">
 
+                            <tr>
+                                <th>  <label for ="start_time">Start Time</label>  </th>
+                                <th>     </th>
+                                <th>  <label for ="end_time">End Time</label>      </th>
+                            </tr>
 
+                            <tr>
+                                <th>  <input type="time" id="start_time" name="start_time" min="2020-11-01" max="2030-12-31" value="{{ old('start_time') }}">  </th>
+                                <th>     </th>
+                                <th>  <input type="time" id="end_time" name="end_time" min="2020-11-01" max="2030-12-31" value="{{ old('end_time') }}">        </th>
+                            </tr>
+                        </table>
+
+                        @foreach ($errors->get('start_time') as $message)
+                        <div class="alert alert-danger">
+                            <ul>
+                                <li class="failAlertMessage"> {{ $message }}</li>
+                            </ul>
+                        </div>
+                        @endforeach
+
+                        @foreach ($errors->get('end_time') as $message)
+                        <div class="alert alert-danger">
+                            <ul>
+                                <li class="failAlertMessage"> {{ $message }}</li>
+                            </ul>
+                        </div>
+                        @endforeach
 
                         <label for ="seat">Choose a seat</label>
                         <select name="seat" id="seat">
