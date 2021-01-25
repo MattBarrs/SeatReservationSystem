@@ -27,21 +27,45 @@ class RoomsController extends Controller
         return view('rooms.show',['Room' => $room]);
     }
 
-    public function  create(){
-        return view('rooms.create');
+    public function  create(Request $request){
+            $institution = $request->session()->get('institution_name');
+
+            if( $institution == null)
+            {
+                return redirect('/institution');
+            }
+            else{
+                return view('rooms.create');
+        }
     }
 
-    public function store(){
+    public function store(Request $request){
         $room = new Rooms();
+        $institue = $request->session()->get('institution_name');
 
-        $room->room_name = request('roomName');
+        $rules = [
+            'room_name' => 'required',
+            'open_time' => 'required',
+            'close_time' => 'required|after:open_time',
+//            'reference_length' => 'required',
+            'numOfSeats' => 'required'
+        ];
+
+        $customMessages = [
+            'close_time.after' => "Closing time must be after Opening time."
+        ];
+
+        $this->validate($request,$rules,$customMessages);
+
+        $room->institution_name = $institue;
+        $room->booking_code = "ABC";
+        $room->room_name = request('room_name');
         $room->open_time = request('open_time');
         $room->close_time = request('close_time');
-        $room->booking_code = "ABC";
-        //        $room->booking_code = request('booking_code');
-        $room->reference_length = 10.0;
-        $room->floor_plan = "s";
-//        request(file('floor_plan'));
+        $room->floor_plan = "s"; //For java interactive section
+        $room->reference_length = 10.0; //Reference length to allow distance guaging
+        //$room->booking_code = request('booking_code');
+        //request(file('floor_plan'));
 
 
         $room->save();

@@ -4,6 +4,8 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\BookingsController;
 use App\Http\Controllers\RoomsController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\InstitutionController;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -23,6 +25,9 @@ Route::get('/', function () {
 Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', function () {
     return view('dashboard');
 })->name('dashboard');
+
+Route::get('/institution', [InstitutionController::class, 'select'])->name('institution.select')->middleware('auth');
+
 
 Route::get('/bookings', [BookingsController::class, 'index'])->name('bookings.index')->middleware('auth');
 Route::get('/bookings/create', [BookingsController::class,'create'])->name('bookings.create')->middleware('auth');

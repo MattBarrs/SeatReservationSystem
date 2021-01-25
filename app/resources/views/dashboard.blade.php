@@ -17,7 +17,7 @@
                             <br/>Booking System
                         </div>
 
-                        @if( session('mssg') == "Booking Created Successfully" )
+                        @if( session('mssg') != null )
                             <div class = "successAlertMessage"  style="margin-left:auto;margin-right:auto;" >
                                 <p class="mssg" >{{ session('mssg') }}</p>
                             </div>
@@ -26,6 +26,7 @@
                                 <p class="mssg">{{ session('mssg') }}</p>
                             </div>
                         @endif
+
                         <br/>
                         <a href="{{ route('bookings.create') }}">Book A seat</a>
                     </div>

@@ -13,24 +13,67 @@
                     <form action="{{ route('rooms.index') }}" method="POST">
                         @csrf
 
-                        <label for ="roomName">Room Name:
-                            <div class="tooltip"> What's this?
+                        <label for ="room_name">Room Name
+                            <div class="tooltip" style="width:2%;height:2%;">
+                                <img src="/img/question.png" class="inline" alt="RoomCode Tooltip" title="Please ask your local admim or staff if you do not the room code"></a>
                                 <span class="tooltiptext">
-                                    Name of the room so it's easier for people to remember
+                                    Name for the room - So it's easier for people to remember
                                 </span>
                             </div>
                         </label>
-                        <input type="text" id = "roomName" name = "roomName">
+
+                        <input type="text" id = "room_name" name = "room_name" value="{{ old('room_name') }}">
+
+                        @foreach ($errors->get('room_name') as $message)
+                        <div class="alert alert-danger">
+                            <ul>
+                                <li class="failAlertMessage"> {{ $message }}</li>
+                            </ul>
+                        </div>
+                        @endforeach
+
                         <br/><br/>
 
-                        <label for ="open_time">Opening Time:</label>
-                        <input type="time" value="08:30:00" name="open_time" id="open_time">
+                        <table style="width:50% align:left;">
 
-                        <label for ="close_time">Pick Time:</label>
-                        <input type="time" value="08:30:00" name="close_time" id="close_time">
+                            <tr>
+                                <th> <label for ="open_time">Opening Time</label> </th>
+                                <th>     </th>
+                                <th> <label for ="close_time">Closing Time</label> </th>
+                            </tr>
+                            <tr>
+                                <th> <input type="time" name="open_time" id="open_time" value="{{ old('open_time') }}"> </th>
+                                <th>     </th>
+                                <th> <input type="time" name="close_time" id="close_time" value="{{ old('close_time') }}"> </th>
+                            </tr>
+                        </table>
 
-                        <label for ="seat">Number Of Seats</label>
-                        <input type="number" id="numOfSeats" name="numOfSeats" min="1">
+                        @foreach ($errors->get('open_time') as $message)
+                        <div class="alert alert-danger">
+                            <ul>
+                                <li class="failAlertMessage"> {{ $message }}</li>
+                            </ul>
+                        </div>
+                        @endforeach
+                        @foreach ($errors->get('close_time') as $message)
+                        <div class="alert alert-danger">
+                            <ul>
+                                <li class="failAlertMessage"> {{ $message }}</li>
+                            </ul>
+                        </div>
+                        @endforeach
+
+
+                        <label for ="numOfSeats">Number Of Seats</label>
+                        <input type="number" id="numOfSeats" name="numOfSeats" min="1" value="{{ old('numOfSeats') }}">
+
+                        @foreach ($errors->get('numOfSeats') as $message)
+                        <div class="alert alert-danger">
+                            <ul>
+                                <li class="failAlertMessage"> {{ $message }}</li>
+                            </ul>
+                        </div>
+                        @endforeach
 
                         <label for ="floor_plan">Upload floor plan of room</label>
                         <input type="file" id="floor_plan" name="floor_plan">

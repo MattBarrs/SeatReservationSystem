@@ -16,7 +16,13 @@
                         <label for ="roomCode">Room Code</label>
 
                         <input type="text" id = "roomCode" name = "roomCode" value="{{ old('roomCode') }}">
-                        <img src="/img/question.png" class="inline" alt="RoomCode Tooltip" title="Please ask your local admim or staff if you do not the room code" style="width:2%;height:2%;"></a>
+                        <div class="tooltip" style="width:2%;height:2%;">
+                            <img src="/img/question.png" class="inline" alt="RoomCode Tooltip" title="Please ask your local admim or staff if you do not the room code"></a>
+                            <span class="tooltiptext">
+                            Please ask your local admim or staff if you do not the room code
+                            </span>
+                        </div>
+
 
                         @foreach ($errors->get('roomCode') as $message)
                             <div class="alert alert-danger">
@@ -30,6 +36,7 @@
 
                         <label for ="start_date">Pick Date </label>
                         <input type="date" id="start_date" name="start_date" min="2020-11-01" max="2030-12-31" value="{{ old('start_date') }}">
+
                         @foreach ($errors->get('start_date') as $message)
                         <div class="alert alert-danger">
                             <ul>

@@ -28,12 +28,27 @@ class BookingsController extends Controller
         return view('bookings.show',['Booking' => $booking]);
     }
 
-    public function  create(){
-        return view('bookings.create');
+    public function  selectInstitution(){
+        return view('bookings.institution');
+    }
+
+    public function  create(Request $request){
+        $institution = $request->session()->get('institution_name');
+
+        if($institution == null)
+        {
+            return redirect('/institution');
+        }
+        else{
+            return view('bookings.create');
+        }
     }
 
     public function store(Request $request){
         $booking = new Bookings();
+
+        $institue = $request->session()->get('institution_name');
+
 
         $rules = [
             'roomCode' => 'required',
@@ -50,8 +65,10 @@ class BookingsController extends Controller
         ];
 
         $this->validate($request,$rules,$customMessages);
-//        $booking->roomId = request('roomcode');
+
+        //$booking->roomId = request('roomcode');
         $booking->roomId = 1;
+        $booking->institution_name = $institue;
         $booking->seatID = request('seat');
         $booking->start_date = request('start_date');
         $booking->start_time = request('start_time');
