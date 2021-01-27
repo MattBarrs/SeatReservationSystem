@@ -16,7 +16,7 @@
                     <div class="booking-item">
                         <img src="/img/roomIcon.png" alt="room-item" style="width:5%;height:5%;">
                         <h4>
-                            <a href="/rooms/{{ $room->id }}"> {{ $room->room_name }} - {{$room->open_time}} </a>
+                            <a href="/rooms/{{ $room->id }}"> {{ $room->room_name }} - {{$room->open_time}} - {{ $room->institution_name }} </a>
                         </h4>
                     </div>
                     @endforeach

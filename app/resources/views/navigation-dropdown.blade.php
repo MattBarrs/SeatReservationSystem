@@ -4,25 +4,34 @@
         <div class="flex justify-between h-16">
             <div class="flex">
                 <!-- Logo -->
-                <div class="flex-shrink-0 flex items-center">
-                    <a href="{{ route('dashboard') }}">
-                        <x-jet-application-mark class="block h-9 w-auto" />
-<!--                             <img src="img/bookingIcon.png"  alt="Home Page" style="max-width:10%; max-height:10%;">-->
-                    </a>
-                </div>
+
+                    <x-jet-nav-link style="width:6%;height:6%; padding-top:3%;padding-bottom:3%;" href="{{ route('dashboard') }}" :active="request()->routeIs('dashboard')">
+                        <img src="/img/bookingIcon.png"></a>
+                    </x-jet-nav-link>
+
 
                 <!-- Navigation Links -->
-                <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex" align="left">
+
+
+                <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
+
+
                     <x-jet-nav-link href="{{ route('dashboard') }}" :active="request()->routeIs('dashboard')">
                         {{ __('Dashboard') }}
                     </x-jet-nav-link>
-                    <x-jet-nav-link href="{{ route('bookings.index') }}" :active="request()->routeIs('bookings.index')">
-                        {{ __('View Bookings') }}
-                    </x-jet-nav-link>
+
                     <x-jet-nav-link href="{{ route('bookings.create') }}" :active="request()->routeIs('bookings.create')">
                         {{ __('Book A Seat') }}
                     </x-jet-nav-link>
 
+                    <x-jet-nav-link href="{{ route('bookings.index') }}" :active="request()->routeIs('bookings.index')">
+                        {{ __('View Bookings') }}
+                    </x-jet-nav-link>
+
+
+                    <x-jet-nav-link href="{{ route('institution.select') }}" :active="request()->routeIs('institution.select')">
+                        {{ __('Select Institution') }}
+                    </x-jet-nav-link>
 
                     @foreach (Auth::user()->allTeams() as $team)
                         @if( $team->name == "SuperUser's Team")

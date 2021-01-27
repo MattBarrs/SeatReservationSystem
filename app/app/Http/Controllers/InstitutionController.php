@@ -11,19 +11,16 @@ class InstitutionController extends Controller
         $institution = $request->session()->get('institution_name');
         $value   = request('institution');
 
-        if(($institution == null) AND ( $value == null))
+        if( $value == null)
         {
             return view('institution.select');
         }
-        elseif( $value != null)
+        else
         {
             $request->session()->put('institution_name', $value);
             return redirect('/dashboard')->with('mssg','Institution Selected Successfully');
 
         }
-        else
-        {
-            return redirect('/dashboard');
-        }
+
     }
 }

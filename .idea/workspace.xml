@@ -145,17 +145,17 @@
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/app/resources/views/auth" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/app/resources/views/bookings" />
     <property name="nodejs_package_manager_path" value="npm" />
   </component>
   <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\Matty B\Documents\Uni_Y4\OneDrive - University of Leeds\Project\SeatReservationSystem\app\resources\views\bookings" />
+      <recent name="C:\Users\Matty B\Documents\Uni_Y4\OneDrive - University of Leeds\Project\SeatReservationSystem\app\resources\views\auth" />
+    </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="C:\Users\Matty B\Documents\Uni_Y4\OneDrive - University of Leeds\Project\SeatReservationSystem\app\resources\views" />
       <recent name="C:\Users\Matty B\Documents\Uni_Y4\OneDrive - University of Leeds\Project\SeatReservationSystem\app\resources\views\auth\institution" />
-    </key>
-    <key name="CopyFile.RECENT_KEYS">
-      <recent name="C:\Users\Matty B\Documents\Uni_Y4\OneDrive - University of Leeds\Project\SeatReservationSystem\app\resources\views\auth" />
-      <recent name="C:\Users\Matty B\Documents\Uni_Y4\OneDrive - University of Leeds\Project\SeatReservationSystem\app\resources\views\bookings" />
     </key>
   </component>
   <component name="RunManager">
@@ -185,6 +185,9 @@
       <workItem from="1611046039088" duration="13487000" />
       <workItem from="1611147843811" duration="619000" />
       <workItem from="1611590926133" duration="15009000" />
+      <workItem from="1611653285466" duration="2162000" />
+      <workItem from="1611670803980" duration="5531000" />
+      <workItem from="1611736652353" duration="9568000" />
     </task>
     <servers />
   </component>
@@ -192,19 +195,24 @@
     <option name="version" value="3" />
   </component>
   <component name="WindowStateProjectService">
-    <state x="690" y="275" key="#com.jetbrains.php.actions.copyPaste.importReferences.PhpImportReferencesDialog" timestamp="1611600919827">
+    <state x="679" y="322" key="#com.intellij.fileTypes.FileTypeChooser" timestamp="1611676881201">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
+    <state x="679" y="322" key="#com.intellij.fileTypes.FileTypeChooser/0.0.1920.1040/0.-1080.1920.1040@0.0.1920.1040" timestamp="1611676881201" />
+    <state x="690" y="275" key="#com.jetbrains.php.actions.copyPaste.importReferences.PhpImportReferencesDialog" timestamp="1611738258352">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="690" y="275" key="#com.jetbrains.php.actions.copyPaste.importReferences.PhpImportReferencesDialog/0.0.1920.1040/0.-1080.1920.1040@0.0.1920.1040" timestamp="1611738258352" />
     <state x="690" y="275" key="#com.jetbrains.php.actions.copyPaste.importReferences.PhpImportReferencesDialog/0.0.1920.1040@0.0.1920.1040" timestamp="1611600919827" />
     <state x="777" y="434" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2" timestamp="1611050311540">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="777" y="434" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2/0.0.1920.1040/0.-1080.1920.1040@0.0.1920.1040" timestamp="1611050311540" />
-    <state x="1111" y="192" width="585" height="592" key="find.popup" timestamp="1611046833032">
+    <state x="1111" y="192" width="585" height="592" key="find.popup" timestamp="1611672873123">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="1111" y="-888" width="585" height="592" key="find.popup/0.0.1920.1040/0.-1080.1920.1040@0.-1080.1920.1040" timestamp="1611046428076" />
-    <state x="1111" y="192" width="585" height="592" key="find.popup/0.0.1920.1040/0.-1080.1920.1040@0.0.1920.1040" timestamp="1611046833032" />
+    <state x="1111" y="192" width="585" height="592" key="find.popup/0.0.1920.1040/0.-1080.1920.1040@0.0.1920.1040" timestamp="1611672873123" />
     <state x="1111" y="191" width="585" height="592" key="find.popup/0.0.1920.1040/9.-1080.1920.1040@0.0.1920.1040" timestamp="1608393339056" />
     <state x="616" y="240" key="run.anything.popup" timestamp="1611601167954">
       <screen x="0" y="0" width="1920" height="1040" />

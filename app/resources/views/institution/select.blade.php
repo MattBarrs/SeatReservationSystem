@@ -1,7 +1,7 @@
 <x-app-layout>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            {{ __('Dashboard') }}
+            {{ __('Institution Selection') }}
         </h2>
     </x-slot>
 
@@ -10,7 +10,14 @@
             <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg">
                 <div class="wrapper create-booking">
 
-                    <h1> Please Select Your Institution</h1>
+
+
+                    @if( session('institution_name') != null)
+                        <h1>Current Institute Selected: {{ session('institution_name') }}</h1>
+                    @else
+                        <h1>No Institute Selected <br/>Please Select Your Institution</h1>
+
+                    @endif
 
                     <form action="{{ route('institution.select') }} " method="GET">
                         @csrf

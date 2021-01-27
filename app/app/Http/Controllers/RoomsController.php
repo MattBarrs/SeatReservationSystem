@@ -6,8 +6,9 @@ use Illuminate\Http\Request;
 use App\Models\Rooms;
 class RoomsController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
+        $institution = $request->session()->get('institution_name');
         $room = Rooms::latest()->get();
         return view
         ('rooms.index',
@@ -16,6 +17,7 @@ class RoomsController extends Controller
                 'open_time' => request('open_time'),
                 'close_time' => request('close_time'),
                 'bookingCode' => request('bookingCode'),
+                'institution_name' => request('institution_name'),
                 'referenceLength' => request('referenceLength'),
             ],
         );

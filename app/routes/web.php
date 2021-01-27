@@ -35,6 +35,7 @@ Route::post('bookings', [BookingsController::class,'store'])->name('bookings.sto
 Route::get('/bookings/{id}', [BookingsController::class,'show'])->name('bookings.show')->middleware('auth');
 Route::delete('/bookings/{id}', [BookingsController::class,'destroy'])->name('bookings.delete')->middleware('auth');
 
+Route::get('/bookings/create/rooms', [BookingsController::class, 'selectRoom'])->name('bookings.selectRoom')->middleware('auth');
 
 Route::get('/rooms', [RoomsController::class, 'index'])->name('rooms.index')->middleware('auth');
 Route::get('/rooms/create', [RoomsController::class,'create'])->name('rooms.create')->middleware('auth');

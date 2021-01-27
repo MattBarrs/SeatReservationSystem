@@ -8,14 +8,20 @@
     <div class="py-12">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg">
-                <div class="flex-center position-ref full-height" style="align-content: middle">
+                <div class="flex-center position-ref full-height">
 
 
-                    <div class="content" >
-                        <a href="{{ route('bookings.create') }}"><img src="/img/bookingIcon.png" alt="bookingIcon" height="200px" width="200px" style="margin-left:auto;margin-right:auto"></a>
+                    <div class="content" style="align-content:center;" >
                         <div class="title m-b-md">
                             <br/>Booking System
                         </div>
+
+                        @if( session('institution_name') == null)
+                            <div class = "alertMessage"  style="margin-left:auto;margin-right:auto;" >
+                                <a href="{{ route('institution.select') }} "><p class="mssg" >No Institution selected. Select Institution</p></a>
+
+                            </div>
+                        @endif
 
                         @if( session('mssg') != null )
                             <div class = "successAlertMessage"  style="margin-left:auto;margin-right:auto;" >

@@ -1,7 +1,7 @@
 <x-app-layout>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            {{ __('Dashboard') }}
+            {{ __('Create A Booking') }}
         </h2>
     </x-slot>
 
@@ -10,6 +10,11 @@
             <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg">
                 <div class="wrapper create-booking">
                     <h1> Create A New Booking</h1>
+                    <br/>
+                    <p>Room Selected: {{ session('selected_room') }} </p>
+                    <a href="{{ route('bookings.selectRoom') }}"> <b><- Change room</b></a>
+
+
                     <form action="{{ route('bookings.index') }}" method="POST">
                         @csrf
 

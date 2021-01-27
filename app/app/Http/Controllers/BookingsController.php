@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Rooms;
 use Illuminate\Http\Request;
 use App\Models\Bookings;
 
@@ -34,12 +35,16 @@ class BookingsController extends Controller
 
     public function  create(Request $request){
         $institution = $request->session()->get('institution_name');
-
+        $room = $request->session()->get('selected_room');
         if($institution == null)
         {
             return redirect('/institution');
         }
-        else{
+        elseif($room == null) {
+            return redirect('/bookings/create/rooms');
+        }
+        else
+        {
             return view('bookings.create');
         }
     }
@@ -80,6 +85,31 @@ class BookingsController extends Controller
         return redirect('/dashboard')->with('mssg','Booking Created Successfully');
 
     }
+
+    public function selectRoom(Request $request)
+    {
+        $value   = request("submit");
+        $institution = $request->session()->get('institution_name');
+        $room = Rooms::where('institution_name',$institution)->get();
+
+        if($value != null)
+        {
+            $request->session()->put('selected_room', $value);
+            return redirect('/bookings/create');
+        }
+        return view
+        ('bookings.selectRoom',
+            [
+                'rooms' => $room,
+                'open_time' => request('open_time'),
+                'close_time' => request('close_time'),
+                'bookingCode' => request('bookingCode'),
+                'institution_name' => request('institution_name'),
+                'referenceLength' => request('referenceLength'),
+            ],
+        );
+    }
+
 
     public function destroy($id){
         $booking = Bookings::findOrFail($id);
