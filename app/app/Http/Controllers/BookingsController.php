@@ -3,14 +3,20 @@
 namespace App\Http\Controllers;
 
 use App\Models\Rooms;
-use Illuminate\Http\Request;
 use App\Models\Bookings;
+use App\Models\User_Booking;
+use App\Models\Workstation;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+
 
 class BookingsController extends Controller
 {
     public function index()
     {
-        $booking = Bookings::latest()->get();
+        $booking = Bookings::join('Rooms','Bookings.roomID','Rooms.id')
+            ->select('Bookings.seatID','Bookings.start_date','Bookings.start_time','Bookings.end_time','Bookings.id','Rooms.room_name')
+            ->get();
         return view
         ('bookings.index',
             [
@@ -94,6 +100,15 @@ class BookingsController extends Controller
 
         $booking->save();
 
+        $user_booking = new User_Booking();
+
+        $bookingID= Bookings::latest('created_at')->first()->id;
+        $userId = Auth::id();
+        $user_booking->id = $bookingID;
+        $user_booking->userId = $userId;
+
+        $user_booking->save();
+
         return redirect('/dashboard')->with('mssg',"Booking Successful");
 
     }
@@ -139,7 +154,10 @@ class BookingsController extends Controller
         $booking = Bookings::findOrFail($id);
         $booking->delete();
 
-        return redirect(route('bookings.index'));
+        $user_booking = User_Booking::findOrFail($id);
+        $user_booking->delete();
+
+        return redirect('/dashboard')->with('mssg','Booking Deleted Successfully');
     }
 
 

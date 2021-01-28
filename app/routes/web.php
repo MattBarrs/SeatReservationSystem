@@ -5,6 +5,7 @@ use App\Http\Controllers\BookingsController;
 use App\Http\Controllers\RoomsController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\InstitutionController;
+use App\Http\Controllers\DashboardController;
 
 
 /*
@@ -18,13 +19,11 @@ use App\Http\Controllers\InstitutionController;
 |
 */
 
-Route::get('/', function () {
-    return view('dashboard');
-})->middleware('auth');
 
-Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', function () {
-    return view('dashboard');
-})->name('dashboard');
+Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', function () {return view('dashboard');})->name('dashboard');
+
+Route::get('/', [DashboardController::class, 'show'])->name('dashboard')->middleware('auth');
+Route::get('/dashboard', [DashboardController::class, 'show'])->name('dashboard')->middleware('auth');
 
 Route::get('/institution', [InstitutionController::class, 'select'])->name('institution.select')->middleware('auth');
 

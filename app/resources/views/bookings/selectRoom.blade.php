@@ -17,7 +17,7 @@
                         <div class="alertMessage">No Rooms Found For Your Institute</div>
                         <br/>
                         <h1>Current Institute Selected: {{ session('institution_name') }}</h1>
-                        <a href="{{ route('institution.select') }}">Change Institution</a>
+                        <a href="{{ route('institution.select') }}" class="clickable">Change Institution</a>
 
                     @else
                         <form action=" {{ route('bookings.selectRoom') }} " method="GET" >
@@ -33,7 +33,8 @@
                                                     <td style="padding:0 10px 0 10px;">
                                                         Opens: {{\Carbon\Carbon::createFromFormat('H:i:s',$room->open_time)->format('h:i A')}}
                                                         <br/>
-                                                        Closes: {{\Carbon\Carbon::createFromFormat('H:i:s',$room->close_time)->format('h:i A')}}</td>
+                                                        Closes: {{\Carbon\Carbon::createFromFormat('H:i:s',$room->close_time)->format('h:i A')}}
+                                                    </td>
                                                 </tr>
                                             </table>
                                         </button>

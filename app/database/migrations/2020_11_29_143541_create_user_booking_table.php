@@ -13,11 +13,10 @@ class CreateUserBookingTable extends Migration
      */
     public function up()
     {
-        Schema::create('user_booking', function (Blueprint $table) {
-            $table->id("booking_id");
+        Schema::create('user_bookings', function (Blueprint $table) {
+            $table->id();
             $table->string('userID');
             $table->timestamps();
-            $table->string('institution_name');
         });
     }
 
@@ -28,6 +27,6 @@ class CreateUserBookingTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('user_booking');
+        Schema::dropIfExists('user_bookings');
     }
 }
