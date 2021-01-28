@@ -29,9 +29,7 @@
                     </x-jet-nav-link>
 
 
-                    <x-jet-nav-link href="{{ route('institution.select') }}" :active="request()->routeIs('institution.select')">
-                        {{ __('Select Institution') }}
-                    </x-jet-nav-link>
+
 
                     @foreach (Auth::user()->allTeams() as $team)
                         @if( $team->name == "SuperUser's Team")
@@ -71,6 +69,10 @@
                         <div class="block px-4 py-2 text-xs text-gray-400">
                             {{ __('Manage Account') }}
                         </div>
+
+                        <x-jet-dropdown-link href="{{ route('institution.select') }}" :active="request()->routeIs('institution.select')">
+                            {{ __('Select Institution') }}
+                        </x-jet-dropdown-link>
 
                         <x-jet-dropdown-link href="{{ route('profile.show') }}">
                             {{ __('Profile') }}

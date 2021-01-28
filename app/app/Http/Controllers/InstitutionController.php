@@ -18,6 +18,12 @@ class InstitutionController extends Controller
         else
         {
             $request->session()->put('institution_name', $value);
+
+            $request->session()->put('close_time', null);
+            $request->session()->put('open_time', null);
+            $request->session()->put('close_time', null);
+            $request->session()->put('selected_room', null);
+
             return redirect('/dashboard')->with('mssg','Institution Selected Successfully');
 
         }

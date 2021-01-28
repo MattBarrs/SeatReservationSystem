@@ -16,6 +16,9 @@
                         <br/>
                         <div class="alertMessage">No Rooms Found For Your Institute</div>
                         <br/>
+                        <h1>Current Institute Selected: {{ session('institution_name') }}</h1>
+                        <a href="{{ route('institution.select') }}">Change Institution</a>
+
                     @else
                         <form action=" {{ route('bookings.selectRoom') }} " method="GET" >
                             @foreach($rooms as $room)
