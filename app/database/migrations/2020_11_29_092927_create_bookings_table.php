@@ -21,6 +21,7 @@ class CreateBookingsTable extends Migration
             $table->time("start_time");
             $table->time('end_time');
             $table->json('extra_requirements')->nullable();
+            $table->string('institution_name');
             $table->timestamps();
         });
     }

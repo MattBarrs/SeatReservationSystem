@@ -12,27 +12,33 @@
 
                     <div class="title">Book A Seat: Select Room</div>
 
-                    <form action=" {{ route('bookings.selectRoom') }} " method="GET" >
-                        @foreach($rooms as $room)
-                            <div class="booking-item">
+                    @if(count($rooms) == 0)
+                        <br/>
+                        <div class="alertMessage">No Rooms Found For Your Institute</div>
+                        <br/>
+                    @else
+                        <form action=" {{ route('bookings.selectRoom') }} " method="GET" >
+                            @foreach($rooms as $room)
+                                <div class="booking-item">
 
-                                <h4>
-                                    <button type="submit" name="submit" value="{{$room->room_name}}">
-                                        <table>
-                                            <tr>
-                                                <td style="padding:0 10px 0 0;"><img src="/img/roomIcon.png" alt="room-item"></td>
-                                                <td style="padding:0 10px 0 10px;"> {{ $room->room_name }} </td>
-                                                <td style="padding:0 10px 0 10px;">
-                                                    Opens: {{\Carbon\Carbon::createFromFormat('H:i:s',$room->open_time)->format('h:i A')}}
-                                                    <br/>
-                                                    Closes: {{\Carbon\Carbon::createFromFormat('H:i:s',$room->close_time)->format('h:i A')}}</td>
-                                            </tr>
-                                        </table>
-                                    </button>
-                                </h4>
-                            </div>
-                        @endforeach
-                    </form>
+                                    <h4>
+                                        <button type="submit" name="submit" value="{{$room->room_name}}">
+                                            <table>
+                                                <tr>
+                                                    <td style="padding:0 10px 0 0;"><img src="/img/roomIcon.png" alt="room-item"></td>
+                                                    <td style="padding:0 10px 0 10px;"> {{ $room->room_name }} </td>
+                                                    <td style="padding:0 10px 0 10px;">
+                                                        Opens: {{\Carbon\Carbon::createFromFormat('H:i:s',$room->open_time)->format('h:i A')}}
+                                                        <br/>
+                                                        Closes: {{\Carbon\Carbon::createFromFormat('H:i:s',$room->close_time)->format('h:i A')}}</td>
+                                                </tr>
+                                            </table>
+                                        </button>
+                                    </h4>
+                                </div>
+                            @endforeach
+                        </form>
+                    @endif
                 </div>
 
             </div>

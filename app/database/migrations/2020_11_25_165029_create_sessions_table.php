@@ -20,6 +20,10 @@ class CreateSessionsTable extends Migration
             $table->text('user_agent')->nullable();
             $table->text('payload');
             $table->integer('last_activity')->index();
+            $table->time('close_time')->nullable();
+            $table->time('open_time')->nullable();
+            $table->string('selected_room')->nullable();
+            $table->string('institution_name')->nullable();
         });
     }
 

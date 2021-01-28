@@ -158,19 +158,6 @@
       <recent name="C:\Users\Matty B\Documents\Uni_Y4\OneDrive - University of Leeds\Project\SeatReservationSystem\app\resources\views\auth\institution" />
     </key>
   </component>
-  <component name="RunManager">
-    <configuration default="true" type="ArquillianJUnit" factoryName="" nameIsGenerated="true">
-      <option name="arquillianRunConfiguration">
-        <value>
-          <option name="containerStateName" value="" />
-        </value>
-      </option>
-      <option name="TEST_OBJECT" value="class" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-  </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
@@ -187,7 +174,12 @@
       <workItem from="1611590926133" duration="15009000" />
       <workItem from="1611653285466" duration="2162000" />
       <workItem from="1611670803980" duration="5531000" />
-      <workItem from="1611736652353" duration="9568000" />
+      <workItem from="1611736652353" duration="10011000" />
+      <workItem from="1611752941360" duration="7105000" />
+      <workItem from="1611769097901" duration="444000" />
+      <workItem from="1611769565200" duration="3962000" />
+      <workItem from="1611774519938" duration="2679000" />
+      <workItem from="1611821386882" duration="617000" />
     </task>
     <servers />
   </component>
@@ -199,29 +191,32 @@
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="679" y="322" key="#com.intellij.fileTypes.FileTypeChooser/0.0.1920.1040/0.-1080.1920.1040@0.0.1920.1040" timestamp="1611676881201" />
-    <state x="690" y="275" key="#com.jetbrains.php.actions.copyPaste.importReferences.PhpImportReferencesDialog" timestamp="1611738258352">
+    <state x="690" y="275" key="#com.jetbrains.php.actions.copyPaste.importReferences.PhpImportReferencesDialog" timestamp="1611759363753">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="690" y="275" key="#com.jetbrains.php.actions.copyPaste.importReferences.PhpImportReferencesDialog/0.0.1920.1040/0.-1080.1920.1040@0.0.1920.1040" timestamp="1611738258352" />
+    <state x="690" y="275" key="#com.jetbrains.php.actions.copyPaste.importReferences.PhpImportReferencesDialog/0.0.1920.1040/0.-1080.1920.1040@0.0.1920.1040" timestamp="1611759363753" />
     <state x="690" y="275" key="#com.jetbrains.php.actions.copyPaste.importReferences.PhpImportReferencesDialog/0.0.1920.1040@0.0.1920.1040" timestamp="1611600919827" />
-    <state x="777" y="434" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2" timestamp="1611050311540">
+    <state x="777" y="434" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2" timestamp="1611772608183">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="777" y="434" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2/0.0.1920.1040/0.-1080.1920.1040@0.0.1920.1040" timestamp="1611050311540" />
-    <state x="1111" y="192" width="585" height="592" key="find.popup" timestamp="1611672873123">
+    <state x="777" y="434" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2/0.0.1920.1040@0.0.1920.1040" timestamp="1611772608183" />
+    <state x="231" y="192" width="1465" height="787" key="find.popup" timestamp="1611777176085">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="1111" y="-888" width="585" height="592" key="find.popup/0.0.1920.1040/0.-1080.1920.1040@0.-1080.1920.1040" timestamp="1611046428076" />
-    <state x="1111" y="192" width="585" height="592" key="find.popup/0.0.1920.1040/0.-1080.1920.1040@0.0.1920.1040" timestamp="1611672873123" />
+    <state x="1111" y="192" width="585" height="592" key="find.popup/0.0.1920.1040/0.-1080.1920.1040@0.0.1920.1040" timestamp="1611758395954" />
     <state x="1111" y="191" width="585" height="592" key="find.popup/0.0.1920.1040/9.-1080.1920.1040@0.0.1920.1040" timestamp="1608393339056" />
-    <state x="616" y="240" key="run.anything.popup" timestamp="1611601167954">
+    <state x="231" y="192" width="1465" height="787" key="find.popup/0.0.1920.1040@0.0.1920.1040" timestamp="1611777176085" />
+    <state x="616" y="240" key="run.anything.popup" timestamp="1611753776499">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
+    <state x="616" y="240" key="run.anything.popup/0.0.1920.1040/0.-1080.1920.1040@0.0.1920.1040" timestamp="1611753776499" />
     <state x="616" y="240" key="run.anything.popup/0.0.1920.1040@0.0.1920.1040" timestamp="1611601167954" />
-    <state x="623" y="225" width="672" height="678" key="search.everywhere.popup" timestamp="1611600904994">
+    <state x="623" y="225" width="672" height="678" key="search.everywhere.popup" timestamp="1611777411076">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="623" y="225" width="672" height="678" key="search.everywhere.popup/0.0.1920.1040/0.-1080.1920.1040@0.0.1920.1040" timestamp="1611054199070" />
-    <state x="623" y="225" width="672" height="678" key="search.everywhere.popup/0.0.1920.1040@0.0.1920.1040" timestamp="1611600904994" />
+    <state x="623" y="225" width="672" height="678" key="search.everywhere.popup/0.0.1920.1040/0.-1080.1920.1040@0.0.1920.1040" timestamp="1611753572277" />
+    <state x="623" y="225" width="672" height="678" key="search.everywhere.popup/0.0.1920.1040@0.0.1920.1040" timestamp="1611777411076" />
   </component>
 </project>

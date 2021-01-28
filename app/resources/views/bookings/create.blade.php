@@ -59,9 +59,9 @@
                             </tr>
 
                             <tr>
-                                <th>  <input type="time" id="start_time" name="start_time" min="2020-11-01" max="2030-12-31" value="{{ old('start_time') }}">  </th>
+                                <th>  <input type="time" id="start_time" name="start_time" min="{{ session('open_time')  }}" max="{{ session('close_time')  }}" value="{{ old('start_time') }}">  </th>
                                 <th>     </th>
-                                <th>  <input type="time" id="end_time" name="end_time" min="2020-11-01" max="2030-12-31" value="{{ old('end_time') }}">        </th>
+                                <th>  <input type="time" id="end_time" name="end_time" min="{{ session('open_time') }}" max="{{ session('close_time') }}" value="{{ old('end_time') }}">        </th>
                             </tr>
                         </table>
 

@@ -17,6 +17,7 @@ class CreateUserBookingTable extends Migration
             $table->id("booking_id");
             $table->string('userID');
             $table->timestamps();
+            $table->string('institution_name');
         });
     }
 

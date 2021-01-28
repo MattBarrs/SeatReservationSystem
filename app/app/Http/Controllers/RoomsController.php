@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Rooms;
+use App\Models\Workstation;
+
 class RoomsController extends Controller
 {
     public function index(Request $request)
@@ -68,9 +70,22 @@ class RoomsController extends Controller
         $room->reference_length = 10.0; //Reference length to allow distance guaging
         //$room->booking_code = request('booking_code');
         //request(file('floor_plan'));
-
-
         $room->save();
+
+        $numOfSeats = request('numOfSeats');
+        $roomID = Rooms::latest('created_at')->first()->id;
+        for($i = 0;$i<=$numOfSeats;$i++)
+        {
+            $workstation = new Workstation();
+
+            $workstation->roomID = $roomID;
+            $workstation->seatID = $i+1;
+            $workstation->coord_x = 0; //used in javascript map
+            $workstation->coord_y = 0; //used in javascript map
+
+            $workstation->save();
+
+        }
 
         return redirect('/')->with('mssg','Room Created Successfully');
 

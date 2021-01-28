@@ -21,6 +21,7 @@ class CreateRoomTable extends Migration
             $table->string('booking_code');
             $table->float('reference_length');
             $table->string('floor_plan');
+            $table->string('institution_name');
             $table->timestamps();
         });
     }
