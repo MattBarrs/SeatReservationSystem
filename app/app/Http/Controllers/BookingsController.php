@@ -8,6 +8,7 @@ use App\Models\User_Booking;
 use App\Models\Workstation;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use function Symfony\Component\String\s;
 
 
 class BookingsController extends Controller
@@ -44,7 +45,6 @@ class BookingsController extends Controller
 
         $room = $request->session()->get('selected_room');
 
-
         if($institution == null)
         {
             return redirect('/institution');
@@ -54,7 +54,11 @@ class BookingsController extends Controller
         }
         else
         {
-            return view('bookings.create');
+            $seats = Rooms::join('Workstations','Workstations.roomID','Rooms.id')
+                ->where('room_name',$room)
+                ->select('Workstations.seatID')
+                ->get();
+            return view('bookings.create', ['seats'=>$seats]);
         }
     }
 

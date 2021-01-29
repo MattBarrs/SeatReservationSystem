@@ -1,16 +1,16 @@
 <x-app-layout>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            {{ __('Create Room') }}
+            {{ __('Add New Room') }}
         </h2>
     </x-slot>
 
     <div class="py-12">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg">
-                <div class="wrapper create-booking">
-                    <h1> Create A New Room</h1>
-                    <form action="{{ route('rooms.index') }}" method="POST">
+                <div class="wrapper create-booking" style="width:80%;">
+                    <div class="title"> Add New Room</div>
+                    <form action="{{ route('rooms.index') }}" method="POST" style="padding: 0 0 0 30px;">
                         @csrf
 
                         <label for ="room_name">Room Name
@@ -37,14 +37,12 @@
                         <table style="width:50% align:left;">
 
                             <tr>
-                                <th> <label for ="open_time">Opening Time</label> </th>
-                                <th>     </th>
-                                <th> <label for ="close_time">Closing Time</label> </th>
+                                <th style="padding: 0 10px 0 0;"> <label for ="open_time">Opening Time</label> </th>
+                                <th style="padding: 0 10px 0 0;"> <label for ="close_time">Closing Time</label> </th>
                             </tr>
-                            <tr>
-                                <th> <input type="time" name="open_time" id="open_time" value="{{ old('open_time') }}"> </th>
-                                <th>     </th>
-                                <th> <input type="time" name="close_time" id="close_time" value="{{ old('close_time') }}"> </th>
+                            <tr >
+                                <td style="padding: 0 10px 0 0;"> <input type="time" name="open_time" id="open_time" value="{{ old('open_time') }}"> </td>
+                                <td style="padding: 0 10px 0 0;"> <input type="time" name="close_time" id="close_time" value="{{ old('close_time') }}"> </td>
                             </tr>
                         </table>
 

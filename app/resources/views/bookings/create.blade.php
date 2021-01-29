@@ -83,12 +83,10 @@
 
                         <label for ="seat">Choose a seat</label>
                         <select name="seat" id="seat">
-                            <option value="A1">A1</option>
-                            <option value="A2">A2</option>
-                            <option value="A3">A3</option>
-                            <option value="B1">B1 </option>
-                            <option value="B2">B2 </option>
-                            <option value="B3">B3 </option>
+                            @foreach ($seats as $seat)
+                                <option value="{{$seat->seatID}}">{{$seat->seatID}}</option>
+
+                            @endforeach
                         </select>
                         <br/><br/>
 
@@ -100,7 +98,7 @@
                         </fieldset>
                         <br/><br/>
 
-                        <input type="submit" value="Submit">
+                        <input type="submit" value="Submit" class="clickable">
                     </form>
                 </div>
 

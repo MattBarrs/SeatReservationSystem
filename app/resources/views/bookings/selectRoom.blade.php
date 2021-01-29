@@ -28,12 +28,15 @@
                                         <button type="submit" name="submit" value="{{$room->room_name}}">
                                             <table>
                                                 <tr>
-                                                    <td style="padding:0 10px 0 0;"><img src="/img/roomIcon.png" alt="room-item"></td>
-                                                    <td style="padding:0 10px 0 10px;"> {{ $room->room_name }} </td>
-                                                    <td style="padding:0 10px 0 10px;">
+                                                    <td style="padding:0 15px 0 0;min-width:150px;max-width:151px;"><img src="/img/roomIcon.png" alt="room-item"></td>
+                                                    <td style="padding:0 15px 0 0;min-width:150px;max-width:151px;"> {{ $room->room_name }} </td>
+                                                    <td style="padding:0 15px 0 0;min-width:150px;max-width:151px;">
                                                         Opens: {{\Carbon\Carbon::createFromFormat('H:i:s',$room->open_time)->format('h:i A')}}
                                                         <br/>
                                                         Closes: {{\Carbon\Carbon::createFromFormat('H:i:s',$room->close_time)->format('h:i A')}}
+                                                    </td>
+                                                    <td style="padding:0 15px 0 10px;min-width:150px;max-width:151px;">
+                                                        <button type="submit" name="submit" value="{{$room->room_name}}" class="clickable">Select</button>
                                                     </td>
                                                 </tr>
                                             </table>

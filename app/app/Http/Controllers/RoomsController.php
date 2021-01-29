@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Validation\Rule;
 use App\Models\Rooms;
 use App\Models\Workstation;
 
@@ -43,23 +44,25 @@ class RoomsController extends Controller
         }
     }
 
-    public function store(Request $request){
+    public function saveRoom(Request $request)
+    {
         $room = new Rooms();
         $institue = $request->session()->get('institution_name');
 
-        $rules = [
-            'room_name' => 'required',
+        $rules =
+        [
+            'room_name' => ['required',Rule::unique('Rooms')->where('institution_name', $institue)],
             'open_time' => 'required',
             'close_time' => 'required|after:open_time',
+            'numOfSeats' => 'required',
 //            'reference_length' => 'required',
-            'numOfSeats' => 'required'
         ];
 
         $customMessages = [
             'close_time.after' => "Closing time must be after Opening time."
         ];
 
-        $this->validate($request,$rules,$customMessages);
+        $this->validate($request, $rules, $customMessages);
 
         $room->institution_name = $institue;
         $room->booking_code = "ABC";
@@ -72,8 +75,10 @@ class RoomsController extends Controller
         //request(file('floor_plan'));
         $room->save();
 
-        $numOfSeats = request('numOfSeats');
+        $request->session()->put('selected_room', request('room_name'));
+
         $roomID = Rooms::latest('created_at')->first()->id;
+        $numOfSeats = request('numOfSeats');
         for($i = 0;$i<=$numOfSeats;$i++)
         {
             $workstation = new Workstation();
@@ -86,11 +91,35 @@ class RoomsController extends Controller
             $workstation->save();
 
         }
-
-        return redirect('/')->with('mssg','Room Created Successfully');
-
+        return redirect('/rooms/edit');
     }
 
+    public function edit(Request $request)
+    {
+        $room = $request->session()->get('selected_room');
+        $institue = $request->session()->get('institution_name');
+
+        $seats = Rooms::join('Workstations','Workstations.roomID','Rooms.id')
+            ->where('room_name',$room)
+            ->where('institution_name',$institue)
+            ->select('Workstations.*')
+            ->get();
+
+        return view('rooms.edit', ['seats'=>$seats]);
+    }
+
+    public function saveSeats(Request $request)
+    {
+
+        return redirect('/')->with('mssg','Room Created Successfully');
+    }
+
+    public function seatDelete($id){
+        $seat = Workstation::findOrFail($id);
+        $seat->delete();
+
+        return redirect(route('rooms.edit'));
+    }
     public function destroy($id){
         $room = Rooms::findOrFail($id);
         $room->delete();
