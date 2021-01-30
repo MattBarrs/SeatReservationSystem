@@ -14,7 +14,10 @@
                     <div class="title"> List of Bookings</div>
 
                         <div class = "content" style="align-content:center;">
-                            @foreach($bookings as $booking)
+                            @if($bookings == "")
+                                <p>No bookings found.</p>
+                            @else
+                                @foreach($bookings as $booking)
                                 <div class="booking-item" style="width:80%;margin-left:auto;margin-right: auto;"  >
                                     <h4>
                                         <a href="/bookings/{{ $booking->id }}">
@@ -22,7 +25,7 @@
                                                 <tr>
                                                     <td style="padding: 0 30px 0 0;" ><img src="/img/workplace.png" alt="booking-item"></td>
                                                     <td style="padding: 0 20px 0 0;" >Room: {{ $booking->room_name }}</td>
-                                                    <td style="padding: 0 20px 0 0;" >Seat: {{ $booking->seatID }}</td>
+                                                    <td style="padding: 0 20px 0 0;" >Seat: {{ $booking->seat_name }}</td>
                                                     <td style="padding: 0 20px 0 0;">Date: {{ \Carbon\Carbon::parse($booking->start_date )->format('d/m/Y') }}</td>
                                                     <td style="padding: 0 20px 0 0;" >
                                                         Starts {{ \Carbon\Carbon::createFromFormat('H:i:s', $booking->start_time)->format('h:i A') }}
@@ -37,7 +40,8 @@
                                         </a>
                                     </h4>
                                 </div>
-                            @endforeach
+                                @endforeach
+                            @endif
                         </div>
                     </div>
                 </div>

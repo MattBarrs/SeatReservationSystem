@@ -15,8 +15,9 @@ class CreateBookStatusTable extends Migration
     {
         Schema::create('book_status', function (Blueprint $table) {
             $table->id();
-            $table->integer("room_id");
-            $table->integer("seat_id");
+            $table->string("room_name");
+            $table->string("institution_name");
+            $table->string("seat_name");
             $table->timestamps();
         });
     }

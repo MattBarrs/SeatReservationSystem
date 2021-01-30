@@ -13,8 +13,6 @@
                         <div class="title"  > Room - {{ $Room->room_name}}</div>
                         <p class="opens"> Opens - {{ $Room->open_time }}</p>
                         <p class="closes"> Closes - {{ $Room->close_time }}</p>
-                        <p class="startTime"> Booking Code - {{ $Room->booking_code}}</p>
-
                     </div>
                     <a href="{{ route('rooms.index') }} " class="back"> <- Back to all Rooms</a>
                 </div>

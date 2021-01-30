@@ -15,8 +15,8 @@ class BookingsController extends Controller
 {
     public function index()
     {
-        $booking = Bookings::join('Rooms','Bookings.roomID','Rooms.id')
-            ->select('Bookings.seatID','Bookings.start_date','Bookings.start_time','Bookings.end_time','Bookings.id','Rooms.room_name')
+        $booking = Bookings::join('Rooms','Bookings.room_name','Rooms.room_name')
+            ->select('Bookings.seat_name','Bookings.start_date','Bookings.start_time','Bookings.end_time','Bookings.id','Rooms.room_name')
             ->get();
         return view
         ('bookings.index',
@@ -25,7 +25,7 @@ class BookingsController extends Controller
                 'name' => request('name'),
                 'seat' => request(' seat'),
                 'duration' => request('duration'),
-                'extra_requirements' => request('extra_requirements'),
+                'seat_details' => request('seat_details'),
             ],
         );
     }
@@ -42,7 +42,6 @@ class BookingsController extends Controller
 
     public function  create(Request $request){
         $institution = $request->session()->get('institution_name');
-
         $room = $request->session()->get('selected_room');
 
         if($institution == null)
@@ -54,38 +53,38 @@ class BookingsController extends Controller
         }
         else
         {
-            $seats = Rooms::join('Workstations','Workstations.roomID','Rooms.id')
-                ->where('room_name',$room)
-                ->select('Workstations.seatID')
+            $seats = Workstation::
+                where('room_name',$room)
+                ->where('institution_name',$institution)
+                ->select('Workstations.seat_name')
                 ->get();
             return view('bookings.create', ['seats'=>$seats]);
         }
     }
 
     public function store(Request $request){
-        $booking = new Bookings();
 
         $institution = $request->session()->get('institution_name');
         $room = $request->session()->get('selected_room');
 
         $selected_room = Rooms::where('institution_name',$institution)->where('room_name',$room)->get();
+
         $roomOpen = $selected_room[0]->open_time;
         $roomClose = $selected_room[0]->close_time;
+        $openTimeMessage = \Carbon\Carbon::createFromFormat('H:i:s',$roomOpen)->format('h:i A');
+        $closeTimeMessage = \Carbon\Carbon::createFromFormat('H:i:s',$roomClose)->format('h:i A');
 
         $rules = [
-            'roomCode' => 'required',
             'seat' => 'required',
             'start_date' => 'required|after_or_equal:yesterday',
             'start_time' => "required|after_or_equal:$roomOpen",
             'end_time' => "required|after_or_equal:start_time|before_or_equal:$roomClose",
         ];
 
-        $openTimeMessage = \Carbon\Carbon::createFromFormat('H:i:s',$roomOpen)->format('h:i A');
-        $closeTimeMessage = \Carbon\Carbon::createFromFormat('H:i:s',$roomClose)->format('h:i A');
 
         $customMessages = [
             'start_date.after_or_equal' => "Invalid date selected. Date must be today or in the future ",
-            'end_time.after_or_equal' => "'Start Time' must be before 'End Time'.",
+            'end_time.after_or_equal' => "Start time must be before end time.",
             'end_time.before_or_equal' => "This facility closes at $closeTimeMessage.",
             'start_time.after_or_equal' => "This facility opens at $openTimeMessage.",
 
@@ -93,14 +92,13 @@ class BookingsController extends Controller
 
         $this->validate($request,$rules,$customMessages);
 
-        //$booking->roomId = request('roomcode');
-        $booking->roomId = 1;
+        $booking = new Bookings();
+        $booking->room_name = $room;
         $booking->institution_name = $institution;
-        $booking->seatID = request('seat');
+        $booking->seat_name = request('seat');
         $booking->start_date = request('start_date');
         $booking->start_time = request('start_time');
         $booking->end_time = request('end_time');
-        $booking->extra_requirements = request('extra_requirements');
 
         $booking->save();
 
@@ -109,7 +107,7 @@ class BookingsController extends Controller
         $bookingID= Bookings::latest('created_at')->first()->id;
         $userId = Auth::id();
         $user_booking->id = $bookingID;
-        $user_booking->userId = $userId;
+        $user_booking->user_id = $userId;
 
         $user_booking->save();
 
@@ -138,18 +136,14 @@ class BookingsController extends Controller
 
             return redirect('/bookings/create');
         }
-        else{
-            return view
-            ('bookings.selectRoom',
-                [
-                    'rooms' => $room,
-                    'open_time' => request('open_time'),
-                    'close_time' => request('close_time'),
-                    'bookingCode' => request('bookingCode'),
-                    'institution_name' => request('institution_name'),
-                    'referenceLength' => request('referenceLength'),
-                ],
-            );
+        elseif($room == "[]")
+        {
+            return view('bookings.selectRoom');
+
+        }
+        else
+        {
+            return view('bookings.selectRoom', ['rooms' => $room]);
         }
     }
 

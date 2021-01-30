@@ -11,6 +11,7 @@
                 <div class="wrapper create-booking" style="width:80%;">
                     <div class="title"> Add New Room</div>
                     <form action="{{ route('rooms.index') }}" method="POST" style="padding: 0 0 0 30px;">
+
                         @csrf
 
                         <label for ="room_name">Room Name
@@ -63,7 +64,7 @@
 
 
                         <label for ="numOfSeats">Number Of Seats</label>
-                        <input type="number" id="numOfSeats" name="numOfSeats" min="1" value="{{ old('numOfSeats') }}">
+                        <input type="number" id="numOfSeats" name="numOfSeats" min="1" value="{{ old('numOfSeats') }}" style="width:10%;">
 
                         @foreach ($errors->get('numOfSeats') as $message)
                         <div class="alert alert-danger">
@@ -73,10 +74,32 @@
                         </div>
                         @endforeach
 
-                        <label for ="floor_plan">Upload floor plan of room</label>
-                        <input type="file" id="floor_plan" name="floor_plan">
 
                         <br/><br/>
+                        <b>Room Facilities & Details</b>
+                        <fieldset>
+                            <input type="checkbox" name="room_details[]" value="Catering" @if(is_array(old('room_details')) && in_array('Catering', old('room_details'))) checked @endif>Catering
+                            <br/>
+                            <input type="checkbox" name="room_details[]" value="DisabledToilets" @if(is_array(old('room_details')) && in_array('DisabledToilets', old('room_details'))) checked @endif>Disabled Toilets
+                            <br/>
+                            <input type="checkbox" name="room_details[]" value="GuideDogFriendly" @if(is_array(old('room_details')) && in_array('GuideDogFriendly', old('room_details'))) checked @endif>Guide Dog Friendly
+                            <br/>
+                            <input type="checkbox" name="room_details[]" value="WheelChairAccess" @if(is_array(old('room_details')) && in_array('WheelChairAccess', old('room_details'))) checked @endif>Wheel Chair Access
+                            <br/>
+                            <input type="checkbox" name="room_details[]" value="Lifts" @if(is_array(old('room_details')) && in_array('Lifts', old('room_details'))) checked @endif>Lifts
+                            <br/>
+                            <input type="checkbox" name="room_details[]" value="PrayerRooms" @if(is_array(old('room_details')) && in_array('PrayerRooms', old('room_details'))) checked @endif>Prayer Room
+                            <br/>
+                            <input type="checkbox" name="room_details[]" value="QuietRoom" @if(is_array(old('room_details')) && in_array('QuietRoom', old('room_details'))) checked @endif >Quiet Room
+                            <br/>
+                            <input type="checkbox" name="room_details[]" value="Toilets" @if(is_array(old('room_details')) && in_array('Toilets', old('room_details'))) checked @endif>Toilets
+                            <br/>
+                        </fieldset>
+
+                        <label for ="floor_plan">Upload floor plan of room</label>
+                        <input type="file" id="floor_plan" name="floor_plan">
+                        <br/>
+
                         <input type="submit" value="Submit">
                     </form>
                 </div>

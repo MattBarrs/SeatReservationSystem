@@ -10,15 +10,15 @@
             <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg">
                 <div class="wrapper booking-details">
                     <div>
-                        <div class="title"  > Booking in room - {{ $Booking->roomID}}</div>
-                        <p class="seat"> Seat - {{ $Booking->seatID}}</p>
+                        <div class="title"  > Booking in room - {{ $Booking->room_name}}</div>
+                        <p class="seat"> Seat - {{ $Booking->seat_name}}</p>
                         <p class="start_date"> Start Date - {{ $Booking->start_time}}</p>
                         <p class="end_time"> End Time - {{ $Booking->end_time}}</p>
                         <ul>
-                            @if($Booking->extra_requirements != null)
+                            @if($Booking->seat_details != null)
                             <p class="toppings"> Special Requirements:</p>
-                            @foreach( $Booking->extra_requirements as $extra_requirements )
-                            <li>{{$extra_requirements}}</li>
+                            @foreach( $Booking->seat_details as $seat_details )
+                            <li>{{$seat_details}}</li>
                             @endforeach
                             @endif
                         </ul>

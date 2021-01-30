@@ -30,7 +30,7 @@
 
                             <table>
                                 <tr>
-                                    <td>
+                                    <td style="padding:0 10px 0 0;">
                                         <div class="booking-item" style="background-color:#eeeeee">
                                             <p>Your Latest Booking</p>
                                             <div class="booking-item">
@@ -58,51 +58,44 @@
                                             </div>
                                         </div>
                                     </td>
-                                    <td>
-                                        <div class="py-12">
-                                            <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-                                                <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg">
-                                                    <div class="wrapper create-booking"  style="text-align:center;">
+                                    <td style="padding:0 0 0 10px;">
+                                        <div class="booking-item" style="background-color:#eeeeee">
+                                            <h1>Current Institute</h1>
 
-                                                        @if( session('institution_name') != null)
-                                                        <h1>Current Institute: {{ session('institution_name') }}</h1>
-                                                        <a href="{{ route('institution.select') }}" class="clickable"">Change Institution</a>
-                                                        @else
-                                                        <div class = "alertMessage"  style="margin-left:auto;margin-right:auto;width:100%;min-width: 100px;" >
-                                                            <p class="mssg">No Institution Selected</p>
-                                                        </div>
-                                                        <form action="{{ route('institution.select') }} " method="GET"  >
-                                                            @csrf
-                                                            <label for ="institution"></label>
-                                                            <select name="institution" id="institution" style="margin-left: auto;margin-right: auto;">
-                                                                <option value="UNIVERSITY OF LEEDS">University of Leeds</option>
-                                                                <option value="LEEDS BECKETT">Leeds Beckett</option>
-                                                                <option value="UNIVERSITY OF SHEFFIELD">University of Sheffield</option>
-                                                            </select>
-                                                            <br/>
-                                                            <input type="submit" value="Submit">
-                                                        </form>
-                                                        @endif
 
-                                                    </div>
-                                                </div>
+                                            <div class="booking-item"  style="text-align:center;">
+                                                @if( session('institution_name') != null)
+                                                    <h1>{{ session('institution_name') }}</h1>
+                                                    <a href="{{ route('institution.select') }}" class="clickable">Change Institution</a>
+
+                                                @elseif( empty($institutes))
+                                                    <p>No Institutes Found. Please contact adminastrator </p>
+                                                @else
+                                                    <h1>No Institute Selected <br/>Please Select Your Institution</h1>
+                                                    <form action="{{ route('institution.select') }} " method="POST">
+                                                        @csrf
+
+                                                        <label for ="institution"></label>
+                                                        <select name="institution" id="institution">
+                                                            @foreach($institutes as $institute)
+                                                            <option value="{{$institute->institution_name}}">{{$institute->institution_name}}</option>
+                                                            @endforeach
+                                                        </select>
+                                                        <br/><br/>
+
+                                                        <label for ="seat">Access Code</label>
+                                                        <input type="text" name="access_code" id="access_code"value="{{ old('access_code') }}">
+                                                        <br/><br/>
+                                                        <input type="submit" value="Submit" class="clickable">
+                                                    </form>
+                                                @endif
                                             </div>
                                         </div>
                                     </td>
                                 </tr>
-
                             </table>
-
-
-
-
-
-
                             <br/>
-
                     </div>
-
-
                 </div>
             </div>
         </div>

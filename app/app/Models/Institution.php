@@ -5,11 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Workstation extends Model
+class Institution extends Model
 {
-//    use HasFactory;
-
-    protected $casts = [
-        'seat_details' => 'array',
-    ];
+    use HasFactory;
 }

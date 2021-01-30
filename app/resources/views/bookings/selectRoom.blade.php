@@ -12,7 +12,7 @@
 
                     <div class="title">Book A Seat: Select Room</div>
 
-                    @if(count($rooms) == 0)
+                    @if( empty($rooms))
                         <br/>
                         <div class="alertMessage">No Rooms Found For Your Institute</div>
                         <br/>
@@ -22,15 +22,14 @@
                     @else
                         <form action=" {{ route('bookings.selectRoom') }} " method="GET" >
                             @foreach($rooms as $room)
-                                <div class="booking-item">
-
+                                <div class="booking-item" >
                                     <h4>
                                         <button type="submit" name="submit" value="{{$room->room_name}}">
-                                            <table>
+                                            <table style="text-align:left;">
                                                 <tr>
-                                                    <td style="padding:0 15px 0 0;min-width:150px;max-width:151px;"><img src="/img/roomIcon.png" alt="room-item"></td>
-                                                    <td style="padding:0 15px 0 0;min-width:150px;max-width:151px;"> {{ $room->room_name }} </td>
-                                                    <td style="padding:0 15px 0 0;min-width:150px;max-width:151px;">
+                                                    <td style="padding:0 15px 0 0;width:150px;"><img src="/img/roomIcon.png" alt="room-item"></td>
+                                                    <td style="padding:0 15px 0 0;width:150px;"> {{ $room->room_name }} </td>
+                                                    <td style="padding:0 15px 0 0;width:150px;">
                                                         Opens: {{\Carbon\Carbon::createFromFormat('H:i:s',$room->open_time)->format('h:i A')}}
                                                         <br/>
                                                         Closes: {{\Carbon\Carbon::createFromFormat('H:i:s',$room->close_time)->format('h:i A')}}

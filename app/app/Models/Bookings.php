@@ -7,8 +7,6 @@ use Illuminate\Database\Eloquent\Model;
 
 class Bookings extends Model
 {
-    //use HasFactory;
-    protected $casts = [
-        'extra_requirements' => 'array',
-    ];
+    use HasFactory;
+
 }

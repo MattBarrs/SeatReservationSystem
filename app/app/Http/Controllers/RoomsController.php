@@ -47,11 +47,15 @@ class RoomsController extends Controller
     public function saveRoom(Request $request)
     {
         $room = new Rooms();
-        $institue = $request->session()->get('institution_name');
+
+        $room_name_input = request('room_name');
+        $institute = $request->session()->get('institution_name');
+
+        $request->session()->put('selected_room', $room_name_input);
 
         $rules =
         [
-            'room_name' => ['required',Rule::unique('Rooms')->where('institution_name', $institue)],
+            'room_name' => ['required',Rule::unique('Rooms')->where('institution_name', $institute)],
             'open_time' => 'required',
             'close_time' => 'required|after:open_time',
             'numOfSeats' => 'required',
@@ -59,32 +63,34 @@ class RoomsController extends Controller
         ];
 
         $customMessages = [
-            'close_time.after' => "Closing time must be after Opening time."
+            'close_time.after' => "Closing time must be after Opening time.",
+            'numOfSeats.required' => "The number of seats is required.",
         ];
 
         $this->validate($request, $rules, $customMessages);
 
-        $room->institution_name = $institue;
-        $room->booking_code = "ABC";
-        $room->room_name = request('room_name');
+        $room->institution_name = $institute;
+        $room->room_name = $room_name_input;
         $room->open_time = request('open_time');
         $room->close_time = request('close_time');
+        $room->room_details = request('room_details');
+
         $room->floor_plan = "s"; //For java interactive section
         $room->reference_length = 10.0; //Reference length to allow distance guaging
-        //$room->booking_code = request('booking_code');
         //request(file('floor_plan'));
+
         $room->save();
 
-        $request->session()->put('selected_room', request('room_name'));
 
-        $roomID = Rooms::latest('created_at')->first()->id;
         $numOfSeats = request('numOfSeats');
-        for($i = 0;$i<=$numOfSeats;$i++)
+        for($i = 0;$i<$numOfSeats;$i++)
         {
             $workstation = new Workstation();
 
-            $workstation->roomID = $roomID;
-            $workstation->seatID = $i+1;
+            $workstation->room_name = $room_name_input;
+            $workstation->institution_name = $institute;
+
+            $workstation->seat_name = $i+1;
             $workstation->coord_x = 0; //used in javascript map
             $workstation->coord_y = 0; //used in javascript map
 
@@ -96,22 +102,78 @@ class RoomsController extends Controller
 
     public function edit(Request $request)
     {
-        $room = $request->session()->get('selected_room');
+        $value   = request("submit");
         $institue = $request->session()->get('institution_name');
+        $room = $request->session()->get('selected_room');
 
-        $seats = Rooms::join('Workstations','Workstations.roomID','Rooms.id')
-            ->where('room_name',$room)
-            ->where('institution_name',$institue)
-            ->select('Workstations.*')
-            ->get();
+        if($value != null)
+        {
+            $request->session()->put('selected_room',$value);
+            return redirect(route('rooms.edit'));
+        }
+        else
+        {
+            $request->session()->put('selected_room',"");
+            if($room == null)
+            {
+                $rooms  = Rooms::
+                where('institution_name',$institue)
+                    ->get();
+                $seats = "";
+            }
+            else
+            {
+                $rooms  = Rooms::
+                    where('institution_name',$institue)
+                    ->where('room_name',$room)
+                    ->first();
 
-        return view('rooms.edit', ['seats'=>$seats]);
+                $seats = Workstation::
+                    where('room_name',$room)
+                    ->where('institution_name',$institue)
+                    ->get();
+            }
+        }
+        return view('rooms.edit', ['seats'=>$seats],['rooms'=>$rooms]);
     }
 
-    public function saveSeats(Request $request)
+    public function saveEdit(Request $request)
     {
+        $room = $request->session()->get('selected_room');
+        $institute = $request->session()->get('institution_name');
 
-        return redirect('/')->with('mssg','Room Created Successfully');
+        $seats = Workstation::
+            where('room_name',$room)
+            ->where('institution_name',$institute)
+            ->select('room_name','seat_name','institution_name')
+            ->get();
+
+        foreach($seats as $seat)
+        {
+            $seat_name_input = request("seatInputFor_$seat->seat_name");
+            $seat_details = request("detailsFor_$seat->seat_name");
+
+            if ($seat_name_input == "")
+            {
+                Workstation::
+                    where('room_name',$seat->room_name)
+                    ->where('institution_name',$seat->institution_name)
+                    ->where('seat_name',$seat->seat_name)
+                    ->update(['seat_details'=>$seat_details]);
+            }
+            else
+            {
+                Workstation::
+                where('room_name',$seat->room_name)
+                    ->where('seat_name',$seat->seat_name)
+                    ->where('institution_name',$seat->institution_name)
+                    ->update(['seat_details'=>$seat_details, 'seat_name'=>$seat_name_input]);
+            }
+
+        }
+        $request->session()->put('selected_room', "");
+
+        return redirect('/')->with('mssg','Room Details Updated Successfully');
     }
 
     public function seatDelete($id){

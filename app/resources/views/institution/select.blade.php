@@ -11,28 +11,46 @@
                 <div class="wrapper create-booking">
 
 
-
                     @if( session('institution_name') != null)
                         <h1>Current Institute Selected: {{ session('institution_name') }}</h1>
                     @else
                         <h1>No Institute Selected <br/>Please Select Your Institution</h1>
-
                     @endif
 
-                    <form action="{{ route('institution.select') }} " method="GET">
-                        @csrf
+                    @if( empty($institutes))
+                        <p>No Institutes Found. Please contact adminastrator </p>
+                    @else
+                        <form action="{{ route('institution.select') }} " method="POST">
+                            @csrf
 
-                        <label for ="institution"></label>
-                        <select name="institution" id="institution">
-                            <option value="UNIVERSITY OF LEEDS">University of Leeds</option>
-                            <option value="LEEDS BECKETT">Leeds Beckett</option>
-                            <option value="UNIVERSITY OF SHEFFIELD">University of Sheffield</option>
-                        </select>
-                        <br/><br/>
+                            <label for ="institution"></label>
+                            <select name="institution" id="institution">
+                                @foreach($institutes as $institute)
+                                    <option value="{{$institute->institution_name}}">{{$institute->institution_name}}</option>
+                                @endforeach
+                            </select>
+                            <br/><br/>
+
+                            <label for ="seat">Access Code</label>
+                            <input type="text" name="access_code" id="access_code"value="{{ old('access_code') }}">
+                            @if( session('mssg') != null )
+                            <div class = "failAlertMessage">
+                                <p class="mssg" >{{ session('mssg') }}</p>
+                            </div>
+                            @endif
+                            @foreach ($errors->get('access_code') as $message)
+                            <div class="alert alert-danger">
+                                <ul>
+                                    <li class="failAlertMessage"> {{ $message }}</li>
+                                </ul>
+                            </div>
+                            @endforeach
+                            <br/>
+                            <input type="submit" value="Submit">
+                        </form>
+                    @endif
 
 
-                        <input type="submit" value="Submit">
-                    </form>
 
                 </div>
             </div>

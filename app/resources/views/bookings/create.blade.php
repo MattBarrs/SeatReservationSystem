@@ -1,43 +1,24 @@
 <x-app-layout>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            {{ __('Create A Booking') }}
+            {{ __('Create New Booking') }}
         </h2>
     </x-slot>
 
     <div class="py-12">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg">
-                <div class="wrapper create-booking">
-                    <h1> Create A New Booking</h1>
+                <div class="wrapper create-booking" style="width:80%;">
+                    <div class="title">Create New Booking</div>
                     <br/>
                     <p>Room Selected: {{ session('selected_room') }} </p>
                     <a href="{{ route('bookings.selectRoom') }}"  class="clickable"> <b>Change room</b></a>
 
 
-                    <form action="{{ route('bookings.index') }}" method="POST">
+                    <form action="{{ route('bookings.create') }}" method="POST">
                         @csrf
 
-                        <label for ="roomCode">Room Code</label>
 
-                        <input type="text" id = "roomCode" name = "roomCode" value="{{ old('roomCode') }}">
-                        <div class="tooltip" style="width:2%;height:2%;">
-                            <img src="/img/question.png" class="inline" alt="RoomCode Tooltip" title="Please ask your local admim or staff if you do not the room code"></a>
-                            <span class="tooltiptext">
-                            Please ask your local admim or staff if you do not the room code
-                            </span>
-                        </div>
-
-
-                        @foreach ($errors->get('roomCode') as $message)
-                            <div class="alert alert-danger">
-                                <ul>
-                                    <li class="failAlertMessage"> {{ $message }}</li>
-                                </ul>
-                            </div>
-                        @endforeach
-
-                        <br/><br/>
 
                         <label for ="start_date">Pick Date </label>
                         <input type="date" id="start_date" name="start_date" min="2020-11-01" max="2030-12-31" value="{{ old('start_date') }}">
@@ -84,20 +65,10 @@
                         <label for ="seat">Choose a seat</label>
                         <select name="seat" id="seat">
                             @foreach ($seats as $seat)
-                                <option value="{{$seat->seatID}}">{{$seat->seatID}}</option>
+                                <option value="{{$seat->seat_name}}">{{$seat->seat_name}}</option>
 
                             @endforeach
                         </select>
-                        <br/><br/>
-
-                       <fieldset>
-                            <label>Extra Requirements</label>
-                            <br/>
-                            <input type="checkbox" name="extra_requirements[]" value="Disabled Seat">Disabled Seat<br/>
-                            <input type="checkbox" name="extra_requirements[]" value="Visually Impaired">Visually Impaired<br/>
-                        </fieldset>
-                        <br/><br/>
-
                         <input type="submit" value="Submit" class="clickable">
                     </form>
                 </div>

@@ -15,9 +15,10 @@ class CreateWorkstationTable extends Migration
     {
         Schema::create('workstations', function (Blueprint $table) {
             $table->id();
-            $table->string('roomID');
-            $table->string('seatID');
-            $table->json('availableExtra')->nullable();
+            $table->string('room_name');
+            $table->string('institution_name');
+            $table->string('seat_name',20);
+            $table->json('seat_details')->nullable();// change to details
             $table->float('coord_x');
             $table->float('coord_y');
             $table->timestamps();
