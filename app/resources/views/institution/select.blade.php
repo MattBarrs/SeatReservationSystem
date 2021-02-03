@@ -31,7 +31,15 @@
                             </select>
                             <br/><br/>
 
-                            <label for ="seat">Access Code</label>
+                            <label for ="seat">
+                                Access Code
+                                <div class="tooltip"style="max-width: 20px;max-height: 20px;"> <img src="img/question.png">
+                                    <span class="tooltiptext">
+                                    Please ask your local staff or admin if you do not know the access code.
+                                </span>
+                                </div>
+                            </label>
+
                             <input type="text" name="access_code" id="access_code"value="{{ old('access_code') }}">
                             @if( session('mssg') != null )
                             <div class = "failAlertMessage">
@@ -46,7 +54,7 @@
                             </div>
                             @endforeach
                             <br/>
-                            <input type="submit" value="Submit">
+                            <input type="submit" value="Submit" class="clickable">
                         </form>
                     @endif
 

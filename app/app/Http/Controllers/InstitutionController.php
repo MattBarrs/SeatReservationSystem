@@ -11,7 +11,7 @@ class InstitutionController extends Controller
 {
     public function select()
     {
-        $institutes_all = Institution::select('institution_name')->get();
+        $institutes_all = Institution::select('institution_name')->orderBy('institution_name','ASC')->get();
         return view('institution.select', ['institutes'=>$institutes_all]);
     }
 

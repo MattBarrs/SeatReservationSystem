@@ -25,10 +25,11 @@
                         <form action="{{ route('bookings.delete', $Booking->id) }}" method="POST">
                             @csrf
                             @method('DELETE')
-                            <button>Delete Booking</button>
+                            <button class="clickable">Delete Booking</button>
                         </form>
                     </div>
-                    <a href="{{ route('bookings.index') }} " class="back"> <- Back to all bookings</a>
+                    <br/><br/>
+                    <a href="{{ route('bookings.index') }} " class="clickable">Back to all bookings</a>
                 </div>
             </div>
         </div>

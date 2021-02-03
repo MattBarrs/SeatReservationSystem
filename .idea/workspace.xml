@@ -160,21 +160,6 @@
       <recent name="C:\Users\Matty B\Documents\Uni_Y4\OneDrive - University of Leeds\Project\SeatReservationSystem\app\resources\views\auth" />
     </key>
   </component>
-  <component name="RunManager">
-    <configuration default="true" type="ArquillianTestNG" factoryName="" nameIsGenerated="true">
-      <option name="arquillianRunConfiguration">
-        <value>
-          <option name="containerStateName" value="" />
-        </value>
-      </option>
-      <option name="TEST_OBJECT" value="CLASS" />
-      <properties />
-      <listeners />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-  </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
@@ -203,6 +188,8 @@
       <workItem from="1611908868542" duration="1629000" />
       <workItem from="1611929923553" duration="12409000" />
       <workItem from="1611998014915" duration="34886000" />
+      <workItem from="1612089570712" duration="1768000" />
+      <workItem from="1612099743851" duration="602000" />
     </task>
     <servers />
   </component>
@@ -224,10 +211,10 @@
     </state>
     <state x="777" y="434" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2/0.0.1920.1040/0.-1080.1920.1040@0.0.1920.1040" timestamp="1611936138758" />
     <state x="777" y="434" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2/0.0.1920.1040@0.0.1920.1040" timestamp="1612036099897" />
-    <state x="231" y="192" width="1465" height="787" key="find.popup" timestamp="1612036949300">
-      <screen x="0" y="0" width="1920" height="1040" />
+    <state x="1111" y="-888" width="585" height="592" key="find.popup" timestamp="1612089700116">
+      <screen x="0" y="-1080" width="1920" height="1040" />
     </state>
-    <state x="1111" y="-888" width="585" height="592" key="find.popup/0.0.1920.1040/0.-1080.1920.1040@0.-1080.1920.1040" timestamp="1611046428076" />
+    <state x="1111" y="-888" width="585" height="592" key="find.popup/0.0.1920.1040/0.-1080.1920.1040@0.-1080.1920.1040" timestamp="1612089700116" />
     <state x="569" y="178" width="585" height="592" key="find.popup/0.0.1920.1040/0.-1080.1920.1040@0.0.1920.1040" timestamp="1612033506792" />
     <state x="1111" y="191" width="585" height="592" key="find.popup/0.0.1920.1040/9.-1080.1920.1040@0.0.1920.1040" timestamp="1608393339056" />
     <state x="231" y="192" width="1465" height="787" key="find.popup/0.0.1920.1040@0.0.1920.1040" timestamp="1612036949300" />

@@ -98,9 +98,9 @@
 
                         <label for ="floor_plan">Upload floor plan of room</label>
                         <input type="file" id="floor_plan" name="floor_plan">
-                        <br/>
+                        <br/><br/>
 
-                        <input type="submit" value="Submit">
+                        <input type="submit" value="Submit" class="clickable">
                     </form>
                 </div>
 

@@ -8,32 +8,39 @@ use App\Models\User_Booking;
 use App\Models\Workstation;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Carbon\Carbon;
 use function Symfony\Component\String\s;
 
 
 class BookingsController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $booking = Bookings::join('Rooms','Bookings.room_name','Rooms.room_name')
+        $sessionId = Auth::id();
+
+        $booking = Bookings::
+            join('Rooms','Bookings.room_name','Rooms.room_name')
+            ->join('User_Bookings','Bookings.id','User_Bookings.id')
+            ->where('User_Bookings.user_id',$sessionId)
             ->select('Bookings.seat_name','Bookings.start_date','Bookings.start_time','Bookings.end_time','Bookings.id','Rooms.room_name')
             ->get();
-        return view
-        ('bookings.index',
-            [
-                'bookings' => $booking,
-                'name' => request('name'),
-                'seat' => request(' seat'),
-                'duration' => request('duration'),
-                'seat_details' => request('seat_details'),
-            ],
-        );
+        return view('bookings.index',['bookings' => $booking]);
     }
 
-    public function show($id)
+    public function show(Request $request,$id)
     {
-        $booking = Bookings::findOrFail($id);
-        return view('bookings.show',['Booking' => $booking]);
+        $user_bookings = User_Booking::find($id);
+        $sessionId = Auth::id();
+
+        if( $user_bookings->user_id == $sessionId)
+        {
+            $booking = Bookings::findOrFail($id);
+            return view('bookings.show',['Booking' => $booking]);
+        }
+        else{
+            return redirect('/dashboard')->withErrors('You are not authorised to view this booking');
+        }
+
     }
 
     public function  selectInstitution(){
@@ -71,8 +78,8 @@ class BookingsController extends Controller
 
         $roomOpen = $selected_room[0]->open_time;
         $roomClose = $selected_room[0]->close_time;
-        $openTimeMessage = \Carbon\Carbon::createFromFormat('H:i:s',$roomOpen)->format('h:i A');
-        $closeTimeMessage = \Carbon\Carbon::createFromFormat('H:i:s',$roomClose)->format('h:i A');
+        $openTimeMessage = Carbon::createFromFormat('H:i:s',$roomOpen)->format('h:i A');
+        $closeTimeMessage = Carbon::createFromFormat('H:i:s',$roomClose)->format('h:i A');
 
         $rules = [
             'seat' => 'required',
@@ -147,6 +154,29 @@ class BookingsController extends Controller
         }
     }
 
+    public function filterRooms(Request $request)
+    {
+        $value   = request("room_details");
+        $asJSON = json_encode($value);
+
+        $institution = $request->session()->get('institution_name');
+
+        $filteredRooms = Rooms::
+            where('institution_name',$institution)
+            ->where('room_details','like',$asJSON)
+            ->get();
+
+
+        if($value != null)
+        {
+            return view('bookings.selectRoom', ['rooms' => $filteredRooms]);
+            //            return redirect('/bookings/create');
+        }
+        else
+        {
+            return redirect('bookings/create/rooms')->withErrors('No criteria selected for filter.');;
+        }
+    }
 
     public function destroy($id){
         $booking = Bookings::findOrFail($id);

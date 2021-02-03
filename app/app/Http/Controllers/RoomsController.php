@@ -103,38 +103,58 @@ class RoomsController extends Controller
     public function edit(Request $request)
     {
         $value   = request("submit");
-        $institue = $request->session()->get('institution_name');
+        $institute = $request->session()->get('institution_name');
         $room = $request->session()->get('selected_room');
+
+        $seats = "";
 
         if($value != null)
         {
             $request->session()->put('selected_room',$value);
             return redirect(route('rooms.edit'));
         }
+        elseif( $institute == null)
+        {
+            return redirect('/institution');
+        }
         else
         {
-            $request->session()->put('selected_room',"");
             if($room == null)
             {
                 $rooms  = Rooms::
-                where('institution_name',$institue)
+                where('institution_name',$institute)
                     ->get();
-                $seats = "";
+
             }
             else
             {
                 $rooms  = Rooms::
-                    where('institution_name',$institue)
+                    where('institution_name',$institute)
                     ->where('room_name',$room)
                     ->first();
 
                 $seats = Workstation::
                     where('room_name',$room)
-                    ->where('institution_name',$institue)
+                    ->where('institution_name',$institute)
                     ->get();
+                foreach($seats as $seat)
+                {
+                    $inputBoxName = str_replace(' ','_', $seat->seat_name);
+                    $seat->seat_name = $inputBoxName;
+                }
             }
         }
-        return view('rooms.edit', ['seats'=>$seats],['rooms'=>$rooms]);
+
+
+        if($room == "[]")
+        {
+            return view('rooms.edit', ['seats'=>$seats]);
+
+        }
+        else
+        {
+            return view('rooms.edit', ['seats'=>$seats],['rooms'=>$rooms]);
+        }
     }
 
     public function saveEdit(Request $request)
@@ -145,33 +165,45 @@ class RoomsController extends Controller
         $seats = Workstation::
             where('room_name',$room)
             ->where('institution_name',$institute)
-            ->select('room_name','seat_name','institution_name')
             ->get();
 
         foreach($seats as $seat)
         {
-            $seat_name_input = request("seatInputFor_$seat->seat_name");
-            $seat_details = request("detailsFor_$seat->seat_name");
+            $inputBoxName = str_replace(' ','_', $seat->seat_name);
+            $stringForInput = "seatInputFor_$inputBoxName";
+            $seat_name_input = request($stringForInput);
+            $seat_details = request("detailsFor_$inputBoxName");
+
+            $trial = Workstation::where('room_name',$seat->room_name)
+                ->where('institution_name',$seat->institution_name)
+                ->where('seat_name',"$seat->seat_name")
+                ->get();
+
+
 
             if ($seat_name_input == "")
             {
                 Workstation::
                     where('room_name',$seat->room_name)
                     ->where('institution_name',$seat->institution_name)
-                    ->where('seat_name',$seat->seat_name)
+                    ->where('seat_name',"$seat->seat_name")
                     ->update(['seat_details'=>$seat_details]);
             }
             else
             {
+                echo $seat_name_input;
+                echo $seat->seat_name;
                 Workstation::
-                where('room_name',$seat->room_name)
-                    ->where('seat_name',$seat->seat_name)
+                    where('room_name',$seat->room_name)
                     ->where('institution_name',$seat->institution_name)
+                    ->where('seat_name',$seat->seat_name)
                     ->update(['seat_details'=>$seat_details, 'seat_name'=>$seat_name_input]);
             }
 
         }
         $request->session()->put('selected_room', "");
+        $request->session()->put('open_time',"");
+        $request->session()->put('close_time',"");
 
         return redirect('/')->with('mssg','Room Details Updated Successfully');
     }
