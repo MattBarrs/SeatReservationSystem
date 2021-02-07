@@ -6,40 +6,38 @@
     </x-slot>
 
     <div class="py-12">
-        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-            <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg">
-                <div class="wrapper create-booking" style="width:80%;">
-                    <div class="title">Add Institution</div>
-                    <br/>
-                    <form action="{{ route('institution.create') }}" method="POST">
-                        @csrf
+        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 bg-white overflow-hidden shadow-xl sm:rounded-lg">
 
-                        <label for ="institution_name">Institution Name</label>
-                        <input type="text" id="institution_name" name="institution_name" value="{{ old('institution_name') }}">
+            <div class="wrapper create-booking" style="width:80%;">
+                <div class="title">Add Institution</div>
+                <br/>
+                <form action="{{ route('institution.create') }}" method="POST">
+                    @csrf
 
-                        @foreach ($errors->get('institution_name') as $message)
+                    <label for ="institution_name">Institution Name</label>
+                    <input type="text" id="institution_name" name="institution_name" value="{{ old('institution_name') }}">
+
+                    @foreach ($errors->get('institution_name') as $message)
+                    <div class="alert alert-danger">
+                        <ul>
+                            <li class="failAlertMessage"> {{ $message }}</li>
+                        </ul>
+                    </div>
+                    @endforeach
+
+                    <label for ="seat">Access Code</label>
+                    <input type="text" name="access_code" id="access_code"value="{{ old('access_code') }}">
+                    @foreach ($errors->get('access_code') as $message)
                         <div class="alert alert-danger">
                             <ul>
                                 <li class="failAlertMessage"> {{ $message }}</li>
                             </ul>
                         </div>
-                        @endforeach
+                    @endforeach
 
-                        <label for ="seat">Access Code</label>
-                        <input type="text" name="access_code" id="access_code"value="{{ old('access_code') }}">
-                        @foreach ($errors->get('access_code') as $message)
-                            <div class="alert alert-danger">
-                                <ul>
-                                    <li class="failAlertMessage"> {{ $message }}</li>
-                                </ul>
-                            </div>
-                        @endforeach
-
-                        <br/>
-                        <input type="submit" value="Submit" class="clickable">
-                    </form>
-                </div>
-
+                    <br/>
+                    <input type="submit" value="Submit" class="clickable">
+                </form>
             </div>
         </div>
     </div>

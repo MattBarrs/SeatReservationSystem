@@ -54,7 +54,9 @@ class InstitutionController extends Controller
         $institute = request('institution_name');
 
         $rules = [
-            'institution_name' => ['required',Rule::unique('Institutions')->where('institution_name', $institute)],
+            'institution_name' => ['max:30','min:5','required',
+                                    Rule::unique('Institutions')->where('institution_name', $institute)
+                                    ],
             'access_code' => 'required|max:15|min:5',
         ];
 

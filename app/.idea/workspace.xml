@@ -33,6 +33,9 @@
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
   </component>
   <component name="JupyterTrust" id="5c1aaa31-ced4-4251-8086-22d6f10f5c43" />
+  <component name="NamedScopeManager">
+    <scope name="blade" pattern="" />
+  </component>
   <component name="PhpWorkspaceProjectConfiguration">
     <include_path>
       <path value="$PROJECT_DIR$/vendor/symfony/service-contracts" />
@@ -164,15 +167,27 @@
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/app/Http/Controllers" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/resources/views/rooms" />
     <property name="nodejs_package_manager_path" value="npm" />
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\Matty B\Documents\Uni_Y4\OneDrive - University of Leeds\Project\SeatReservationSystem\app\resources\views\rooms" />
       <recent name="C:\Users\Matty B\Documents\Uni_Y4\OneDrive - University of Leeds\Project\SeatReservationSystem\app\app\Http\Controllers" />
     </key>
   </component>
   <component name="RunManager">
+    <configuration default="true" type="ArquillianJUnit" factoryName="" nameIsGenerated="true">
+      <option name="arquillianRunConfiguration">
+        <value>
+          <option name="containerStateName" value="" />
+        </value>
+      </option>
+      <option name="TEST_OBJECT" value="class" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
     <configuration name="phpunit.xml" type="PHPUnitRunConfigurationType" factoryName="PHPUnit">
       <TestRunner scope="XML" />
       <method v="2" />
@@ -191,6 +206,15 @@
       <workItem from="1612277367697" duration="4216000" />
       <workItem from="1612341540979" duration="10352000" />
       <workItem from="1612361750392" duration="7384000" />
+      <workItem from="1612426612020" duration="5861000" />
+      <workItem from="1612441426985" duration="615000" />
+      <workItem from="1612513683068" duration="12648000" />
+      <workItem from="1612624826851" duration="704000" />
+      <workItem from="1612690556359" duration="277000" />
+      <workItem from="1612697075926" duration="12177000" />
+      <workItem from="1612714605820" duration="237000" />
+      <workItem from="1612714996730" duration="761000" />
+      <workItem from="1612716047767" duration="1269000" />
     </task>
     <servers />
   </component>
@@ -210,21 +234,30 @@
     <option name="oldMeFiltersMigrated" value="true" />
   </component>
   <component name="WindowStateProjectService">
-    <state x="1116" y="179" width="689" height="615" key="find.popup" timestamp="1612372493743">
+    <state x="777" y="454" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2" timestamp="1612701275634">
+      <screen x="0" y="0" width="1920" height="1080" />
+    </state>
+    <state x="777" y="454" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2/0.0.1920.1080/0.-1080.1920.1080@0.0.1920.1080" timestamp="1612701275634" />
+    <state x="493" y="398" width="689" height="682" key="find.popup" timestamp="1612716726975">
       <screen x="0" y="0" width="1920" height="1080" />
     </state>
     <state x="1116" y="172" width="689" height="592" key="find.popup/0.0.1920.1040/0.-1080.1920.1040@0.0.1920.1040" timestamp="1612279827229" />
-    <state x="1116" y="-901" width="689" height="615" key="find.popup/0.0.1920.1080/0.-1080.1920.1080@0.-1080.1920.1080" timestamp="1612363644525" />
-    <state x="1116" y="179" width="689" height="615" key="find.popup/0.0.1920.1080/0.-1080.1920.1080@0.0.1920.1080" timestamp="1612372493743" />
-    <state x="616" y="249" key="run.anything.popup" timestamp="1612375532902">
+    <state x="376" y="-615" width="689" height="615" key="find.popup/0.0.1920.1080/0.-1080.1920.1080@0.-1080.1920.1080" timestamp="1612712451972" />
+    <state x="493" y="398" width="689" height="682" key="find.popup/0.0.1920.1080/0.-1080.1920.1080@0.0.1920.1080" timestamp="1612716726975" />
+    <state x="616" y="249" key="run.anything.popup" timestamp="1612435051345">
       <screen x="0" y="0" width="1920" height="1080" />
     </state>
     <state x="616" y="240" key="run.anything.popup/0.0.1920.1040/0.-1080.1920.1040@0.0.1920.1040" timestamp="1612276777675" />
-    <state x="616" y="249" key="run.anything.popup/0.0.1920.1080/0.-1080.1920.1080@0.0.1920.1080" timestamp="1612375532902" />
-    <state x="623" y="234" width="672" height="705" key="search.everywhere.popup" timestamp="1612374786961">
-      <screen x="0" y="0" width="1920" height="1080" />
+    <state x="616" y="249" key="run.anything.popup/0.0.1920.1080/0.-1080.1920.1080@0.0.1920.1080" timestamp="1612435051345" />
+    <state x="512" y="-449" width="490" height="396" key="scopes" timestamp="1612712421568">
+      <screen x="0" y="-1080" width="1920" height="1080" />
+    </state>
+    <state x="512" y="-449" width="490" height="396" key="scopes/0.0.1920.1080/0.-1080.1920.1080@0.-1080.1920.1080" timestamp="1612712421568" />
+    <state x="623" y="-846" width="672" height="705" key="search.everywhere.popup" timestamp="1612712899055">
+      <screen x="0" y="-1080" width="1920" height="1080" />
     </state>
     <state x="623" y="225" width="672" height="678" key="search.everywhere.popup/0.0.1920.1040/0.-1080.1920.1040@0.0.1920.1040" timestamp="1612278900512" />
-    <state x="623" y="234" width="672" height="705" key="search.everywhere.popup/0.0.1920.1080/0.-1080.1920.1080@0.0.1920.1080" timestamp="1612374786961" />
+    <state x="623" y="-846" width="672" height="705" key="search.everywhere.popup/0.0.1920.1080/0.-1080.1920.1080@0.-1080.1920.1080" timestamp="1612712899055" />
+    <state x="623" y="234" width="672" height="705" key="search.everywhere.popup/0.0.1920.1080/0.-1080.1920.1080@0.0.1920.1080" timestamp="1612697907004" />
   </component>
 </project>

@@ -100,61 +100,65 @@ class RoomsController extends Controller
         return redirect('/rooms/edit');
     }
 
-    public function edit(Request $request)
+    public function selectEdit(Request $request)
     {
-        $value   = request("submit");
         $institute = $request->session()->get('institution_name');
-        $room = $request->session()->get('selected_room');
 
-        $seats = "";
-
-        if($value != null)
-        {
-            $request->session()->put('selected_room',$value);
-            return redirect(route('rooms.edit'));
-        }
-        elseif( $institute == null)
+        if( $institute == NULL)
         {
             return redirect('/institution');
         }
         else
         {
-            if($room == null)
-            {
-                $rooms  = Rooms::
-                where('institution_name',$institute)
-                    ->get();
+            $rooms = Rooms::
+            where('institution_name', $institute)
+                ->get();
+        }
+        return view('rooms.selectEdit', ['rooms'=>$rooms]);
+    }
 
-            }
-            else
-            {
-                $rooms  = Rooms::
+    public function edit(Request $request)
+    {
+        $value   = request("submit");
+
+        $institute = $request->session()->get('institution_name');
+        $room = $request->session()->get('selected_room');
+
+        $seats = "";
+
+        if($value != NULL)
+        {
+            $request->session()->put('selected_room',$value);
+            return redirect(route('rooms.edit'));
+        }
+        elseif( $institute == NULL)
+        {
+            return redirect('/institution');
+        }
+        elseif($room == NULL ) {
+
+            return redirect('/rooms/selectEdit');
+        }
+        else
+        {
+            $rooms  = Rooms::
                     where('institution_name',$institute)
                     ->where('room_name',$room)
                     ->first();
 
-                $seats = Workstation::
+            $seats = Workstation::
                     where('room_name',$room)
                     ->where('institution_name',$institute)
                     ->get();
-                foreach($seats as $seat)
-                {
-                    $inputBoxName = str_replace(' ','_', $seat->seat_name);
-                    $seat->seat_name = $inputBoxName;
-                }
-            }
+            foreach($seats as $seat)
+            {
+                $inputBoxName = str_replace(' ','_', $seat->seat_name);
+                $seat->seat_name = $inputBoxName;
+            };
         }
 
 
-        if($room == "[]")
-        {
-            return view('rooms.edit', ['seats'=>$seats]);
-
-        }
-        else
-        {
-            return view('rooms.edit', ['seats'=>$seats],['rooms'=>$rooms]);
-        }
+        return view('rooms.edit', ['seats'=>$seats],['rooms'=>$rooms]);
     }
 
     public function saveEdit(Request $request)
