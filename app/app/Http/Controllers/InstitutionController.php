@@ -58,6 +58,8 @@ class InstitutionController extends Controller
                                     Rule::unique('Institutions')->where('institution_name', $institute)
                                     ],
             'access_code' => 'required|max:15|min:5',
+            'start_time' => 'required',
+            'interval_time' => 'required',
         ];
 
 
@@ -78,6 +80,14 @@ class InstitutionController extends Controller
         $institution->institution_name = $institute;
         $institution->access_code = $access_code_hashed;
 
+        $input_sTime = request('start_time');
+        $input_inTime = request('interval_time'); //60 seconds per minute
+
+        $converted_start = ($input_sTime); //60 seconds per minute
+        $converted_interval = ($input_inTime);
+
+        $institution->start_time = $converted_start;
+        $institution->interval_time = $converted_interval;
 
         $institution->save();
 

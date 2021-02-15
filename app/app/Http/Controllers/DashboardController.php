@@ -41,6 +41,8 @@ class DashboardController extends Controller
 
         return view('dashboard', ['booking' => $booking, 'institutes'=>$institutes_all, 'upcoming_bookings'=>$upcoming_bookings]);
     }
-
+    public function sandbox(){
+        return view('sandbox');
+    }
 
 }

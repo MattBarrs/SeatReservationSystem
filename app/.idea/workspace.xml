@@ -36,6 +36,9 @@
   <component name="NamedScopeManager">
     <scope name="blade" pattern="" />
   </component>
+  <component name="PackageJsonUpdateNotifier">
+    <dismissed value="$PROJECT_DIR$/package.json" />
+  </component>
   <component name="PhpWorkspaceProjectConfiguration">
     <include_path>
       <path value="$PROJECT_DIR$/vendor/symfony/service-contracts" />
@@ -155,6 +158,7 @@
       <path value="$PROJECT_DIR$/vendor/symfony/polyfill-ctype" />
       <path value="$PROJECT_DIR$/vendor/phpoption/phpoption" />
       <path value="$PROJECT_DIR$/vendor/webmozart/assert" />
+      <path value="$PROJECT_DIR$/vendor/laravel/ui" />
     </include_path>
   </component>
   <component name="ProjectId" id="1nvPcwQRPcFhZEyZCO97VlA9ig5" />
@@ -167,11 +171,12 @@
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/resources/views/rooms" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/resources/views" />
     <property name="nodejs_package_manager_path" value="npm" />
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\Matty B\Documents\Uni_Y4\OneDrive - University of Leeds\Project\SeatReservationSystem\app\resources\views" />
       <recent name="C:\Users\Matty B\Documents\Uni_Y4\OneDrive - University of Leeds\Project\SeatReservationSystem\app\resources\views\rooms" />
       <recent name="C:\Users\Matty B\Documents\Uni_Y4\OneDrive - University of Leeds\Project\SeatReservationSystem\app\app\Http\Controllers" />
     </key>
@@ -215,6 +220,16 @@
       <workItem from="1612714605820" duration="237000" />
       <workItem from="1612714996730" duration="761000" />
       <workItem from="1612716047767" duration="1269000" />
+      <workItem from="1612857003182" duration="6086000" />
+      <workItem from="1612880775907" duration="2445000" />
+      <workItem from="1613119493496" duration="2121000" />
+      <workItem from="1613209468774" duration="1275000" />
+      <workItem from="1613318237049" duration="1000" />
+      <workItem from="1613318940874" duration="613000" />
+      <workItem from="1613388731241" duration="1188000" />
+      <workItem from="1613392433960" duration="2000" />
+      <workItem from="1613397546350" duration="595000" />
+      <workItem from="1613405552196" duration="4961000" />
     </task>
     <servers />
   </component>
@@ -234,16 +249,32 @@
     <option name="oldMeFiltersMigrated" value="true" />
   </component>
   <component name="WindowStateProjectService">
+    <state width="1076" height="295" key="GridCell.Tab.0.bottom" timestamp="1613412411147">
+      <screen x="0" y="0" width="1920" height="1080" />
+    </state>
+    <state width="1076" height="295" key="GridCell.Tab.0.bottom/0.0.1920.1080/543.-1024.1280.1024@0.0.1920.1080" timestamp="1613412411147" />
+    <state width="1076" height="295" key="GridCell.Tab.0.center" timestamp="1613412411147">
+      <screen x="0" y="0" width="1920" height="1080" />
+    </state>
+    <state width="1076" height="295" key="GridCell.Tab.0.center/0.0.1920.1080/543.-1024.1280.1024@0.0.1920.1080" timestamp="1613412411147" />
+    <state width="1076" height="295" key="GridCell.Tab.0.left" timestamp="1613412411147">
+      <screen x="0" y="0" width="1920" height="1080" />
+    </state>
+    <state width="1076" height="295" key="GridCell.Tab.0.left/0.0.1920.1080/543.-1024.1280.1024@0.0.1920.1080" timestamp="1613412411147" />
+    <state width="1076" height="295" key="GridCell.Tab.0.right" timestamp="1613412411147">
+      <screen x="0" y="0" width="1920" height="1080" />
+    </state>
+    <state width="1076" height="295" key="GridCell.Tab.0.right/0.0.1920.1080/543.-1024.1280.1024@0.0.1920.1080" timestamp="1613412411147" />
     <state x="777" y="454" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2" timestamp="1612701275634">
       <screen x="0" y="0" width="1920" height="1080" />
     </state>
     <state x="777" y="454" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2/0.0.1920.1080/0.-1080.1920.1080@0.0.1920.1080" timestamp="1612701275634" />
-    <state x="493" y="398" width="689" height="682" key="find.popup" timestamp="1612716726975">
+    <state x="613" y="342" width="689" height="682" key="find.popup" timestamp="1612864271460">
       <screen x="0" y="0" width="1920" height="1080" />
     </state>
     <state x="1116" y="172" width="689" height="592" key="find.popup/0.0.1920.1040/0.-1080.1920.1040@0.0.1920.1040" timestamp="1612279827229" />
     <state x="376" y="-615" width="689" height="615" key="find.popup/0.0.1920.1080/0.-1080.1920.1080@0.-1080.1920.1080" timestamp="1612712451972" />
-    <state x="493" y="398" width="689" height="682" key="find.popup/0.0.1920.1080/0.-1080.1920.1080@0.0.1920.1080" timestamp="1612716726975" />
+    <state x="613" y="342" width="689" height="682" key="find.popup/0.0.1920.1080/0.-1080.1920.1080@0.0.1920.1080" timestamp="1612864271460" />
     <state x="616" y="249" key="run.anything.popup" timestamp="1612435051345">
       <screen x="0" y="0" width="1920" height="1080" />
     </state>

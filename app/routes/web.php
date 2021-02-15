@@ -54,4 +54,4 @@ Route::delete('/rooms/edit/{seat_name}', [BookingsController::class,'destroy'])-
 Route::get('/rooms/{room_name}', [RoomsController::class,'show'])->name('rooms.show')->middleware('auth');
 Route::delete('/rooms/{room_name}', [RoomsController::class,'destroy'])->name('rooms.delete')->middleware('auth');
 
-
+Route::get('sandbox', [DashboardController::class, 'sandbox'])->name('sandbox')->middleware('auth');
