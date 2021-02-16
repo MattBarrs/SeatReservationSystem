@@ -10,7 +10,11 @@
 
             <div class="wrapper create-booking" style="width:80%;">
                 <div class="title">Canvas Sandbox</div>
-
+                Test 1
+                <example-component>
+                    Test 2
+                </example-component>
+                Test 3
             </div>
         </div>
     </div>
