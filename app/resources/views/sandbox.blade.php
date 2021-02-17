@@ -1,4 +1,5 @@
 <x-app-layout>
+    <script defer src="{{ mix('js/app.js') }}"></script>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
             {{ __('Create New Booking') }}
@@ -10,14 +11,12 @@
 
             <div class="wrapper create-booking" style="width:80%;">
                 <div class="title">Canvas Sandbox</div>
-                Test 1
+                < Before JS >
                 <example-component>
-                    Test 2
                 </example-component>
-                Test 3
+                < After JS >
             </div>
         </div>
     </div>
 </x-app-layout>
-
 

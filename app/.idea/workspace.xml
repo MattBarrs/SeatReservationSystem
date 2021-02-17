@@ -183,17 +183,6 @@
     </key>
   </component>
   <component name="RunManager">
-    <configuration default="true" type="ArquillianJUnit" factoryName="" nameIsGenerated="true">
-      <option name="arquillianRunConfiguration">
-        <value>
-          <option name="containerStateName" value="" />
-        </value>
-      </option>
-      <option name="TEST_OBJECT" value="class" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
     <configuration name="phpunit.xml" type="PHPUnitRunConfigurationType" factoryName="PHPUnit">
       <TestRunner scope="XML" />
       <method v="2" />
@@ -231,6 +220,7 @@
       <workItem from="1613392433960" duration="2000" />
       <workItem from="1613397546350" duration="595000" />
       <workItem from="1613405552196" duration="4961000" />
+      <workItem from="1613557673376" duration="1322000" />
     </task>
     <servers />
   </component>
@@ -285,11 +275,12 @@
       <screen x="0" y="-1080" width="1920" height="1080" />
     </state>
     <state x="512" y="-449" width="490" height="396" key="scopes/0.0.1920.1080/0.-1080.1920.1080@0.-1080.1920.1080" timestamp="1612712421568" />
-    <state x="623" y="-846" width="672" height="705" key="search.everywhere.popup" timestamp="1612712899055">
-      <screen x="0" y="-1080" width="1920" height="1080" />
+    <state x="623" y="234" width="672" height="705" key="search.everywhere.popup" timestamp="1613557977236">
+      <screen x="0" y="0" width="1920" height="1080" />
     </state>
     <state x="623" y="225" width="672" height="678" key="search.everywhere.popup/0.0.1920.1040/0.-1080.1920.1040@0.0.1920.1040" timestamp="1612278900512" />
     <state x="623" y="-846" width="672" height="705" key="search.everywhere.popup/0.0.1920.1080/0.-1080.1920.1080@0.-1080.1920.1080" timestamp="1612712899055" />
     <state x="623" y="234" width="672" height="705" key="search.everywhere.popup/0.0.1920.1080/0.-1080.1920.1080@0.0.1920.1080" timestamp="1612697907004" />
+    <state x="623" y="234" width="672" height="705" key="search.everywhere.popup/0.0.1920.1080/629.-1024.1280.1024@0.0.1920.1080" timestamp="1613557977236" />
   </component>
 </project>
