@@ -28,7 +28,7 @@
                             @endforeach
                         </select>
                         <br/>
-                        <label for ="access_code"">
+                        <label for ="access_code">
                             Access Code
                             <div class="tooltip"style="max-width: 20px;max-height: 20px;"> <img src="img/question.png">
                                 <span class="tooltiptext">

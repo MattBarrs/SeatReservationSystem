@@ -37,7 +37,7 @@
 
 
                     <label for ="start_time">Start Time
-                    <div class="tooltip"style="max-width: 20px;max-height: 20px;"> <img src="../img/question.png">
+                    <div class="tooltip"style=""> <img src="../img/question.png">
                         <span class="tooltiptext">
                                     Start time is when your bookings start.
                                     <br/>
@@ -49,8 +49,12 @@
                         </span>
                     </div>
                     </label>
-                    <input type="number" name="start_time" id="start_time" value="{{ old('start_time') }}" min="0" max="3600" step="60">
-
+                    <input v-model="startTimeInput" v-on:change="timeConvert()" type="number" name="start_time" id="start_time" value="{{ old('start_time') }}" min="0" max="3540" step="60">
+                    <br/>
+                    <div class = "inline">
+                        <span v-html="startTimeMinutes" class="inline"></span>
+                        <p class="inline">  Minutes Past The Hour</p>
+                    </div>
 
                     @foreach ($errors->get('start_time') as $message)
                     <div class="alert alert-danger">
@@ -75,7 +79,13 @@
                         </div>
                     </label>
 
-                    <input type="number" name="interval_time" id="interval_time" value="{{ old('interval_time') }}" min="300" max="3600" step="300">
+                    <input v-model="intervalTimeInput" v-on:change="timeConvert(interval_time)" type="number" name="interval_time" id="interval_time" value="{{ old('interval_time') }}" min="300" max="3540" step="300">
+
+                    <br/>
+                    <div class="inline">
+                       <span v-html="intervalTimeMinutes" class="inline" ></span><p class="inline"> Minute Divisions</p>
+                    </div>
+
                     @foreach ($errors->get('interval_time') as $message)
                         <div class="alert alert-danger">
                             <ul>

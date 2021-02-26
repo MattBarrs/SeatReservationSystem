@@ -9,17 +9,22 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Carbon\Carbon;
 
-
+#controller for the main page - known as  dashboard
 class DashboardController extends Controller
 {
+
     public function show()
     {
+        #get user ID
         $userId = Auth::id();
+
+        #find their latest booking
         $user_booking = User_Booking::
                 where('user_id',$userId)
                 ->orderby('created_at','desc')
                 ->first();
 
+        #find up to 5 bookings after current day
         $upcoming_bookings = User_Booking::
                 join('bookings','bookings.id','=','user_Bookings.id')
                 ->where('user_id',$userId)
@@ -27,20 +32,25 @@ class DashboardController extends Controller
                 ->take(5)
                 ->get();
 
+        #if the user has a booking
         if($user_booking != "")
         {
             $bookingID = $user_booking->id;
             $booking = Bookings::where('id', $bookingID)->first();
         }
+        #if user has no bookings
         else
         {
             $booking = "";
             $upcoming_bookings = "";
         }
+
+        #return list of available institutions
         $institutes_all = Institution::select('institution_name')->orderBy('institution_name','ASC')->get();
 
         return view('dashboard', ['booking' => $booking, 'institutes'=>$institutes_all, 'upcoming_bookings'=>$upcoming_bookings]);
     }
+
     public function sandbox(){
         return view('sandbox');
     }

@@ -171,12 +171,13 @@
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/resources/views" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../../../Web Computing/cwk_01" />
     <property name="nodejs_package_manager_path" value="npm" />
     <property name="ts.external.directory.path" value="C:\Program Files\JetBrains\IntelliJ IDEA 2020.2.2\plugins\JavaScriptLanguage\jsLanguageServicesImpl\external" />
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\Matty B\Documents\Uni_Y4\OneDrive - University of Leeds\Project\SeatReservationSystem\app\resources\js\components" />
       <recent name="C:\Users\Matty B\Documents\Uni_Y4\OneDrive - University of Leeds\Project\SeatReservationSystem\app\resources\views" />
       <recent name="C:\Users\Matty B\Documents\Uni_Y4\OneDrive - University of Leeds\Project\SeatReservationSystem\app\resources\views\rooms" />
       <recent name="C:\Users\Matty B\Documents\Uni_Y4\OneDrive - University of Leeds\Project\SeatReservationSystem\app\app\Http\Controllers" />
@@ -220,7 +221,12 @@
       <workItem from="1613392433960" duration="2000" />
       <workItem from="1613397546350" duration="595000" />
       <workItem from="1613405552196" duration="4961000" />
-      <workItem from="1613557673376" duration="1322000" />
+      <workItem from="1613557673376" duration="2535000" />
+      <workItem from="1613566606433" duration="9559000" />
+      <workItem from="1613640373529" duration="1303000" />
+      <workItem from="1613750020682" duration="195000" />
+      <workItem from="1613901829705" duration="43000" />
+      <workItem from="1613923361370" duration="17000" />
     </task>
     <servers />
   </component>
@@ -240,6 +246,15 @@
     <option name="oldMeFiltersMigrated" value="true" />
   </component>
   <component name="WindowStateProjectService">
+    <state x="1089" y="-752" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog" timestamp="1613641595995">
+      <screen x="629" y="-1024" width="1280" height="1024" />
+    </state>
+    <state x="690" y="287" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog/0.0.1920.1080/629.-1024.1280.1024@0.0.1920.1080" timestamp="1613568936800" />
+    <state x="1089" y="-752" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog/0.0.1920.1080/629.-1024.1280.1024@629.-1024.1280.1024" timestamp="1613641595995" />
+    <state x="1228" y="-757" key="FileChooserDialogImpl" timestamp="1613923376939">
+      <screen x="808" y="-1024" width="1280" height="1024" />
+    </state>
+    <state x="1228" y="-757" key="FileChooserDialogImpl/0.0.1920.1080/808.-1024.1280.1024@808.-1024.1280.1024" timestamp="1613923376939" />
     <state width="1076" height="295" key="GridCell.Tab.0.bottom" timestamp="1613412411147">
       <screen x="0" y="0" width="1920" height="1080" />
     </state>
@@ -260,12 +275,14 @@
       <screen x="0" y="0" width="1920" height="1080" />
     </state>
     <state x="777" y="454" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2/0.0.1920.1080/0.-1080.1920.1080@0.0.1920.1080" timestamp="1612701275634" />
-    <state x="613" y="342" width="689" height="682" key="find.popup" timestamp="1612864271460">
-      <screen x="0" y="0" width="1920" height="1080" />
+    <state x="1038" y="-700" width="555" height="647" key="find.popup" timestamp="1613641647546">
+      <screen x="629" y="-1024" width="1280" height="1024" />
     </state>
     <state x="1116" y="172" width="689" height="592" key="find.popup/0.0.1920.1040/0.-1080.1920.1040@0.0.1920.1040" timestamp="1612279827229" />
     <state x="376" y="-615" width="689" height="615" key="find.popup/0.0.1920.1080/0.-1080.1920.1080@0.-1080.1920.1080" timestamp="1612712451972" />
     <state x="613" y="342" width="689" height="682" key="find.popup/0.0.1920.1080/0.-1080.1920.1080@0.0.1920.1080" timestamp="1612864271460" />
+    <state x="613" y="342" width="689" height="682" key="find.popup/0.0.1920.1080/629.-1024.1280.1024@0.0.1920.1080" timestamp="1613571508612" />
+    <state x="1038" y="-700" width="555" height="647" key="find.popup/0.0.1920.1080/629.-1024.1280.1024@629.-1024.1280.1024" timestamp="1613641647546" />
     <state x="616" y="249" key="run.anything.popup" timestamp="1612435051345">
       <screen x="0" y="0" width="1920" height="1080" />
     </state>
