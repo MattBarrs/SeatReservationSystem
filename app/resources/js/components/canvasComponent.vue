@@ -1,7 +1,7 @@
 
 <template>
     <div>
-
+        <vue-slider v-model="radius"/>
 
         X:{{x}},Y:{{y}}
         <canvas id="canvas"  height="600"width="800" @mousemove="showCoordinates" @mousedown="drawCircle" style="border: 1px solid grey;">
@@ -11,12 +11,18 @@
 </template>
 
 <script>
-    module.exports={
+    import VueSlider from 'vue-slider-component'
+    import 'vue-slider-component/theme/antd.css'
+
+    export default{
+        components:{
+            VueSlider
+        },
 
         mounted(){
             var c = document.getElementById("canvas");
-            this.canvas = c.getContext('2d');
             const contextCanvas = c.getContext('2d');
+
             const img = new Image();
             img.src = "./img/default_floorplan.jpg"
             img.onload = () =>{
@@ -28,7 +34,8 @@
             return{
                 x:10,
                 y:11,
-                greeting: 'hello'
+                greeting: 'hello',
+                radius:10
                 }
             },
         methods:{
@@ -40,7 +47,7 @@
                     var c = document.getElementById("canvas");
                     var ctx = c.getContext("2d");
                     ctx.beginPath();
-                    ctx.arc( e.offsetX,  e.offsetY, 50, 0, 2 * Math.PI);
+                    ctx.arc( e.offsetX,  e.offsetY, this.radius, 0, 2 * Math.PI);
                     ctx.stroke();
                 }
             }
