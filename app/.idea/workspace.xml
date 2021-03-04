@@ -171,7 +171,14 @@
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/../../../Web Computing/cwk_01" />
+    <property name="jsx.switch.disabled" value="true" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/resources/js/components" />
+    <property name="node.js.detected.package.eslint" value="true" />
+    <property name="node.js.detected.package.tslint" value="true" />
+    <property name="node.js.path.for.package.eslint" value="project" />
+    <property name="node.js.path.for.package.tslint" value="project" />
+    <property name="node.js.selected.package.eslint" value="(autodetect)" />
+    <property name="node.js.selected.package.tslint" value="(autodetect)" />
     <property name="nodejs_package_manager_path" value="npm" />
     <property name="ts.external.directory.path" value="C:\Program Files\JetBrains\IntelliJ IDEA 2020.2.2\plugins\JavaScriptLanguage\jsLanguageServicesImpl\external" />
   </component>
@@ -184,6 +191,17 @@
     </key>
   </component>
   <component name="RunManager">
+    <configuration default="true" type="ArquillianJUnit" factoryName="" nameIsGenerated="true">
+      <option name="arquillianRunConfiguration">
+        <value>
+          <option name="containerStateName" value="" />
+        </value>
+      </option>
+      <option name="TEST_OBJECT" value="class" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
     <configuration name="phpunit.xml" type="PHPUnitRunConfigurationType" factoryName="PHPUnit">
       <TestRunner scope="XML" />
       <method v="2" />
@@ -227,6 +245,8 @@
       <workItem from="1613750020682" duration="195000" />
       <workItem from="1613901829705" duration="43000" />
       <workItem from="1613923361370" duration="17000" />
+      <workItem from="1614781886055" duration="1720000" />
+      <workItem from="1614861784281" duration="13616000" />
     </task>
     <servers />
   </component>
@@ -246,11 +266,12 @@
     <option name="oldMeFiltersMigrated" value="true" />
   </component>
   <component name="WindowStateProjectService">
-    <state x="1089" y="-752" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog" timestamp="1613641595995">
-      <screen x="629" y="-1024" width="1280" height="1024" />
+    <state x="690" y="287" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog" timestamp="1614871500326">
+      <screen x="0" y="0" width="1920" height="1080" />
     </state>
     <state x="690" y="287" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog/0.0.1920.1080/629.-1024.1280.1024@0.0.1920.1080" timestamp="1613568936800" />
     <state x="1089" y="-752" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog/0.0.1920.1080/629.-1024.1280.1024@629.-1024.1280.1024" timestamp="1613641595995" />
+    <state x="690" y="287" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog/0.0.1920.1080/770.-1024.1280.1024@0.0.1920.1080" timestamp="1614871500326" />
     <state x="1228" y="-757" key="FileChooserDialogImpl" timestamp="1613923376939">
       <screen x="808" y="-1024" width="1280" height="1024" />
     </state>
@@ -275,19 +296,21 @@
       <screen x="0" y="0" width="1920" height="1080" />
     </state>
     <state x="777" y="454" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2/0.0.1920.1080/0.-1080.1920.1080@0.0.1920.1080" timestamp="1612701275634" />
-    <state x="1038" y="-700" width="555" height="647" key="find.popup" timestamp="1613641647546">
-      <screen x="629" y="-1024" width="1280" height="1024" />
+    <state x="613" y="342" width="689" height="682" key="find.popup" timestamp="1614879753855">
+      <screen x="0" y="0" width="1920" height="1080" />
     </state>
     <state x="1116" y="172" width="689" height="592" key="find.popup/0.0.1920.1040/0.-1080.1920.1040@0.0.1920.1040" timestamp="1612279827229" />
     <state x="376" y="-615" width="689" height="615" key="find.popup/0.0.1920.1080/0.-1080.1920.1080@0.-1080.1920.1080" timestamp="1612712451972" />
     <state x="613" y="342" width="689" height="682" key="find.popup/0.0.1920.1080/0.-1080.1920.1080@0.0.1920.1080" timestamp="1612864271460" />
-    <state x="613" y="342" width="689" height="682" key="find.popup/0.0.1920.1080/629.-1024.1280.1024@0.0.1920.1080" timestamp="1613571508612" />
+    <state x="613" y="342" width="689" height="682" key="find.popup/0.0.1920.1080/629.-1024.1280.1024@0.0.1920.1080" timestamp="1614879753855" />
     <state x="1038" y="-700" width="555" height="647" key="find.popup/0.0.1920.1080/629.-1024.1280.1024@629.-1024.1280.1024" timestamp="1613641647546" />
-    <state x="616" y="249" key="run.anything.popup" timestamp="1612435051345">
+    <state x="614" y="342" width="833" height="683" key="find.popup/0.0.1920.1080/770.-1024.1280.1024@0.0.1920.1080" timestamp="1614872986330" />
+    <state x="616" y="249" key="run.anything.popup" timestamp="1614870116558">
       <screen x="0" y="0" width="1920" height="1080" />
     </state>
     <state x="616" y="240" key="run.anything.popup/0.0.1920.1040/0.-1080.1920.1040@0.0.1920.1040" timestamp="1612276777675" />
     <state x="616" y="249" key="run.anything.popup/0.0.1920.1080/0.-1080.1920.1080@0.0.1920.1080" timestamp="1612435051345" />
+    <state x="616" y="249" key="run.anything.popup/0.0.1920.1080/770.-1024.1280.1024@0.0.1920.1080" timestamp="1614870116558" />
     <state x="512" y="-449" width="490" height="396" key="scopes" timestamp="1612712421568">
       <screen x="0" y="-1080" width="1920" height="1080" />
     </state>

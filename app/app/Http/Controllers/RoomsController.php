@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Bookings;
+use App\Models\User_Booking;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
 use App\Models\Rooms;
@@ -139,12 +141,11 @@ class RoomsController extends Controller
             $request->session()->put('selected_room',$value);
             return redirect(route('rooms.edit'));
         }
-        elseif( $institute == NULL)
+        elseif( $institute == "")
         {
             return redirect('/institution');
         }
-        elseif($room == NULL ) {
-
+        elseif($room == "" ) {
             return redirect('/rooms/selectEdit');
         }
         else
@@ -224,10 +225,44 @@ class RoomsController extends Controller
         return redirect(route('rooms.edit'));
     }
 
-    public function destroy($id){
-        #delete a room
-        $room = Rooms::findOrFail($id);
+    #delete a room
+    public function destroy($room_name,Request $request){
+        $institute = $request->session()->get('institution_name');
+
+        $room = Rooms::
+            where('room_name',$room_name)
+            ->where('institution_name',$institute);
+
+        $bookings = Bookings::
+            where('room_name',$room_name)
+            ->where('institution_name',$institute);
+
+
+
+        $workstations = Workstation::
+            where('room_name',$room_name)
+            ->where('institution_name',$institute);
+
+        $user_bookingsSearch = Bookings::
+        where('room_name',$room_name)
+            ->where('institution_name',$institute)
+            ->get();
+
+        foreach($user_bookingsSearch as $booking)
+        {
+            $user_bookings = User_Booking::
+                where('id',$booking->id);
+            $user_bookings->delete();
+        }
+
+        $workstations->delete();
+        $bookings->delete();
         $room->delete();
+
+        #blank the session data
+        $request->session()->put('selected_room', "");
+        $request->session()->put('open_time',"");
+        $request->session()->put('close_time',"");
 
         return redirect(route('rooms.index'));
     }

@@ -25,7 +25,7 @@
                     <form action="{{ route('bookings.delete', $Booking->id) }}" method="POST">
                         @csrf
                         @method('DELETE')
-                        <button class="clickable">Delete Booking</button>
+                        <button class="redButton">Delete Booking</button>
                     </form>
                 </div>
                 <br/><br/>

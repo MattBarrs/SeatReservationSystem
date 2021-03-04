@@ -1,3 +1,6 @@
+
+
+
 /******/ (function(modules) { // webpackBootstrap
     /******/ 	// The module cache
     /******/ 	var installedModules = {};
@@ -21334,6 +21337,8 @@ window.Vue = require('vue').default;
 // const files = require.context('./', true, /\.vue$/i)
 // files.keys().map(key => Vue.component(key.split('/').pop().split('.')[0], files(key).default))
 
+
+Vue.component('fabric-component',require('./components/fabricComponent.vue').default);
 Vue.component('example-component', require('./components/ExampleComponent.vue').default);
 Vue.component('time_converter-component', require('./components/startTimeConverter.vue').default);
 Vue.component('canvas-component', require('./components/canvasComponent.vue').default);

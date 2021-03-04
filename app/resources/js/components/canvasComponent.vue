@@ -26,7 +26,7 @@
             const img = new Image();
             img.src = "./img/default_floorplan.jpg"
             img.onload = () =>{
-                contextCanvas.drawImage(img,0,0,800,600)
+                contextCanvas.drawImage(img,0,0,900,700)
             }
         },
 
@@ -34,7 +34,6 @@
             return{
                 x:10,
                 y:11,
-                greeting: 'hello',
                 radius:10
                 }
             },

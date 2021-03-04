@@ -12,8 +12,8 @@
                 <br/>< Before JS><br/>
 
                 <br/>
-
-                <canvas-component></canvas-component>
+<!--                <canvas-component></canvas-component>-->
+                <fabric-component></fabric-component>
                 <br/>< After JS ><br/>
 
         </div>

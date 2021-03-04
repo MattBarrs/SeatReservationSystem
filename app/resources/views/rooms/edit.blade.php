@@ -64,6 +64,12 @@
                                         <br/>
                                         <input type="submit" value="Submit" class="clickable">
                                     </form>
+                                    <br/><br/>
+                                    <form action="{{ route('rooms.delete', $rooms->room_name)}}" method="POST">
+                                        @csrf
+                                        @method('DELETE')
+                                        <button class="redButton">Delete Room</button>
+                                    </form>
                                 </div>
                             </div>
                     </div>
