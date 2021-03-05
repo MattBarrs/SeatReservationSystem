@@ -191,13 +191,15 @@
     </key>
   </component>
   <component name="RunManager">
-    <configuration default="true" type="ArquillianJUnit" factoryName="" nameIsGenerated="true">
+    <configuration default="true" type="ArquillianTestNG" factoryName="" nameIsGenerated="true">
       <option name="arquillianRunConfiguration">
         <value>
           <option name="containerStateName" value="" />
         </value>
       </option>
-      <option name="TEST_OBJECT" value="class" />
+      <option name="TEST_OBJECT" value="CLASS" />
+      <properties />
+      <listeners />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
@@ -247,6 +249,7 @@
       <workItem from="1613923361370" duration="17000" />
       <workItem from="1614781886055" duration="1720000" />
       <workItem from="1614861784281" duration="13616000" />
+      <workItem from="1614931496942" duration="11882000" />
     </task>
     <servers />
   </component>
@@ -315,12 +318,13 @@
       <screen x="0" y="-1080" width="1920" height="1080" />
     </state>
     <state x="512" y="-449" width="490" height="396" key="scopes/0.0.1920.1080/0.-1080.1920.1080@0.-1080.1920.1080" timestamp="1612712421568" />
-    <state x="623" y="234" width="672" height="705" key="search.everywhere.popup" timestamp="1613557977236">
-      <screen x="0" y="0" width="1920" height="1080" />
+    <state x="1146" y="-802" width="672" height="669" key="search.everywhere.popup" timestamp="1614955257283">
+      <screen x="731" y="-1024" width="1280" height="1024" />
     </state>
     <state x="623" y="225" width="672" height="678" key="search.everywhere.popup/0.0.1920.1040/0.-1080.1920.1040@0.0.1920.1040" timestamp="1612278900512" />
     <state x="623" y="-846" width="672" height="705" key="search.everywhere.popup/0.0.1920.1080/0.-1080.1920.1080@0.-1080.1920.1080" timestamp="1612712899055" />
     <state x="623" y="234" width="672" height="705" key="search.everywhere.popup/0.0.1920.1080/0.-1080.1920.1080@0.0.1920.1080" timestamp="1612697907004" />
     <state x="623" y="234" width="672" height="705" key="search.everywhere.popup/0.0.1920.1080/629.-1024.1280.1024@0.0.1920.1080" timestamp="1613557977236" />
+    <state x="1146" y="-802" width="672" height="669" key="search.everywhere.popup/0.0.1920.1080/731.-1024.1280.1024@731.-1024.1280.1024" timestamp="1614955257283" />
   </component>
 </project>

@@ -1979,6 +1979,12 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
 
 
 
@@ -1988,9 +1994,14 @@ __webpack_require__.r(__webpack_exports__);
   },
   mounted: function mounted() {
     var ref = this.$refs.can;
-    var canvas = new fabric__WEBPACK_IMPORTED_MODULE_0__.fabric.Canvas(ref); // Define the URL where your background image is located
+    var canvas = new fabric__WEBPACK_IMPORTED_MODULE_0__.fabric.Canvas(ref);
+    canvas.setBackgroundImage('../img/default_floorplan.jpg', canvas.renderAll.bind(canvas));
 
-    var imageUrl = "./img/default_floorplan.jpg"; // // Define
+    var $ = function $(id) {
+      return document.getElementById(id);
+    };
+
+    fabric__WEBPACK_IMPORTED_MODULE_0__.fabric.Object.prototype.transparentCorners = false; // // Define
     // canvas.setBackgroundImage(imageUrl, canvas.renderAll.bind(canvas), {
     //     // Optionally add an opacity lvl to the image
     //     backgroundImageOpacity: 1,
@@ -1999,13 +2010,46 @@ __webpack_require__.r(__webpack_exports__);
     //     height: 600,
     //     width: 800,
     // });
+    // fabric.Image.fromURL(imageUrl, function(img){
+    //     img.scaleToHeight(canvas.height);
+    //     img.scaleToWidth(canvas.width);
+    //     canvas.setBackgroundImage(img);
+    //     canvas.requestRenderAll();
+    // });
+    //////////Draw Shapes
 
-    fabric__WEBPACK_IMPORTED_MODULE_0__.fabric.Image.fromURL(imageUrl, function (img) {
-      img.scaleToHeight(canvas.height);
-      img.scaleToWidth(canvas.width);
-      canvas.setBackgroundImage(img);
-      canvas.requestRenderAll();
-    }); // const rect = new fabric.Rect({
+    var circle = new fabric__WEBPACK_IMPORTED_MODULE_0__.fabric.Circle({
+      radius: 50,
+      left: 275,
+      top: 75,
+      fill: '#aac'
+    }); // var rect = new fabric.Rect({
+    //     width: 100,
+    //     height: 100,
+    //     top: 100,
+    //     left: 100,
+    //     fill: 'rgba(0,0,255,1)'
+    // });
+    // canvas.add(rect);
+    // rect.hasControls = false;
+
+    canvas.add(circle);
+    circle.hasControls = false;
+    var circle2 = new fabric__WEBPACK_IMPORTED_MODULE_0__.fabric.Circle({
+      radius: 50,
+      left: 275,
+      top: 75,
+      fill: '#aac'
+    });
+    canvas.add(circle2);
+    circle2.hasControls = false; // var rect1 = new fabric.Rect({
+    //     width: 100,
+    //     height: 100,
+    //     top: 100,
+    //     left: 100,
+    //     fill: 'rgba(0,0,255,1)'
+    // });
+    // const rect = new fabric.Rect({
     //     fill: 'red',
     //     width: 20,
     //     height: 20
@@ -2020,23 +2064,32 @@ __webpack_require__.r(__webpack_exports__);
     // });
     //
     // canvas.add(circle, triangle);
+    // canvas.add(rect1);
+    // rect1.hasControls = false;
 
-    var $ = function $(id) {
-      return document.getElementById(id);
+    var seatCounter = 2;
+    var scaleControl = $('scale-control');
+
+    scaleControl.oninput = function (options) {
+      var objects = canvas.getObjects();
+
+      for (var i in objects) {
+        objects[i].scaleX = this.value;
+        objects[i].scaleY = this.value;
+      }
+
+      canvas.requestRenderAll();
     };
 
-    fabric__WEBPACK_IMPORTED_MODULE_0__.fabric.Object.prototype.transparentCorners = false;
-    var seatCounter = 0;
-
     addmore.onclick = function () {
-      var red = new fabric__WEBPACK_IMPORTED_MODULE_0__.fabric.Rect({
-        top: 100,
-        left: 0,
-        width: 50,
-        height: 50,
-        fill: 'blue'
+      var seat = new fabric__WEBPACK_IMPORTED_MODULE_0__.fabric.Circle({
+        radius: 50,
+        left: 275,
+        top: 75,
+        fill: '#aac'
       });
-      canvas.add(red);
+      canvas.add(seat);
+      seat.hasControls = false;
       seatCounter = seatCounter + 1;
     };
 
@@ -2079,19 +2132,62 @@ __webpack_require__.r(__webpack_exports__);
       canvas.requestRenderAll();
     };
 
-    var scaleControl = $('scale-control');
+    function updateControls() {// scaleControl.value = rect.scaleX;
+    }
 
-    scaleControl.oninput = function () {
-      rect.scale(parseFloat(this.value)).setCoords();
-      canvas.requestRenderAll();
-    };
+    canvas.on('mouse:wheel', function (opt) {
+      var delta = opt.e.deltaY;
+      var zoom = canvas.getZoom();
+      zoom *= Math.pow(0.999, delta);
+      if (zoom > 20) zoom = 20;
+      if (zoom < 0.5) zoom = 0.5;
+      canvas.zoomToPoint({
+        x: opt.e.offsetX,
+        y: opt.e.offsetY
+      }, zoom);
+      opt.e.preventDefault();
+      opt.e.stopPropagation();
+    });
+    canvas.on('mouse:down', function (opt) {
+      var evt = opt.e;
 
-    function updateControls() {
-      scaleControl.value = rect.scaleX;
+      if (evt.altKey === true) {
+        this.isDragging = true;
+        this.selection = false;
+        this.lastPosX = evt.clientX;
+        this.lastPosY = evt.clientY;
+      }
+    });
+    canvas.on('mouse:move', function (opt) {
+      if (this.isDragging) {
+        var e = opt.e;
+        var vpt = this.viewportTransform;
+        vpt[4] += e.clientX - this.lastPosX;
+        vpt[5] += e.clientY - this.lastPosY;
+        this.requestRenderAll();
+        this.lastPosX = e.clientX;
+        this.lastPosY = e.clientY;
+      }
+    });
+    canvas.on('mouse:up', function (opt) {
+      // on mouse up we want to recalculate new interaction
+      // for all objects, so we call setViewportTransform
+      this.setViewportTransform(this.viewportTransform);
+      this.isDragging = false;
+      this.selection = true;
+    });
+
+    function onChange(options) {
+      options.target.setCoords();
+      canvas.forEachObject(function (obj) {
+        if (obj === options.target) return;
+        obj.set('fill', options.target.intersectsWithObject(obj) ? '#ff0000' : '#aac');
+      });
     }
 
     canvas.on({
-      'object:scaling': updateControls
+      'object:scaling': updateControls,
+      'object:moving': onChange
     });
   },
   data: function data() {
@@ -79461,67 +79557,59 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c(
-    "div",
-    [
-      _vm._v(
-        "\n        Num of Seats: " + _vm._s(_vm.seatCounter) + "\n        // //"
-      ),
-      _c("vue-slider", {
-        attrs: { id: "scaleControl" },
-        model: {
-          value: _vm.scaleControl,
-          callback: function($$v) {
-            _vm.scaleControl = $$v
-          },
-          expression: "scaleControl"
-        }
-      }),
-      _vm._v(" "),
-      _c("input", {
-        attrs: {
-          type: "range",
-          id: "scale-control",
-          value: "1",
-          min: "0.1",
-          max: "3",
-          step: "0.1"
-        }
-      }),
-      _vm._v(" "),
-      _c("canvas", {
-        ref: "can",
-        staticStyle: { border: "1px solid grey" },
-        attrs: { width: "900", height: "500" },
-        on: { mousedown: _vm.drawRectangle }
-      }),
-      _vm._v(" "),
-      _c("button", { staticClass: "clickable", attrs: { id: "addmore" } }, [
-        _vm._v("Add more Seats")
-      ]),
-      _vm._v(" "),
-      _c("button", { staticClass: "clickable", attrs: { id: "group" } }, [
-        _vm._v("Group Selection")
-      ]),
-      _vm._v(" "),
-      _c("button", { staticClass: "clickable", attrs: { id: "ungroup" } }, [
-        _vm._v("Ungroup Selection")
-      ]),
-      _vm._v(" "),
-      _c("button", { staticClass: "clickable", attrs: { id: "discard" } }, [
-        _vm._v("Discard Selection")
-      ]),
-      _vm._v(" "),
-      _c("br"),
-      _vm._v(" "),
-      _c(
-        "button",
-        { staticClass: "redButton", attrs: { id: "deleteSelection" } },
-        [_vm._v("Delete Selection")]
-      )
-    ],
-    1
-  )
+  return _c("div", [
+    _vm._v("\n        Instructions:"),
+    _c("br"),
+    _vm._v("\n            - 'ALT' + 'Left Click': Move view of canvas"),
+    _c("br"),
+    _vm._v("\n            - 'Mouse wheel': Changes level of zoom"),
+    _c("br"),
+    _vm._v("\n            - 'Alter Slider': Changes size of rectangles"),
+    _c("br"),
+    _vm._v(" "),
+    _c("br"),
+    _vm._v("Size of seats: "),
+    _c("input", {
+      attrs: {
+        type: "range",
+        id: "scale-control",
+        value: "1",
+        min: "0.1",
+        max: "3",
+        step: "0.1"
+      }
+    }),
+    _vm._v(" "),
+    _c("canvas", {
+      ref: "can",
+      staticStyle: { border: "1px solid grey" },
+      attrs: { width: "900", height: "500" }
+    }),
+    _vm._v(" "),
+    _c("button", { staticClass: "clickable", attrs: { id: "addmore" } }, [
+      _vm._v("Add more Seats")
+    ]),
+    _vm._v(" "),
+    _c("button", { staticClass: "clickable", attrs: { id: "group" } }, [
+      _vm._v("Group Selection")
+    ]),
+    _vm._v(" "),
+    _c("button", { staticClass: "clickable", attrs: { id: "ungroup" } }, [
+      _vm._v("Ungroup Selection")
+    ]),
+    _vm._v(" "),
+    _c("button", { staticClass: "clickable", attrs: { id: "discard" } }, [
+      _vm._v("Discard Selection")
+    ]),
+    _vm._v(" "),
+    _c("br"),
+    _vm._v(" "),
+    _c(
+      "button",
+      { staticClass: "redButton", attrs: { id: "deleteSelection" } },
+      [_vm._v("Delete Selection")]
+    )
+  ])
 }
 var staticRenderFns = []
 render._withStripped = true
