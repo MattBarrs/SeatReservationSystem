@@ -1985,6 +1985,10 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
 
 
 
@@ -2068,6 +2072,8 @@ __webpack_require__.r(__webpack_exports__);
     // rect1.hasControls = false;
 
     var seatCounter = 2;
+    var seatColour = '#aac';
+    var seatColour_clash = '#ff0000';
     var scaleControl = $('scale-control');
 
     scaleControl.oninput = function (options) {
@@ -2075,7 +2081,11 @@ __webpack_require__.r(__webpack_exports__);
 
       for (var i in objects) {
         objects[i].scaleX = this.value;
-        objects[i].scaleY = this.value;
+        objects[i].scaleY = this.value; // options.target.setCoords();
+        // canvas.forEachObject(function(obj) {
+        //     if (obj === options.target) return;
+        //     obj.set('fill' ,options.target.intersectsWithObject(obj) ? '#ff0000' : '#aac');
+        // });
       }
 
       canvas.requestRenderAll();
@@ -2132,6 +2142,24 @@ __webpack_require__.r(__webpack_exports__);
       canvas.requestRenderAll();
     };
 
+    alterColour_01.onclick = function () {
+      canvas.forEachObject(function (obj) {
+        obj.set('fill', '#1E88E5');
+      });
+      seatColour = "#1E88E5";
+      seatColour_clash = "#FFC107";
+      canvas.requestRenderAll();
+    };
+
+    alterColour_02.onclick = function () {
+      canvas.forEachObject(function (obj) {
+        obj.set('fill', '#40B0A6');
+      });
+      seatColour = "#40B0A6";
+      seatColour_clash = "#E1BE6A";
+      canvas.requestRenderAll();
+    };
+
     function updateControls() {// scaleControl.value = rect.scaleX;
     }
 
@@ -2181,7 +2209,7 @@ __webpack_require__.r(__webpack_exports__);
       options.target.setCoords();
       canvas.forEachObject(function (obj) {
         if (obj === options.target) return;
-        obj.set('fill', options.target.intersectsWithObject(obj) ? '#ff0000' : '#aac');
+        obj.set('fill', options.target.intersectsWithObject(obj) ? seatColour_clash : seatColour);
       });
     }
 
@@ -79567,6 +79595,18 @@ var render = function() {
     _vm._v("\n            - 'Alter Slider': Changes size of rectangles"),
     _c("br"),
     _vm._v(" "),
+    _c(
+      "button",
+      { staticClass: "clickable", attrs: { id: "alterColour_01" } },
+      [_vm._v("Change Colours")]
+    ),
+    _vm._v(" "),
+    _c(
+      "button",
+      { staticClass: "clickable", attrs: { id: "alterColour_02" } },
+      [_vm._v("Change Colours")]
+    ),
+    _vm._v(" "),
     _c("br"),
     _vm._v("Size of seats: "),
     _c("input", {
@@ -79583,7 +79623,7 @@ var render = function() {
     _c("canvas", {
       ref: "can",
       staticStyle: { border: "1px solid grey" },
-      attrs: { width: "900", height: "500" }
+      attrs: { width: "900", height: "900" }
     }),
     _vm._v(" "),
     _c("button", { staticClass: "clickable", attrs: { id: "addmore" } }, [

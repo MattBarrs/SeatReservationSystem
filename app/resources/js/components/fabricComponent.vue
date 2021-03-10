@@ -7,15 +7,19 @@
 
 
 
-       <br/>Size of seats: <input type="range" id="scale-control" value="1" min="0.1" max="3" step="0.1">
+        <button id="alterColour_01" class="clickable">Change Colours</button>
+        <button id="alterColour_02" class="clickable">Change Colours</button>
 
-        <canvas ref="can" width="900" height="500"  style="border: 1px solid grey;"></canvas>
+<br/>Size of seats: <input type="range" id="scale-control" value="1" min="0.1" max="3" step="0.1">
+
+        <canvas ref="can" width="900" height="900"  style="border: 1px solid grey;"></canvas>
         <button id="addmore" class="clickable">Add more Seats</button>
         <button id="group" class="clickable">Group Selection</button>
         <button id="ungroup" class="clickable">Ungroup Selection</button>
         <button id="discard" class="clickable">Discard Selection</button>
 
-        <br/>
+
+<br/>
         <button id="deleteSelection" class="redButton">Delete Selection</button>
 
 
@@ -107,6 +111,8 @@
             // rect1.hasControls = false;
 
             var seatCounter = 2;
+            var seatColour = '#aac';
+            var seatColour_clash = '#ff0000';
 
             var scaleControl = $('scale-control');
             scaleControl.oninput = function(options) {
@@ -114,6 +120,12 @@
                 for (var i in objects) {
                     objects[i].scaleX = this.value;
                     objects[i].scaleY = this.value;
+
+                    // options.target.setCoords();
+                    // canvas.forEachObject(function(obj) {
+                    //     if (obj === options.target) return;
+                    //     obj.set('fill' ,options.target.intersectsWithObject(obj) ? '#ff0000' : '#aac');
+                    // });
                 }
                 canvas.requestRenderAll();
             };
@@ -164,6 +176,25 @@
                 canvas.requestRenderAll();
             }
 
+            alterColour_01.onclick = function() {
+                canvas.forEachObject(function(obj) {
+                    obj.set('fill' ,'#1E88E5');
+                });
+                seatColour = "#1E88E5";
+                seatColour_clash = "#FFC107";
+                canvas.requestRenderAll();
+
+            }
+            alterColour_02.onclick = function() {
+                canvas.forEachObject(function(obj) {
+                    obj.set('fill' ,'#40B0A6');
+                });
+                seatColour = "#40B0A6";
+                seatColour_clash = "#E1BE6A";
+                canvas.requestRenderAll();
+
+            }
+
             function updateControls() {
                 // scaleControl.value = rect.scaleX;
             }
@@ -210,9 +241,10 @@
 
             function onChange(options) {
                 options.target.setCoords();
+
                 canvas.forEachObject(function(obj) {
                     if (obj === options.target) return;
-                    obj.set('fill' ,options.target.intersectsWithObject(obj) ? '#ff0000' : '#aac');
+                    obj.set('fill' ,options.target.intersectsWithObject(obj) ? seatColour_clash : seatColour);
                 });
             }
 
