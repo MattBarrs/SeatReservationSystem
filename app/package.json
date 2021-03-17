@@ -11,7 +11,7 @@
         "@tailwindcss/ui": "^0.6.0",
         "alpinejs": "^2.7.3",
         "axios": "^0.21.1",
-        "bootstrap": "^4.0.0",
+        "bootstrap": "^4.6.0",
         "cross-env": "^7.0.3",
         "jquery": "^3.2",
         "laravel-mix": "^6.0.0-beta.17",
@@ -23,11 +23,12 @@
         "sass": "^1.20.1",
         "sass-loader": "^8.0.0",
         "tailwindcss": "^1.8.0",
-        "vue": "^2.5.17",
+        "vue": "^2.6.12",
         "vue-loader": "^15.9.5",
         "vue-template-compiler": "^2.6.10"
     },
     "dependencies": {
+        "bootstrap-vue": "^2.21.2",
         "fabric": "^4.3.1",
         "vue-confirm-dialog": "^1.0.2",
         "vue-slider-component": "^3.2.11"

@@ -1,26 +1,170 @@
 <template>
     <div>
-        Instructions:<br/>
-            - 'ALT' + 'Left Click': Move view of canvas<br/>
-            - 'Mouse wheel': Changes level of zoom<br/>
-            - 'Alter Slider': Changes size of rectangles<br/>
+
+        <b-button v-b-toggle href="#accessibility-sidebar" @click.prevent class="clickable">Controls & Accessibilty</b-button>
+        <b-button v-b-toggle.collapse-0 variant="primary" class="clickable" style="margin-left:10px;">Toggle Instructions</b-button>
+        <b-collapse id="collapse-0" class="mt-2" style="width:95%">
+            <b-card>
+                Instructions:<br/>
+                - 'ALT' + 'Left Click': Move view of canvas<br/>
+                - 'Mouse wheel': Changes level of zoom<br/>
+                - 'Alter Slider': Changes size of shapes<br/>
+            </b-card>
+        </b-collapse>
+
+        <b-sidebar visible id="accessibility-sidebar" title="Controls & Accessibilty" shadow>
+            <div class="px-3 py-2">
+                <div class="accordion" role="tablist">
+                    <b-card no-body class="mb-1">
+                        <b-card-header header-tag="header" class="p-1" role="tab">
+                            <b-button block v-b-toggle.accordion-1 variant="info">Step 1: Mark Seating Area</b-button>
+                        </b-card-header>
+                        <b-collapse  visible id="accordion-1" accordion="task-accordion" role="tabpanel">
+                            <b-card-body>
+                                <b-card-text>Add a square to define where the seats must be within </b-card-text>
+                            </b-card-body>
+                        </b-collapse>
+                    </b-card>
+
+                    <b-card no-body class="mb-1">
+                        <b-card-header header-tag="header" class="p-1" role="tab">
+                            <b-button block v-b-toggle.accordion-2 variant="info">Step 2: Add Seats</b-button>
+                        </b-card-header>
+                        <b-collapse id="accordion-2" accordion="task-accordion" role="tabpanel">
+                            <b-card-body>
+                                <button id="addmore" class="clickable">Add more Seats</button>
+                                <br/>
+                                Size of seats: <input type="range" id="scale-control" value="1" min="0.1" max="3" step="0.1">
+                                <br/><br/>
+                            </b-card-body>
+                        </b-collapse>
+                    </b-card>
+
+                    <b-card no-body class="mb-1">
+                        <b-card-header header-tag="header" class="p-1" role="tab">
+                            <b-button block v-b-toggle.accordion-3 variant="info">Step 3: Group Seats Into Sections</b-button>
+                        </b-card-header>
+                        <b-collapse id="accordion-3" accordion="task-accordion" role="tabpanel">
+                            <b-card-body>
+                                <button id="group" class="clickable">Group Selection</button>
+                                <button id="ungroup" class="clickable">Ungroup Selection</button>
+                                <br/>
+                                <button id="discard" class="clickable">Discard Selection</button>
+                                <br/><br/>
+                            </b-card-body>
+                        </b-collapse>
+                    </b-card>
+                </div>
+            <button id="deleteSelection" class="redButton">Delete Selection</button>
+            </div>
+
+
+        <b-button v-b-toggle.collapse-1 variant="primary" class="clickable" style="margin-top:150px;margin-left:10px;">Toggle Colour Options</b-button>
+        <b-collapse id="collapse-1" class="mt-2" style="width:95%">
+            <b-card>
+                <button id="resetColours" class="clickable" style="margin-bottom:10px;">Reset Colours</button>
+
+                <div class="accordion" role="tablist">
+                    <b-card no-body class="mb-1">
+                    <b-card-header header-tag="header" class="p-1" role="tab">
+                    <b-button block v-b-toggle.accordion-4 variant="info">Colour Options 01</b-button>
+
+                </b-card-header>
+                <b-collapse visible id="accordion-4" accordion="colour-accordion" role="tabpanel">
+                <b-card-body>
+                <b-card-text>
+
+                <div class="inline-block">
+                <div class='sampleBox blue'/>
+                    &nbsp;Circle Colour
+                </div>
+                <br/>
+
+                <div class="inline-block">
+                <div class='sampleBox yellow'/>
+                    &nbsp;Circle Clash Colour
+                </div>
+                <br/>
+
+                <button id="alterColour_01" class="clickable">Activate</button>
+
+                    </b-card-text>
+                    </b-card-body>
+                    </b-collapse>
+                    </b-card>
+
+                    <b-card no-body class="mb-1">
+                    <b-card-header header-tag="header" class="p-1" role="tab">
+                    <b-button block v-b-toggle.accordion-5 variant="info">Colour Options 02</b-button>
+                </b-card-header>
+                <b-collapse id="accordion-5" accordion="colour-accordion" role="tabpanel">
+                <b-card-body>
+                <b-card-text>
+
+                <div class="inline-block">
+                <div class='sampleBox blue2'/>
+                    &nbsp;Circle Colour
+                </div>
+                <br/>
+
+                <div class="inline-block">
+                <div class='sampleBox yellow2'/>
+                    &nbsp;Circle Clash Colour
+                </div>
+                <br/>
+
+                <button id="alterColour_02" class="clickable">Activate</button>
+                    </b-card-text>
+                    </b-card-body>
+                    </b-collapse>
+                    </b-card>
+
+                    <b-card no-body class="mb-1">
+                    <b-card-header header-tag="header" class="p-1" role="tab">
+                    <b-button block v-b-toggle.accordion-6 variant="info">Colour Options 03</b-button>
+                </b-card-header>
+
+                <b-collapse id="accordion-6" accordion="colour-accordion" role="tabpanel">
+                <b-card-body>
+                <b-card-text>
+                <div class="inline-block">
+                <div class='sampleBox yellow3'/>
+                    &nbsp;Circle Colour
+                </div>
+                <br/>
+
+                <div class="inline-block">
+                <div class='sampleBox pink'/>
+                    &nbsp;Circle Clash Colour
+                </div>
+                <br/>
+
+                <button id="alterColour_03" class="clickable">Activate</button>
+                    </b-card-text>
+                    </b-card-body>
+                    </b-collapse>
+                    </b-card>
+                    </div>
+            </b-card>
+        </b-collapse>
 
 
 
-        <button id="alterColour_01" class="clickable">Change Colours</button>
-        <button id="alterColour_02" class="clickable">Change Colours</button>
 
-<br/>Size of seats: <input type="range" id="scale-control" value="1" min="0.1" max="3" step="0.1">
+                </b-collapse>
+
+
+        </b-sidebar>
+
+
+
+        <br/><br/>
+
+
 
         <canvas ref="can" width="900" height="900"  style="border: 1px solid grey;"></canvas>
-        <button id="addmore" class="clickable">Add more Seats</button>
-        <button id="group" class="clickable">Group Selection</button>
-        <button id="ungroup" class="clickable">Ungroup Selection</button>
-        <button id="discard" class="clickable">Discard Selection</button>
-
 
 <br/>
-        <button id="deleteSelection" class="redButton">Delete Selection</button>
 
 
 </div>
@@ -30,6 +174,10 @@
     import { fabric } from 'fabric';
     import VueSlider from 'vue-slider-component'
     import 'vue-slider-component/theme/antd.css'
+    // import { VBToggle } from 'bootstrap-vue'
+    //  Vue.directive('b-toggle', VBToggle)
+    import { VBTogglePlugin } from 'bootstrap-vue'
+    Vue.use(VBTogglePlugin)
     export default {
         components: {
             VueSlider
@@ -40,6 +188,8 @@
 
             const ref = this.$refs.can;
             const canvas = new fabric.Canvas(ref);
+            // canvas.setHeight(500);
+            // canvas.setWidth(400);
 
             canvas.setBackgroundImage('../img/default_floorplan.jpg', canvas.renderAll.bind(canvas));
             var $ = function(id){return document.getElementById(id)};
@@ -60,11 +210,43 @@
             //     canvas.setBackgroundImage(img);
             //     canvas.requestRenderAll();
             // });
+            var seatCounter = 1;
+            var objectRadius = 1;
 
+            var seatColour = '#baf312';
+            var seatColour_clash = '#ff0000';
+
+            // function collisionCheck(){
+            //     var objects = canvas.getObjects();
+            //     for (var x in objects) {
+            //         for (var y in objects) {
+            //             if(x != y){
+            //                 // objects[x].set('fill' ,objects[y].intersectsWithObject(objects[x]) ? seatColour_clash : seatColour);
+            //                 objects[y].set('fill' ,objects[x].intersectsWithObject(objects[y]) ? seatColour_clash : seatColour);
+            //             }
+            //             // objects[i].scaleX = this.value;
+            //             // objects[i].scaleY = this.value;
+            //         }
+            //      }
+            //     canvas.requestRenderAll();
+            //
+            //     // canvas.forEachObject(function (obj_x) {
+            //     //     canvas.forEachObject(function (obj_y) {
+            //     //         if (obj_x != obj_y){
+            //     //             obj_x.set('fill', obj_y.intersectsWithObject(obj_x) ? seatColour_clash : seatColour);
+            //     //             canvas.requestRenderAll();
+            //     //         }
+            //     //     })
+            //     // })
+            // };
 
             //////////Draw Shapes
             var circle = new fabric.Circle({
-                radius: 50, left: 275, top: 75, fill: '#aac'
+                radius: 50,
+                left: 75,
+                top: 75,
+                fill: seatColour,
+                name: 1,
             });
             // var rect = new fabric.Rect({
             //     width: 100,
@@ -80,7 +262,10 @@
 
 
             var circle2 = new fabric.Circle({
-                radius: 50, left: 275, top: 75, fill: '#aac'
+                radius: 50,
+                left: 175,
+                top: 75,
+                fill: seatColour,
             });
             canvas.add(circle2);
             circle2.hasControls = false;
@@ -110,9 +295,7 @@
             // canvas.add(rect1);
             // rect1.hasControls = false;
 
-            var seatCounter = 2;
-            var seatColour = '#aac';
-            var seatColour_clash = '#ff0000';
+
 
             var scaleControl = $('scale-control');
             scaleControl.oninput = function(options) {
@@ -120,22 +303,32 @@
                 for (var i in objects) {
                     objects[i].scaleX = this.value;
                     objects[i].scaleY = this.value;
-
-                    // options.target.setCoords();
-                    // canvas.forEachObject(function(obj) {
-                    //     if (obj === options.target) return;
-                    //     obj.set('fill' ,options.target.intersectsWithObject(obj) ? '#ff0000' : '#aac');
-                    // });
                 }
+
+                objectRadius = this.value;
+                // console.log(this.value);
+
                 canvas.requestRenderAll();
             };
 
-
+            // console.log(objectRadius);
             addmore.onclick = function() {
+                // console.log(objectRadius);
+
                 var seat = new fabric.Circle({
-                    radius: 50, left: 275, top: 75, fill: '#aac'
+                    radius: 50,
+                    left: 275,
+                    top: 75,
+                    fill: seatColour,
+                    name: seatCounter,
+                    // radius: scaleControl.value,
+                    // scaleX: $('scale-control'),
+                    // scaleY: $('scale-control'),
+                    // fill: seatColour,
                 });
                 canvas.add(seat);
+                seat.scaleX = objectRadius;
+                seat.scaleY = objectRadius;
                 seat.hasControls = false;
 
                 seatCounter = seatCounter + 1;
@@ -178,6 +371,7 @@
 
             alterColour_01.onclick = function() {
                 canvas.forEachObject(function(obj) {
+                    if( obj.get('type') != "circle") return;
                     obj.set('fill' ,'#1E88E5');
                 });
                 seatColour = "#1E88E5";
@@ -187,6 +381,7 @@
             }
             alterColour_02.onclick = function() {
                 canvas.forEachObject(function(obj) {
+                    if( obj.get('type') != "circle") return;
                     obj.set('fill' ,'#40B0A6');
                 });
                 seatColour = "#40B0A6";
@@ -194,23 +389,43 @@
                 canvas.requestRenderAll();
 
             }
+            alterColour_03.onclick = function() {
+                canvas.forEachObject(function(obj) {
+                    if( obj.get('type') != "circle") return;
+                    obj.set('fill' ,'#FEFE62');
+                });
+                seatColour = "#FEFE62";
+                seatColour_clash = "#D35FB7";
+                canvas.requestRenderAll();
 
-            function updateControls() {
-                // scaleControl.value = rect.scaleX;
+            }
+            resetColours.onclick = function() {
+                canvas.forEachObject(function(obj) {
+                    if( obj.get('type') != "circle") return;
+                    obj.set('fill' ,'#baf312');
+                });
+                seatColour = "#baf312";
+                seatColour_clash = "#ff0000";
+                canvas.requestRenderAll();
+
             }
 
-
+            // function updateControls() {
+            // }
 
             canvas.on('mouse:wheel', function(opt) {
                 var delta = opt.e.deltaY;
+                // console.log(delta);
+
                 var zoom = canvas.getZoom();
                 zoom *= 0.999 ** delta;
-                if (zoom > 20) zoom = 20;
-                if (zoom < 0.5) zoom = 0.5;
+                if (zoom > 3 ) zoom = 3;
+                if (zoom < 0.75) zoom = 0.75;
+
                 canvas.zoomToPoint({ x: opt.e.offsetX, y: opt.e.offsetY }, zoom);
                 opt.e.preventDefault();
                 opt.e.stopPropagation();
-            });
+                            });
             canvas.on('mouse:down', function(opt) {
                 var evt = opt.e;
                 if (evt.altKey === true) {
@@ -241,16 +456,66 @@
 
             function onChange(options) {
                 options.target.setCoords();
+                if( options.target.get('type') != "circle") return;
 
                 canvas.forEachObject(function(obj) {
                     if (obj === options.target) return;
+                    if( obj.get('type') != "circle") return;
+
+                    // if(options.target.fill === seatColour_clash) return;
                     obj.set('fill' ,options.target.intersectsWithObject(obj) ? seatColour_clash : seatColour);
+                    // options.target.set('fill' ,obj.intersectsWithObject(options.target) ? seatColour_clash : seatColour);
+
                 });
-            }
+            };
+
+            var rectangle = new fabric.Rect({
+                left: 100,
+                top: 100,
+                // fill: 'red',
+                width: 200,
+                height: 200,
+                strokeDashArray: [1, 1],
+                stroke: 'black',
+                strokeWidth: 3,
+                fill: 'rgba(0,125,0,0.1)',
+            });
+            canvas.add(rectangle);
+
+            // for (var x in objects) {
+                //     for (var y in objects) {
+                //         if(x != y){
+                //             objects[x].set('fill' ,objects[y].intersectsWithObject(objects[x]) ? seatColour_clash : seatColour);
+                //             objects[y].set('fill' ,objects[x].intersectsWithObject(objects[y]) ? seatColour_clash : seatColour);
+                //
+                //
+                //         }
+                //         // objects[i].scaleX = this.value;
+                //         // objects[i].scaleY = this.value;
+                //     }
+                // }
+
+           // function borderCheck(){
+           //     canvas.forEachObject(function(obj) {
+           //         obj.setCoords();
+           //         if (obj.left < 0 || obj.top < 0 || obj.left + obj.width > canvas.getWidth() || obj.top + obj.radius > canvas.getHeight()) {
+           //             canvas.discardActiveObject();
+           //             obj.setTop(100);
+           //             obj.setLeft(100);
+           //             // obj.setScaleX(obj.originalState.scaleX);
+           //             // obj.setScaleY(obj.originalState.scaleY);
+           //             obj.setCoords();
+           //             canvas.requestRenderAll();
+           //
+           //         }
+           //         canvas.requestRenderAll();
+           //     })
+           //  };
 
             canvas.on({
-                'object:scaling': updateControls,
                 'object:moving': onChange,
+                // 'object:scaling': updateControls,
+                // 'object:modified' : borderCheck,
 
             });
 
