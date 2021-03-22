@@ -22,7 +22,11 @@
                         <b-collapse  visible id="accordion-1" accordion="task-accordion" role="tabpanel">
                             <b-card-body>
                                 <b-card-text>Add a square to define where the seats must be within </b-card-text>
-                            </b-card-body>
+                                    <button id="addmore_seatingArea" class="clickable">Add Seating Area</button>
+                                    <button id="addmore_exclusionArea" class="clickable">Add Exclusion Area</button>
+                                    <button id="setSeatArea" class="clickable">Set Seat Area</button>
+                                    <button id="unsetSeatArea" class="clickable">Unset Seat Area</button>
+                                </b-card-body>
                         </b-collapse>
                     </b-card>
 
@@ -32,10 +36,11 @@
                         </b-card-header>
                         <b-collapse id="accordion-2" accordion="task-accordion" role="tabpanel">
                             <b-card-body>
-                                <button id="addmore" class="clickable">Add more Seats</button>
+                                <button id="addmore_seat" class="clickable">Add more Seats</button>
                                 <br/>
                                 Size of seats: <input type="range" id="scale-control" value="1" min="0.1" max="3" step="0.1">
                                 <br/><br/>
+                                <button id="seatCheck" class="clickable">Check Placing Of Seats</button>
                             </b-card-body>
                         </b-collapse>
                     </b-card>
@@ -210,9 +215,11 @@
             //     canvas.setBackgroundImage(img);
             //     canvas.requestRenderAll();
             // });
-            var seatCounter = 1;
+            var counter_seats = 1;
             var objectRadius = 1;
-
+            var seatingAreaSet = false; //used for when the client sets the seating/exlusions areas
+            var counter_seatingArea = 0;
+            var counter_exclusionArea = 0;
             var seatColour = '#baf312';
             var seatColour_clash = '#ff0000';
 
@@ -301,8 +308,10 @@
             scaleControl.oninput = function(options) {
                 var objects = canvas.getObjects();
                 for (var i in objects) {
-                    objects[i].scaleX = this.value;
-                    objects[i].scaleY = this.value;
+                    if (objects[i].type == 'circle'){
+                        objects[i].scaleX = this.value;
+                        objects[i].scaleY = this.value;
+                    }
                 }
 
                 objectRadius = this.value;
@@ -310,28 +319,187 @@
 
                 canvas.requestRenderAll();
             };
+            addmore_seatingArea.onclick = function() {
+                if(seatingAreaSet == false){
+                    // console.log(objectRadius);
+                    var rectangle = new fabric.Rect({
+                        left: 100,
+                        top: 100,
+                        // fill: 'red',
+                        width: 200,
+                        height: 200,
+                        strokeDashArray: [1, 1],
+                        stroke: 'black',
+                        strokeWidth: 3,
+                        name: 'seatingArea',
+                        fill: 'rgba(0,125,0,0.1)',
+                    });
+                    canvas.add(rectangle);
+                    counter_seatingArea = counter_seatingArea + 1;
+                }
+                else{
+                    alert("Seating Area Has been set, please un-set before adding more");
+                    return;
+                }
+            }
 
-            // console.log(objectRadius);
-            addmore.onclick = function() {
+            addmore_exclusionArea.onclick = function() {
                 // console.log(objectRadius);
+                if(seatingAreaSet == false){
+                    var rectangle = new fabric.Rect({
+                        left: 100,
+                        top: 100,
+                        // fill: 'red',
+                        width: 200,
+                        height: 200,
+                        strokeDashArray: [1, 1],
+                        stroke: 'black',
+                        name: 'exclusionArea',
+                        strokeWidth: 3,
+                        fill: 'rgba(125,0,0,0.1)',
+                    });
+                    canvas.add(rectangle);
+                    counter_exclusionArea = counter_exclusionArea + 1;
+                }
+                else{
+                    alert("Seating Area Has been set, please un-set before adding more");
+                    return;
+                }
+            }
 
-                var seat = new fabric.Circle({
-                    radius: 50,
-                    left: 275,
-                    top: 75,
-                    fill: seatColour,
-                    name: seatCounter,
-                    // radius: scaleControl.value,
-                    // scaleX: $('scale-control'),
-                    // scaleY: $('scale-control'),
-                    // fill: seatColour,
+            setSeatArea.onclick = function() {
+                if(counter_seatingArea>0)
+                {
+                    var overlaps = false;
+                    canvas.discardActiveObject();
+
+                    try{
+                        canvas.forEachObject(function(objx) {
+                            if( objx.get('type') != "rect") return;
+
+                            if( objx.get('name') == 'seatingArea'){
+                                canvas.forEachObject(function(objy) {
+                                    if((objy.get('name') == 'exclusionArea') && (objx.intersectsWithObject(objy)) ){
+                                        alert("A Seating Area overlaps with an Exclusion zone please change!");
+                                        overlaps = true;
+                                        throw BreakException;
+                                    }
+                                });
+                            };
+
+                        });
+                    }
+                    catch (e){
+                        if (e !== BreakException) throw e;
+
+                    }
+
+
+                    if(overlaps==false){
+                        canvas.forEachObject(function(objx) {
+                            if( objx.get('type') != "rect") return;
+                            canvas.sendToBack(objx);
+                            objx.selectable = false;
+                        });
+                    };
+                    seatingAreaSet = true;
+
+                }else {
+                    alert("No seating area added.")
+                }
+
+
+            }
+            unsetSeatArea.onclick = function() {
+                canvas.discardActiveObject();
+                canvas.forEachObject(function(obj) {
+                    if( obj.get('type') != "rect") return;
+                    obj.selectable = true;
                 });
-                canvas.add(seat);
-                seat.scaleX = objectRadius;
-                seat.scaleY = objectRadius;
-                seat.hasControls = false;
+                seatingAreaSet = false;
+            }
+            // console.log(objectRadius);
+            addmore_seat.onclick = function() {
+                // console.log(objectRadius);
+                if(seatingAreaSet == true) {
+                    var seat = new fabric.Circle({
+                        radius: 50,
+                        left: 275,
+                        top: 75,
+                        fill: seatColour,
+                        name: counter_seats,
+                        // radius: scaleControl.value,
+                        // scaleX: $('scale-control'),
+                        // scaleY: $('scale-control'),
+                        // fill: seatColour,
+                    });
+                    canvas.add(seat);
+                    seat.scaleX = objectRadius;
+                    seat.scaleY = objectRadius;
+                    seat.hasControls = false;
 
-                seatCounter = seatCounter + 1;
+                    counter_seats = counter_seats + 1;
+                }
+                else{
+                    alert("Seating Area Has Not Been Set!\n Set Seating Area To Continue")
+                }
+            }
+
+            seatCheck.onclick = function(){
+                var seatOverlap = false;
+                var exclusionOverlap = false;
+                // var outOfBounds = false;
+                var withinAZone = false;
+
+                canvas.forEachObject(function(objx) {
+                    withinAZone = false;
+                    if( objx.get('type') != "circle") return;
+                    objx.set('fill' ,seatColour);
+
+                    canvas.forEachObject(function (objz) {
+
+                        if (objx === objz) return;
+                        if (objz.get('type') != "rect") return;
+                        if (objz.get('name') != 'seatingArea') return;
+
+                        if (objx.isContainedWithinObject(objz) == true) {
+                            withinAZone = true;
+                        }
+                    });
+
+                    try {
+                        canvas.forEachObject(function (objy) {
+                            if (objx === objy) return;
+
+                            if ((objy.get('name') == 'exclusionArea') && (objx.intersectsWithObject(objy))) {
+
+                                objx.set('fill', seatColour_clash);
+                                exclusionOverlap = true;
+
+                                throw new Error('SeatPositionException');
+
+                            } else if ((objy.get('name') == 'seatingArea') && !(objx.isContainedWithinObject(objy)) && (withinAZone == false)) {
+                                objx.set('fill', seatColour_clash);
+
+                                throw new Error('SeatPositionException');
+
+                            } else if ((objy.get('type') == "circle") && (objx.intersectsWithObject(objy))) {
+                                objx.set('fill', seatColour_clash);
+                                seatOverlap = true;
+
+                                throw new Error('SeatPositionException');
+                            }
+
+                            canvas.requestRenderAll();
+                        });
+                    }
+                    catch (e){
+                        var error = e;
+
+                    }
+                    canvas.requestRenderAll();
+
+                });
             }
 
             group.onclick = function() {
@@ -357,10 +525,17 @@
             }
 
             deleteSelection.onclick = function() {
+                var obj = canvas.getActiveObject();
+
                 canvas.remove( canvas.getActiveObject()) ;
-                if(seatCounter != 0)
-                {
-                    seatCounter = seatCounter - 1;
+
+                if(obj.get('name') == 'seatingArea'){
+                    counter_seatingArea = counter_seatingArea - 1;
+                }else if( obj.get('name') == 'seatingArea'){
+                    counter_exclusionArea = counter_exclusionArea - 1;
+
+                }else if ( obj.get('circle') ) {
+                    counter_seats = counter_seats - 1;
                 }
             }
 
@@ -459,28 +634,22 @@
                 if( options.target.get('type') != "circle") return;
 
                 canvas.forEachObject(function(obj) {
-                    if (obj === options.target) return;
-                    if( obj.get('type') != "circle") return;
+                    if (obj != options.target) {
+                        if ((obj.get('type') == "rect") && (obj.get('name') == 'exclusionArea')) {
+                            options.target.set('fill', options.target.intersectsWithObject(obj) ? seatColour_clash : seatColour);
+                        } else {
 
-                    // if(options.target.fill === seatColour_clash) return;
-                    obj.set('fill' ,options.target.intersectsWithObject(obj) ? seatColour_clash : seatColour);
-                    // options.target.set('fill' ,obj.intersectsWithObject(options.target) ? seatColour_clash : seatColour);
+                            if (obj.get('type') == "rect") return;
+                            obj.set('fill', options.target.intersectsWithObject(obj) ? seatColour_clash : seatColour);
 
+                            // if(options.target.fill === seatColour_clash) return;
+                            // options.target.set('fill' ,obj.intersectsWithObject(options.target) ? seatColour_clash : seatColour);
+                        }
+                    }
                 });
             };
 
-            var rectangle = new fabric.Rect({
-                left: 100,
-                top: 100,
-                // fill: 'red',
-                width: 200,
-                height: 200,
-                strokeDashArray: [1, 1],
-                stroke: 'black',
-                strokeWidth: 3,
-                fill: 'rgba(0,125,0,0.1)',
-            });
-            canvas.add(rectangle);
+
 
             // for (var x in objects) {
                 //     for (var y in objects) {
@@ -523,7 +692,7 @@
         },
         data: function () {
             return{
-                seatCounter: 0,
+                counter_seats: 0,
             }
         },
 

@@ -21,11 +21,7 @@
   <component name="ChangeListManager">
     <list default="true" id="5ed62eef-6f1a-41d9-b9a0-d392c396b581" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/css/app.css" beforeDir="false" afterPath="$PROJECT_DIR$/public/css/app.css" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/public/js/app.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/js/app.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/js/app.js" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/app.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/resources/js/components/fabricComponent.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/fabricComponent.vue" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -262,7 +258,12 @@
       <workItem from="1615627632604" duration="2000" />
       <workItem from="1615797218991" duration="1189000" />
       <workItem from="1615910295990" duration="425000" />
-      <workItem from="1615976158055" duration="16690000" />
+      <workItem from="1615976158055" duration="17283000" />
+      <workItem from="1616005477338" duration="594000" />
+      <workItem from="1616064928355" duration="30000" />
+      <workItem from="1616080369517" duration="245000" />
+      <workItem from="1616425158763" duration="75000" />
+      <workItem from="1616425296322" duration="11915000" />
     </task>
     <servers />
   </component>
