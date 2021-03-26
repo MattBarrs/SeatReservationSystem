@@ -45,6 +45,26 @@ class RoomsController extends Controller
         }
     }
 
+    public function  createCanvas(Request $request){
+
+    }
+
+    public function saveCanvas(Request $request){
+        $institute = $request->session()->get('institution_name');
+        $room = $request->session()->get('selected_room');
+
+        $canvasObject = $request('saveCanvasVar');
+
+        Rooms::
+            where('room_name',$room)
+            ->where('institution_name',$institute)
+            ->update('room_canvas',$canvasObject);
+
+        return redirect('/dashboard');
+
+
+    }
+
     public function saveRoom(Request $request)
     {
         #new instance of room

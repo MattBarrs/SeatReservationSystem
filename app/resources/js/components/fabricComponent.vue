@@ -40,7 +40,7 @@
                                 <br/>
                                 Size of seats: <input type="range" id="scale-control" value="1" min="0.1" max="3" step="0.1">
                                 <br/><br/>
-                                <button id="seatCheck" class="clickable">Check Placing Of Seats</button>
+
                             </b-card-body>
                         </b-collapse>
                     </b-card>
@@ -51,6 +51,9 @@
                         </b-card-header>
                         <b-collapse id="accordion-3" accordion="task-accordion" role="tabpanel">
                             <b-card-body>
+                                <button id="saveCanvas" class="clickable">Save Canvas</button>
+                                <button id="loadCanvas" class="clickable">Load Canvas</button>
+                                <br/><br/>
                                 <button id="group" class="clickable">Group Selection</button>
                                 <button id="ungroup" class="clickable">Ungroup Selection</button>
                                 <br/>
@@ -160,6 +163,12 @@
 
 
         </b-sidebar>
+         <form id="saveCanvasForm" action="rooms/saveCanvas" method="post"/>
+         <input type='hidden' id= 'hiddenField' name='id' value='' />
+
+
+
+
 
 
 
@@ -193,6 +202,8 @@
 
             const ref = this.$refs.can;
             const canvas = new fabric.Canvas(ref);
+
+            var saveCanvasVar;
             // canvas.setHeight(500);
             // canvas.setWidth(400);
 
@@ -441,65 +452,105 @@
                     counter_seats = counter_seats + 1;
                 }
                 else{
-                    alert("Seating Area Has Not Been Set!\n Set Seating Area To Continue")
+                    alert("Seating Area Has Not Been Set!\nSet Seating Area To Allow Seats To Be Added")
                 }
             }
 
-            seatCheck.onclick = function(){
-                var seatOverlap = false;
-                var exclusionOverlap = false;
+            saveCanvas.onclick = function(){
+                var errorFound = false;
                 // var outOfBounds = false;
-                var withinAZone = false;
+                var withinASeatingArea = false;
+                var errorWhatIsWrong = "Could not save as: \n ";
 
-                canvas.forEachObject(function(objx) {
-                    withinAZone = false;
-                    if( objx.get('type') != "circle") return;
-                    objx.set('fill' ,seatColour);
+                if(seatingAreaSet == false) {
+                    errorFound = true;
+                    errorWhatIsWrong = errorWhatIsWrong + "\n Seating Area Has Not Been Set!";
 
-                    canvas.forEachObject(function (objz) {
+                }
 
-                        if (objx === objz) return;
-                        if (objz.get('type') != "rect") return;
-                        if (objz.get('name') != 'seatingArea') return;
+                if(errorFound == false){
+                    canvas.forEachObject(function(objx) {
+                        withinASeatingArea = false;
 
-                        if (objx.isContainedWithinObject(objz) == true) {
-                            withinAZone = true;
+                        if( objx.get('type') != "circle") return;
+                        objx.set('fill' ,seatColour);
+
+                        canvas.forEachObject(function (objz) {
+                            if (objz.get('name') != 'seatingArea') return;
+                            if (objx === objz) return;
+                            if (objz.get('type') != "rect") return;
+
+                            if (objx.isContainedWithinObject(objz) == true) {
+                                withinASeatingArea = true;
+                                console.log("FOUND IN SEATING AREAS");
+
+                            }
+                        });
+
+                        try {
+
+                            canvas.forEachObject(function (objy) {
+
+                                if (objx === objy) return;
+                                // if (errorFound == true) return;
+
+
+
+                                if ((objy.get('name') == 'exclusionArea') && (objx.intersectsWithObject(objy))) {
+
+                                    objx.set('fill', seatColour_clash);
+                                    errorFound = true;
+                                    errorWhatIsWrong = errorWhatIsWrong + "\n  - A seat overlaps with an exclusion zone";
+
+                                    throw new Error('SeatPositionException');
+
+                                }
+
+                                if ((objy.get('name') == 'seatingArea') && !(objx.isContainedWithinObject(objy)) && (withinASeatingArea == false)) {
+                                    objx.set('fill', seatColour_clash);
+                                    errorFound = true;
+                                    withinASeatingArea = false;
+                                    errorWhatIsWrong = errorWhatIsWrong + "\n   - A seat is not fully in a zone";
+
+                                    throw new Error('SeatPositionException');
+
+                                }
+
+                                if ((objy.get('type') == "circle") && (objx.intersectsWithObject(objy))) {
+                                    objx.set('fill', seatColour_clash);
+                                    errorFound = true;
+                                    errorWhatIsWrong = errorWhatIsWrong + "\n   - A seat overlaps with another seat";
+
+
+                                    throw new Error('SeatPositionException');
+                                }
+                                canvas.requestRenderAll();
+                            });
                         }
+                        catch (e){
+                            var error = e;
+
+                        }
+
+
+                        canvas.requestRenderAll();
+
                     });
 
-                    try {
-                        canvas.forEachObject(function (objy) {
-                            if (objx === objy) return;
+                }
 
-                            if ((objy.get('name') == 'exclusionArea') && (objx.intersectsWithObject(objy))) {
-
-                                objx.set('fill', seatColour_clash);
-                                exclusionOverlap = true;
-
-                                throw new Error('SeatPositionException');
-
-                            } else if ((objy.get('name') == 'seatingArea') && !(objx.isContainedWithinObject(objy)) && (withinAZone == false)) {
-                                objx.set('fill', seatColour_clash);
-
-                                throw new Error('SeatPositionException');
-
-                            } else if ((objy.get('type') == "circle") && (objx.intersectsWithObject(objy))) {
-                                objx.set('fill', seatColour_clash);
-                                seatOverlap = true;
-
-                                throw new Error('SeatPositionException');
-                            }
-
-                            canvas.requestRenderAll();
-                        });
-                    }
-                    catch (e){
-                        var error = e;
-
-                    }
-                    canvas.requestRenderAll();
-
-                });
+                if(errorFound == true){
+                    alert(errorWhatIsWrong);
+                }
+                else {
+                    saveCanvasVar = JSON.stringify(canvas)
+                    document.getElementById('hiddenField').value = saveCanvasVar ;
+                    document.getElementById("saveCanvasForm").submit();
+                    alert("Save Successfull")
+                }
+            }
+            loadCanvas.onclick = function(){
+                canvas.loadFromJSON(saveCanvasVar)
             }
 
             group.onclick = function() {

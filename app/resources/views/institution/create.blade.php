@@ -36,19 +36,17 @@
                     @endforeach
 
 
-                    <label for ="start_time">Start Time
-                    <div class="tooltip"style=""> <img src="../img/question.png">
+                    <label for ="start_time">Start Time</label>
+                        <div class="tooltip"style="max-width: 20px;max-height: 20px;"> <img src="../img/question.png">
                         <span class="tooltiptext">
                                     Start time is when your bookings start.
                                     <br/>
                                         For Example
                                         <br/> 0 would be 9:00, 10:00, 11:00
                                         <br/> 5 would be 9:05, 10:05, 11:05
-
-
                         </span>
                     </div>
-                    </label>
+
                     <input v-model="startTimeInput" v-on:change="timeConvert()" type="number" name="start_time" id="start_time" value="{{ old('start_time') }}" min="0" max="3540" step="60">
                     <br/>
                     <div class = "inline">
@@ -65,7 +63,7 @@
                     @endforeach
 
 
-                    <label for ="interval_time">Interval Time
+                    <label for ="interval_time">Interval Time</label>
                         <div class="tooltip"style="max-width: 20px;max-height: 20px;"> <img src="../img/question.png">
                             <span class="tooltiptext">
                                     Interval Time is the intermission in booking times.
@@ -73,11 +71,8 @@
                                         For Example
                                         <br/> 10 would give 9:00, 9:10, 9:20, 9:30...
                                         <br/> 20 would give 9:20, 9:40, 10:00, 10:20...
-
-
-                        </span>
+                            </span>
                         </div>
-                    </label>
 
                     <input v-model="intervalTimeInput" v-on:change="timeConvert(interval_time)" type="number" name="interval_time" id="interval_time" value="{{ old('interval_time') }}" min="300" max="3540" step="300">
 

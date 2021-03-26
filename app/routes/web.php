@@ -48,6 +48,7 @@ Route::post('rooms', [RoomsController::class,'saveRoom'])->name('rooms.saveRoom'
 Route::get('/rooms/edit', [RoomsController::class,'edit'])->name('rooms.edit')->middleware('auth');
 Route::post('rooms/edit', [RoomsController::class,'saveEdit'])->name('rooms.saveEdit')->middleware('auth');
 Route::get('/rooms/selectEdit', [RoomsController::class,'selectEdit'])->name('rooms.selectEdit')->middleware('auth');
+Route::post('/rooms/saveCanvas', [RoomsController::class,'saveCanvas'])->name('rooms.saveCanvas')->middleware('auth');
 
 Route::delete('/rooms/edit/{seat_name}', [BookingsController::class,'destroy'])->name('rooms.workstationDelete')->middleware('auth');
 
