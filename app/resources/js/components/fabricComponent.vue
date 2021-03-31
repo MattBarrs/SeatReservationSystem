@@ -52,8 +52,14 @@
                         <b-collapse id="accordion-3" accordion="task-accordion" role="tabpanel">
                             <b-card-body>
                                 <br/><br/>
-                                <button id="saveCanvas" class="clickable">Save Canvas</button>
 
+                                <button id="checkCanvas" class="clickable">Check Canvas</button>
+
+                                <form @submit.prevent="saveCanvas" id="saveForm" style="visibility: hidden;">
+                                    <input type="hidden" name="canvas" v-model="saveCanvasVar">
+                                    <input type="hidden" name="_token" :value="csrf">
+                                    <input type="submit" id="saveCanvas" value="Save Canvas" class="clickable">
+                                </form>
                                 <div class="wrapper">
                                     <div v-if="isError">Save Status: Error Occured</div>
                                     <div v-else-if="isLoading">Save Status: Saving...</div>
@@ -62,16 +68,14 @@
 
                                 <br/><br/>
                             </b-card-body>
+
                         </b-collapse>
                     </b-card>
                 </div>
-            <button id="deleteSelection" class="redButton">Delete Selection</button>
+            <button id="discard" class="clickable">Discard Selection</button>
+            <button id="deleteSelection" class="redButton">Delete Object</button>
 
-            <form @submit.prevent="saveCanvas">
-                <input type="hidden" name="title" v-model="saveCanvasVar">
-                <input type="hidden" name="_token" :value="csrf">
-                <input type="submit" value="Submit" class="clickable">
-            </form>
+
 
         </div>
 
@@ -219,7 +223,6 @@
 
 
             // // Define variables
-            var saveCanvasVar;
             var counter_seats = 1;
             var objectRadius = 1;
             var seatingAreaSet = false; //used for when the client sets the seating/exlusions areas
@@ -249,8 +252,8 @@
                 top: 75,
                 fill: seatColour,
             });
-            canvas.add(circle2);
-            circle2.hasControls = false;
+            // canvas.add(circle2);
+            // circle2.hasControls = false;
 
 
 
@@ -359,6 +362,8 @@
 
 
             }
+
+
             unsetSeatArea.onclick = function() {
                 canvas.discardActiveObject();
                 canvas.forEachObject(function(obj) {
@@ -367,9 +372,10 @@
                 });
                 seatingAreaSet = false;
             }
-            // console.log(objectRadius);
+
+
+
             addmore_seat.onclick = function() {
-                // console.log(objectRadius);
                 if(seatingAreaSet == true) {
                     var seat = new fabric.Circle({
                         radius: 50,
@@ -391,7 +397,7 @@
                 }
             }
 
-            saveCanvas.onclick = function(){
+            checkCanvas.onclick = function(){
                 var errorFound = false;
                 // var outOfBounds = false;
                 var withinASeatingArea = false;
@@ -417,7 +423,6 @@
 
                             if (objx.isContainedWithinObject(objz) == true) {
                                 withinASeatingArea = true;
-                                console.log("FOUND IN SEATING AREAS");
 
                             }
                         });
@@ -464,37 +469,29 @@
                         }
                         catch (e){
                             var error = e;
-
                         }
-                        finally {
-                            axios.post('/post',{canvas:this.saveCanvasVar})
-                                .then((response)=>{
-                                    $('#success').html(response.data.message)
-                                }
-                            )
+                        finally{
+                            canvas.requestRenderAll();
                         }
-
-
-
-                        canvas.requestRenderAll();
 
                     });
 
                 }
 
                 if(errorFound == true){
+                    document.getElementById("saveForm").style.visibility = "hidden";
                     alert(errorWhatIsWrong);
                 }
                 else {
-                    saveCanvasVar = JSON.stringify(canvas)
-                    document.getElementById('hiddenField').value = saveCanvasVar ;
-                    document.getElementById("saveCanvasForm").submit();
-                    alert("Save Successfull")
+                    this.saveCanvasVar = JSON.stringify(canvas)
+                    console.log(this.saveCanvasVar);
+                    document.getElementById("saveForm").style.visibility = "visible";
+
                 }
             }
 
 
-            
+
 
             deleteSelection.onclick = function() {
                 var obj = canvas.getActiveObject();
@@ -561,7 +558,6 @@
 
             canvas.on('mouse:wheel', function(opt) {
                 var delta = opt.e.deltaY;
-                // console.log(delta);
 
                 var zoom = canvas.getZoom();
                 zoom *= 0.999 ** delta;
@@ -572,6 +568,9 @@
                 opt.e.preventDefault();
                 opt.e.stopPropagation();
                             });
+
+
+
             canvas.on('mouse:down', function(opt) {
                 var evt = opt.e;
                 if (evt.altKey === true) {
@@ -581,6 +580,8 @@
                     this.lastPosY = evt.clientY;
                 }
             });
+
+
             canvas.on('mouse:move', function(opt) {
                 if (this.isDragging) {
                     var e = opt.e;
@@ -592,6 +593,8 @@
                     this.lastPosY = e.clientY;
                 }
             });
+
+
             canvas.on('mouse:up', function(opt) {
                 // on mouse up we want to recalculate new interaction
                 // for all objects, so we call setViewportTransform
@@ -601,6 +604,7 @@
             });
 
             function onChange(options) {
+                document.getElementById("saveForm").style.visibility = "hidden";
                 options.target.setCoords();
                 if( options.target.get('type') != "circle") return;
 
@@ -613,8 +617,6 @@
                             if (obj.get('type') == "rect") return;
                             obj.set('fill', options.target.intersectsWithObject(obj) ? seatColour_clash : seatColour);
 
-                            // if(options.target.fill === seatColour_clash) return;
-                            // options.target.set('fill' ,obj.intersectsWithObject(options.target) ? seatColour_clash : seatColour);
                         }
                     }
                 });
@@ -625,26 +627,30 @@
 
             canvas.on({
                 'object:moving': onChange,
-                // 'object:scaling': updateControls,
-                // 'object:modified' : borderCheck,
-
             });
 
 
         },
         methods:{
-            async myMethod(){
+            async saveCanvas(){
                 try{
                     this.isLoading = true;
-                    const {data} = await this.$http.patch(
-                        '/api/items',
-                        {name:"my item"}
-                    );
+                    console.log(this.saveCanvasVar);
+
+                    axios.post('/rooms/saveCanvas', {
+                        canvas: this.saveCanvasVar,
+                    }).then(function(response) {
+                        console.log(response);
+                    }).catch(function(error) {
+                        console.log(error);
+                    })
+
+
+
                 }
                 catch(err)
                 {
                     this.isError = true;
-                    console.log(err);
                 }
                 finally {
                     this.isLoading = false;

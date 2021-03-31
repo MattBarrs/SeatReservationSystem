@@ -56,7 +56,9 @@ class RoomsController extends Controller
         $institute = $request->session()->get('institution_name');
         $room = $request->session()->get('selected_room');
 
-        $canvasObject = $request('saveCanvasVar');
+        $canvasObject = $request('canvas');
+        error_log("___________________");
+        error_log($canvasObject);
 
         Rooms::
             where('room_name',$room)

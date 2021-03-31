@@ -9,7 +9,6 @@
       <change beforePath="$PROJECT_DIR$/app/app/Http/Controllers/RoomsController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/app/Http/Controllers/RoomsController.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/public/js/app.js" beforeDir="false" afterPath="$PROJECT_DIR$/app/public/js/app.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/resources/js/components/fabricComponent.vue" beforeDir="false" afterPath="$PROJECT_DIR$/app/resources/js/components/fabricComponent.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/resources/views/rooms/edit.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/resources/views/rooms/edit.blade.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -248,7 +247,7 @@
       <workItem from="1616863159885" duration="60000" />
       <workItem from="1617089058619" duration="7324000" />
       <workItem from="1617120618915" duration="1000" />
-      <workItem from="1617174655711" duration="23862000" />
+      <workItem from="1617174655711" duration="28961000" />
     </task>
     <servers />
   </component>
