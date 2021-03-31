@@ -12,7 +12,7 @@
                 <div class="title">Create New Booking</div>
                 <br/>
                 <p>Room Selected: {{ session('selected_room') }} </p>
-                <a href="{{ route('bookings.selectRoom') }}"  class="clickable"> <b>Change room</b></a>
+                <a href="{{ route('bookings.selectRoom') }}"  class="clickable" > <b>Change room</b></a>
 
 
                 <form action="{{ route('bookings.create') }}" method="POST">

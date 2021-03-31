@@ -123,7 +123,7 @@
                                                 <a href="{{ route('bookings.index') }}" class="clickable">View All</a>
 
                                                 @foreach($upcoming_bookings as $booking)
-                                                    <a href="/bookings/{{ $booking->id }}">
+                                                    <a href="/bookings/{{ $booking->id }}" style="stext-decoration:none;">
                                                         <div class="display-item" >
                                                             <table class="display-table">
                                                                 <tr>

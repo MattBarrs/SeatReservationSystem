@@ -54,6 +54,11 @@
                                 <button id="saveCanvas" class="clickable">Save Canvas</button>
                                 <button id="loadCanvas" class="clickable">Load Canvas</button>
                                 <br/><br/>
+                                <div class="wrapper">
+                                    <div v-if="isError">Save Status: Error Occured</div>
+                                    <div v-else-if="isLoading">Save Status: Saving...</div>
+                                    <div v-else="isLoading">Save Status: Saved.</div>
+                                </div>
                                 <button id="group" class="clickable">Group Selection</button>
                                 <button id="ungroup" class="clickable">Ungroup Selection</button>
                                 <br/>
@@ -84,13 +89,13 @@
 
                 <div class="inline-block">
                 <div class='sampleBox blue'/>
-                    &nbsp;Circle Colour
+                    &nbsp;Seat
                 </div>
                 <br/>
 
                 <div class="inline-block">
                 <div class='sampleBox yellow'/>
-                    &nbsp;Circle Clash Colour
+                    &nbsp;Error With Seat
                 </div>
                 <br/>
 
@@ -111,13 +116,13 @@
 
                 <div class="inline-block">
                 <div class='sampleBox blue2'/>
-                    &nbsp;Circle Colour
+                    &nbsp;Seat
                 </div>
                 <br/>
 
                 <div class="inline-block">
                 <div class='sampleBox yellow2'/>
-                    &nbsp;Circle Clash Colour
+                    &nbsp;Error With Seat
                 </div>
                 <br/>
 
@@ -137,13 +142,13 @@
                 <b-card-text>
                 <div class="inline-block">
                 <div class='sampleBox yellow3'/>
-                    &nbsp;Circle Colour
+                    &nbsp;Seat
                 </div>
                 <br/>
 
                 <div class="inline-block">
                 <div class='sampleBox pink'/>
-                    &nbsp;Circle Clash Colour
+                    &nbsp;Error With Seat
                 </div>
                 <br/>
 
@@ -165,6 +170,7 @@
         </b-sidebar>
          <form id="saveCanvasForm" action="rooms/saveCanvas" method="post"/>
          <input type='hidden' id= 'hiddenField' name='id' value='' />
+        <input type="hidden" name="_token" :value="csrf">
 
 
 
@@ -196,8 +202,9 @@
         components: {
             VueSlider
         },
+        props:['image_name'],
         mounted() {
-
+            console.log(this.image_name);
 
 
             const ref = this.$refs.can;
@@ -206,26 +213,21 @@
             var saveCanvasVar;
             // canvas.setHeight(500);
             // canvas.setWidth(400);
-
-            canvas.setBackgroundImage('../img/default_floorplan.jpg', canvas.renderAll.bind(canvas));
+            // {{ URL::to('/') }}
+            // var filePath = "/public/floor_plan";
+            // filePath = filePath + this.fileName;
+            // var canvasBackground = this.canvasImage;
+            // console.log("TESTING START");
+            // console.log( this.canvasImage);
+            // console.log("TESTING End");
+            var backgroundURL = "/uploads/floor_plan/" + this.image_name;
+            // canvas.setBackgroundImage('../img/default_floorplan.jpg', canvas.renderAll.bind(canvas));
+            canvas.setBackgroundImage(backgroundURL, canvas.renderAll.bind(canvas));
             var $ = function(id){return document.getElementById(id)};
             fabric.Object.prototype.transparentCorners = false;
 
             // // Define
-            // canvas.setBackgroundImage(imageUrl, canvas.renderAll.bind(canvas), {
-            //     // Optionally add an opacity lvl to the image
-            //     backgroundImageOpacity: 1,
-            //     // should the image be resized to fit the container?
-            //     backgroundImageStretch: true,
-            //     height: 600,
-            //     width: 800,
-            // });
-            // fabric.Image.fromURL(imageUrl, function(img){
-            //     img.scaleToHeight(canvas.height);
-            //     img.scaleToWidth(canvas.width);
-            //     canvas.setBackgroundImage(img);
-            //     canvas.requestRenderAll();
-            // });
+
             var counter_seats = 1;
             var objectRadius = 1;
             var seatingAreaSet = false; //used for when the client sets the seating/exlusions areas
@@ -234,29 +236,7 @@
             var seatColour = '#baf312';
             var seatColour_clash = '#ff0000';
 
-            // function collisionCheck(){
-            //     var objects = canvas.getObjects();
-            //     for (var x in objects) {
-            //         for (var y in objects) {
-            //             if(x != y){
-            //                 // objects[x].set('fill' ,objects[y].intersectsWithObject(objects[x]) ? seatColour_clash : seatColour);
-            //                 objects[y].set('fill' ,objects[x].intersectsWithObject(objects[y]) ? seatColour_clash : seatColour);
-            //             }
-            //             // objects[i].scaleX = this.value;
-            //             // objects[i].scaleY = this.value;
-            //         }
-            //      }
-            //     canvas.requestRenderAll();
-            //
-            //     // canvas.forEachObject(function (obj_x) {
-            //     //     canvas.forEachObject(function (obj_y) {
-            //     //         if (obj_x != obj_y){
-            //     //             obj_x.set('fill', obj_y.intersectsWithObject(obj_x) ? seatColour_clash : seatColour);
-            //     //             canvas.requestRenderAll();
-            //     //         }
-            //     //     })
-            //     // })
-            // };
+
 
             //////////Draw Shapes
             var circle = new fabric.Circle({
@@ -266,15 +246,7 @@
                 fill: seatColour,
                 name: 1,
             });
-            // var rect = new fabric.Rect({
-            //     width: 100,
-            //     height: 100,
-            //     top: 100,
-            //     left: 100,
-            //     fill: 'rgba(0,0,255,1)'
-            // });
-            // canvas.add(rect);
-            // rect.hasControls = false;
+
             canvas.add(circle);
             circle.hasControls = false;
 
@@ -288,30 +260,7 @@
             canvas.add(circle2);
             circle2.hasControls = false;
 
-            // var rect1 = new fabric.Rect({
-            //     width: 100,
-            //     height: 100,
-            //     top: 100,
-            //     left: 100,
-            //     fill: 'rgba(0,0,255,1)'
-            // });
-            // const rect = new fabric.Rect({
-            //     fill: 'red',
-            //     width: 20,
-            //     height: 20
-            // });
-            // canvas.add(rect);
-            // rect.animate('left', '+=100', { onChange: canvas.renderAll.bind(canvas) });
-            // var circle = new fabric.Circle({
-            //     radius: 20, fill: 'green', left: 100, top: 100
-            // });
-            // var triangle = new fabric.Triangle({
-            //     width: 20, height: 30, fill: 'blue', left: 50, top: 50
-            // });
-            //
-            // canvas.add(circle, triangle);
-            // canvas.add(rect1);
-            // rect1.hasControls = false;
+
 
 
 
@@ -439,10 +388,7 @@
                         top: 75,
                         fill: seatColour,
                         name: counter_seats,
-                        // radius: scaleControl.value,
-                        // scaleX: $('scale-control'),
-                        // scaleY: $('scale-control'),
-                        // fill: seatColour,
+
                     });
                     canvas.add(seat);
                     seat.scaleX = objectRadius;
@@ -636,8 +582,7 @@
 
             }
 
-            // function updateControls() {
-            // }
+
 
             canvas.on('mouse:wheel', function(opt) {
                 var delta = opt.e.deltaY;
@@ -702,35 +647,6 @@
 
 
 
-            // for (var x in objects) {
-                //     for (var y in objects) {
-                //         if(x != y){
-                //             objects[x].set('fill' ,objects[y].intersectsWithObject(objects[x]) ? seatColour_clash : seatColour);
-                //             objects[y].set('fill' ,objects[x].intersectsWithObject(objects[y]) ? seatColour_clash : seatColour);
-                //
-                //
-                //         }
-                //         // objects[i].scaleX = this.value;
-                //         // objects[i].scaleY = this.value;
-                //     }
-                // }
-
-           // function borderCheck(){
-           //     canvas.forEachObject(function(obj) {
-           //         obj.setCoords();
-           //         if (obj.left < 0 || obj.top < 0 || obj.left + obj.width > canvas.getWidth() || obj.top + obj.radius > canvas.getHeight()) {
-           //             canvas.discardActiveObject();
-           //             obj.setTop(100);
-           //             obj.setLeft(100);
-           //             // obj.setScaleX(obj.originalState.scaleX);
-           //             // obj.setScaleY(obj.originalState.scaleY);
-           //             obj.setCoords();
-           //             canvas.requestRenderAll();
-           //
-           //         }
-           //         canvas.requestRenderAll();
-           //     })
-           //  };
 
             canvas.on({
                 'object:moving': onChange,
@@ -741,9 +657,34 @@
 
 
         },
+        methods:{
+            async myMethod(){
+                try{
+                    this.isLoading = true;
+                    const {data} = await this.$http.patch(
+                        '/api/items',
+                        {name:"my item"}
+                    );
+                }
+                catch(err)
+                {
+                    this.isError = true;
+                    console.log(err);
+                }
+                finally {
+                    this.isLoading = false;
+                }
+
+            }
+        },
+
+
         data: function () {
             return{
+                isLoading: false,
+                isError: false,
                 counter_seats: 0,
+                csrf: document.head.querySelector('meta[name="csrf-token"]').content,
             }
         },
 

@@ -18,7 +18,7 @@
                             <div class="alertMessage">No Rooms Found For Your Institute</div>
                             <br/>
                             <h1>Current Institute Selected: {{ session('institution_name') }}</h1>
-                            <a href="{{ route('institution.select') }}" class="clickable">Change Institution</a>
+                            <a href="{{ route('institution.select') }}" class="clickable" style="text-decoration:none;">Change Institution</a>
 
                         @else
                             <div class="display-block">

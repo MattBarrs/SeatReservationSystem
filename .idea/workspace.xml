@@ -1,13 +1,26 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
   <component name="ChangeListManager">
     <list default="true" id="11180f2f-39ae-4934-a9d8-ad60633b4e6e" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/app/Http/Controllers/RoomsController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/app/Http/Controllers/RoomsController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/app/Models/Rooms.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/app/Models/Rooms.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/config/filesystems.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/config/filesystems.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/app/package-lock.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/app/package.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/public/js/app.js" beforeDir="false" afterPath="$PROJECT_DIR$/app/public/js/app.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/resources/js/app.js" beforeDir="false" afterPath="$PROJECT_DIR$/app/resources/js/app.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/resources/js/components/fabricComponent.vue" beforeDir="false" afterPath="$PROJECT_DIR$/app/resources/js/components/fabricComponent.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/resources/views/institution/create.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/resources/views/institution/create.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/routes/web.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/routes/web.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/resources/views/bookings/create.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/resources/views/bookings/create.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/resources/views/bookings/selectRoom.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/resources/views/bookings/selectRoom.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/resources/views/dashboard.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/resources/views/dashboard.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/resources/views/rooms/create.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/resources/views/rooms/create.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/resources/views/rooms/edit.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/resources/views/rooms/edit.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/resources/views/sandbox.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/resources/views/sandbox.blade.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -185,6 +198,19 @@
       <recent name="C:\Users\Matty B\Documents\Uni_Y4\OneDrive - University of Leeds\Project\SeatReservationSystem\app\resources\views\auth\institution" />
     </key>
   </component>
+  <component name="RunManager">
+    <configuration default="true" type="ArquillianJUnit" factoryName="" nameIsGenerated="true">
+      <option name="arquillianRunConfiguration">
+        <value>
+          <option name="containerStateName" value="" />
+        </value>
+      </option>
+      <option name="TEST_OBJECT" value="class" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+  </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
@@ -230,10 +256,24 @@
       <workItem from="1616668970495" duration="2334000" />
       <workItem from="1616745063334" duration="595000" />
       <workItem from="1616755078346" duration="9106000" />
+      <workItem from="1616863159885" duration="60000" />
+      <workItem from="1617089058619" duration="7324000" />
+      <workItem from="1617120618915" duration="1000" />
+      <workItem from="1617174655711" duration="21193000" />
     </task>
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="javascript">
+          <url>file://$PROJECT_DIR$/app/resources/js/components/startTimeConverter.vue</url>
+          <option name="timeStamp" value="1" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
   </component>
 </project>

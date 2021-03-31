@@ -10,5 +10,6 @@ class Rooms extends Model
 //    use HasFactory;
     protected $casts = [
         'room_details' => 'array',
+        'floor_plan',
     ];
 }

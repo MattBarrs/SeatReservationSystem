@@ -8,6 +8,9 @@ use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
 use App\Models\Rooms;
 use App\Models\Workstation;
+use Illuminate\Support\Facades\Storage;
+
+
 
 class RoomsController extends Controller
 {
@@ -82,16 +85,19 @@ class RoomsController extends Controller
             'room_name' => ['required',Rule::unique('Rooms')->where('institution_name', $institute)],
             'open_time' => 'required',
             'close_time' => 'required|after:open_time',
-            'numOfSeats' => 'required',
+//            'numOfSeats' => 'required',
+            'floor_plan' => 'required|mimes:jpg,jpeg,png,bmp,pdf',
 //            'reference_length' => 'required',
         ];
 
         $customMessages = [
             'close_time.after' => "Closing time must be after Opening time.",
             'numOfSeats.required' => "The number of seats is required.",
+            'floor_plan.required' => "Please upload a floor plan"
         ];
 
         $this->validate($request, $rules, $customMessages);
+
 
         #add data to the room instance
         $room->institution_name = $institute;
@@ -100,10 +106,34 @@ class RoomsController extends Controller
         $room->close_time = request('close_time');
         $room->room_details = request('room_details');
 
-        $room->floor_plan = "s"; //For java interactive section
+        // Store the record, using the new file hashname which will be it's new filename identity.
+
+        $file = request('floor_plan');
+//        $file->store('public');
+//        Storage::put('/public/',$file, 'public');
+
+
+//        $request->file('floor_plan')->store(
+//            'floor_plan', 'public'
+//        );
+        Storage::disk('public')->put('floor_plan', $file,'public');
+        $room->floor_plan = $file->HashName();
+//       Storage::put('public/floor_plan/', $file, 'public');
+//        $contents = Storage::get($room->floor_plan);
+//        error_log($room->floor_plan);
+
+
+//        $filePath = asset("public/floor_plan/"."".$room->floor_plan);
+//        Storage::setVisibility($filePath, 'public');
+//        error_log(Storage::getVisibility($filePath) );
+//        error_log($filePath);
+//        $visibility = Storage::getVisibility("public/floor_plan/"."".$imageName);
+
+//        Storage::disk('local')->put($file, 'Contents');
+//            $room->floor_plan = "s"; //For java interactive section
         $room->reference_length = 10.0; //Reference length to allow distance guaging
         //request(file('floor_plan'));
-
+        $room->room_canvas = "None";
         #save room
         $room->save();
 
@@ -123,6 +153,7 @@ class RoomsController extends Controller
             $workstation->save();
 
         }
+
         #redirected to edit room so the user can edit details about the workstations
         return redirect('/rooms/edit');
     }
@@ -154,6 +185,7 @@ class RoomsController extends Controller
         $institute = $request->session()->get('institution_name');
         $room = $request->session()->get('selected_room');
 
+
         $seats = "";
 
         if($value != NULL)
@@ -175,6 +207,31 @@ class RoomsController extends Controller
                     ->where('room_name',$room)
                     ->first();
 
+//            $imageName = $rooms->floor_plan;
+//            $imageName = "floor_plan/". "". $imageName;
+//            $imageName = $imageName;
+//            $imageName = "floor_plan/". "". $imageName . "a" ;
+//            $imagePath = "/public/floor_plan/"."".$imageName;
+            $image = "";
+//            asset($imageName);
+//            $image = asset('/floor_plan/'."".$imageName);
+//                    $filePath = asset("public/floor_plan/"."".$room->floor_plan);
+
+//            error_log($image);
+//            $canvasImage = Storage::url('public/'.''.$imageName);
+//            var_dump($canvasImage);
+//            $canvasURL = Storage::url($imageName);
+//            $asset = asset($imageName);
+//            error_log($asset);
+//            error_log($canvasURL);
+//            $visibility = Storage::getVisibility('storage/app/public/'."".$canvasURL);
+//            $visibility = Storage::getVisibility($image);
+//            error_log($visibility);
+            //            error_log("------------------");
+//            error_log((string)($canvasImage));
+//            $canvasImage = "ASHSH";
+//            $request->session()->put('floor_plan',$fileName);
+
             $seats = Workstation::
                     where('room_name',$room)
                     ->where('institution_name',$institute)
@@ -188,7 +245,10 @@ class RoomsController extends Controller
         }
 
 
-        return view('rooms.edit', ['seats'=>$seats],['rooms'=>$rooms]);
+        return view('rooms.edit')
+            ->with('seats',$seats)
+            ->with('rooms',$rooms)
+            ->with('image',$image);
     }
 
     #save the details of the room once the user has inputted the new data

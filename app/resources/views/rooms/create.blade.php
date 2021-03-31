@@ -9,7 +9,7 @@
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 bg-white overflow-hidden shadow-xl sm:rounded-lg">
             <div class="wrapper create-booking" style="width:80%;">
                 <div class="title"> Add New Room</div>
-                <form action="{{ route('rooms.index') }}" method="POST" style="padding: 0 0 0 30px;">
+                <form action="{{ route('rooms.index') }}" method="POST" style="padding: 0 0 0 30px;" enctype="multipart/form-data">
 
                     @csrf
 
@@ -61,17 +61,17 @@
                     </div>
                     @endforeach
 
-
-                    <label for ="numOfSeats">Number Of Seats</label>
-                    <input type="number" id="numOfSeats" name="numOfSeats" min="1" value="{{ old('numOfSeats') }}" style="width:10%;">
-
-                    @foreach ($errors->get('numOfSeats') as $message)
-                    <div class="alert alert-danger">
-                        <ul>
-                            <li class="failAlertMessage"> {{ $message }}</li>
-                        </ul>
-                    </div>
-                    @endforeach
+<!---->
+<!--                    <label for ="numOfSeats">Number Of Seats</label>-->
+<!--                    <input type="number" id="numOfSeats" name="numOfSeats" min="1" value="{{ old('numOfSeats') }}" style="width:10%;">-->
+<!---->
+<!--                    @foreach ($errors->get('numOfSeats') as $message)-->
+<!--                    <div class="alert alert-danger">-->
+<!--                        <ul>-->
+<!--                            <li class="failAlertMessage"> {{ $message }}</li>-->
+<!--                        </ul>-->
+<!--                    </div>-->
+<!--                    @endforeach-->
 
 
                     <br/><br/>
@@ -98,6 +98,13 @@
                     <label for ="floor_plan">Upload floor plan of room</label>
                     <input type="file" id="floor_plan" name="floor_plan">
                     <br/><br/>
+                    @foreach ($errors->get('floor_plan') as $message)
+                    <div class="alert alert-danger">
+                        <ul>
+                            <li class="failAlertMessage"> {{ $message }}</li>
+                        </ul>
+                    </div>
+                    @endforeach
 
                     <input type="submit" value="Submit" class="clickable">
                 </form>
