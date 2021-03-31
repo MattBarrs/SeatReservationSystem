@@ -62,13 +62,11 @@
                                             @endforeach
                                         </table>
                                         <br/>
-                                        <img src="/uploads/floor_plan/{{$rooms->floor_plan}}"/>
-                                        <img src="/img/workplace.png"/>
 
-                                        <fabric-component  image_name="{{$rooms->floor_plan}}"></fabric-component>
+                                    </form>
+                                    <fabric-component  image_name="{{$rooms->floor_plan}}"></fabric-component>
 
-s                                    </form>
-                                    <br/><br/>
+                                <br/><br/>
                                     <form action="{{ route('rooms.delete', $rooms->room_name)}}" method="POST">
                                         @csrf
                                         @method('DELETE')

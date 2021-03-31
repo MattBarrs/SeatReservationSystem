@@ -5,22 +5,11 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="11180f2f-39ae-4934-a9d8-ad60633b4e6e" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/app/Http/Controllers/RoomsController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/app/Http/Controllers/RoomsController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/app/Models/Rooms.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/app/Models/Rooms.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/config/filesystems.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/config/filesystems.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/app/package-lock.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/app/package.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/public/js/app.js" beforeDir="false" afterPath="$PROJECT_DIR$/app/public/js/app.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/resources/js/app.js" beforeDir="false" afterPath="$PROJECT_DIR$/app/resources/js/app.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/resources/js/components/fabricComponent.vue" beforeDir="false" afterPath="$PROJECT_DIR$/app/resources/js/components/fabricComponent.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/resources/views/bookings/create.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/resources/views/bookings/create.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/resources/views/bookings/selectRoom.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/resources/views/bookings/selectRoom.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/resources/views/dashboard.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/resources/views/dashboard.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/resources/views/rooms/create.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/resources/views/rooms/create.blade.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/resources/views/rooms/edit.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/resources/views/rooms/edit.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/resources/views/sandbox.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/resources/views/sandbox.blade.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -259,7 +248,7 @@
       <workItem from="1616863159885" duration="60000" />
       <workItem from="1617089058619" duration="7324000" />
       <workItem from="1617120618915" duration="1000" />
-      <workItem from="1617174655711" duration="21193000" />
+      <workItem from="1617174655711" duration="23862000" />
     </task>
     <servers />
   </component>

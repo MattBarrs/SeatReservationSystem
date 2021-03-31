@@ -51,25 +51,29 @@
                         </b-card-header>
                         <b-collapse id="accordion-3" accordion="task-accordion" role="tabpanel">
                             <b-card-body>
-                                <button id="saveCanvas" class="clickable">Save Canvas</button>
-                                <button id="loadCanvas" class="clickable">Load Canvas</button>
                                 <br/><br/>
+                                <button id="saveCanvas" class="clickable">Save Canvas</button>
+
                                 <div class="wrapper">
                                     <div v-if="isError">Save Status: Error Occured</div>
                                     <div v-else-if="isLoading">Save Status: Saving...</div>
                                     <div v-else="isLoading">Save Status: Saved.</div>
                                 </div>
-                                <button id="group" class="clickable">Group Selection</button>
-                                <button id="ungroup" class="clickable">Ungroup Selection</button>
-                                <br/>
-                                <button id="discard" class="clickable">Discard Selection</button>
+
                                 <br/><br/>
                             </b-card-body>
                         </b-collapse>
                     </b-card>
                 </div>
             <button id="deleteSelection" class="redButton">Delete Selection</button>
-            </div>
+
+            <form @submit.prevent="saveCanvas">
+                <input type="hidden" name="title" v-model="saveCanvasVar">
+                <input type="hidden" name="_token" :value="csrf">
+                <input type="submit" value="Submit" class="clickable">
+            </form>
+
+        </div>
 
 
         <b-button v-b-toggle.collapse-1 variant="primary" class="clickable" style="margin-top:150px;margin-left:10px;">Toggle Colour Options</b-button>
@@ -166,11 +170,9 @@
 
                 </b-collapse>
 
-
         </b-sidebar>
-         <form id="saveCanvasForm" action="rooms/saveCanvas" method="post"/>
-         <input type='hidden' id= 'hiddenField' name='id' value='' />
-        <input type="hidden" name="_token" :value="csrf">
+
+
 
 
 
@@ -204,30 +206,20 @@
         },
         props:['image_name'],
         mounted() {
-            console.log(this.image_name);
 
-
+            //Define + create canvas
             const ref = this.$refs.can;
             const canvas = new fabric.Canvas(ref);
-
-            var saveCanvasVar;
-            // canvas.setHeight(500);
-            // canvas.setWidth(400);
-            // {{ URL::to('/') }}
-            // var filePath = "/public/floor_plan";
-            // filePath = filePath + this.fileName;
-            // var canvasBackground = this.canvasImage;
-            // console.log("TESTING START");
-            // console.log( this.canvasImage);
-            // console.log("TESTING End");
             var backgroundURL = "/uploads/floor_plan/" + this.image_name;
-            // canvas.setBackgroundImage('../img/default_floorplan.jpg', canvas.renderAll.bind(canvas));
             canvas.setBackgroundImage(backgroundURL, canvas.renderAll.bind(canvas));
+
             var $ = function(id){return document.getElementById(id)};
             fabric.Object.prototype.transparentCorners = false;
+            // canvas.setBackgroundImage('../img/default_floorplan.jpg', canvas.renderAll.bind(canvas));
 
-            // // Define
 
+            // // Define variables
+            var saveCanvasVar;
             var counter_seats = 1;
             var objectRadius = 1;
             var seatingAreaSet = false; //used for when the client sets the seating/exlusions areas
@@ -275,17 +267,14 @@
                 }
 
                 objectRadius = this.value;
-                // console.log(this.value);
-
                 canvas.requestRenderAll();
             };
+
             addmore_seatingArea.onclick = function() {
                 if(seatingAreaSet == false){
-                    // console.log(objectRadius);
                     var rectangle = new fabric.Rect({
                         left: 100,
                         top: 100,
-                        // fill: 'red',
                         width: 200,
                         height: 200,
                         strokeDashArray: [1, 1],
@@ -304,14 +293,14 @@
             }
 
             addmore_exclusionArea.onclick = function() {
-                // console.log(objectRadius);
                 if(seatingAreaSet == false){
+
                     var rectangle = new fabric.Rect({
                         left: 100,
                         top: 100,
-                        // fill: 'red',
                         width: 200,
                         height: 200,
+
                         strokeDashArray: [1, 1],
                         stroke: 'black',
                         name: 'exclusionArea',
@@ -477,6 +466,14 @@
                             var error = e;
 
                         }
+                        finally {
+                            axios.post('/post',{canvas:this.saveCanvasVar})
+                                .then((response)=>{
+                                    $('#success').html(response.data.message)
+                                }
+                            )
+                        }
+
 
 
                         canvas.requestRenderAll();
@@ -495,31 +492,9 @@
                     alert("Save Successfull")
                 }
             }
-            loadCanvas.onclick = function(){
-                canvas.loadFromJSON(saveCanvasVar)
-            }
 
-            group.onclick = function() {
-                if (!canvas.getActiveObject()) {
-                    return;
-                }
-                if (canvas.getActiveObject().type !== 'activeSelection') {
-                    return;
-                }
-                canvas.getActiveObject().toGroup();
-                canvas.requestRenderAll();
-            }
 
-            ungroup.onclick = function() {
-                if (!canvas.getActiveObject()) {
-                    return;
-                }
-                if (canvas.getActiveObject().type !== 'group') {
-                    return;
-                }
-                canvas.getActiveObject().toActiveSelection();
-                canvas.requestRenderAll();
-            }
+            
 
             deleteSelection.onclick = function() {
                 var obj = canvas.getActiveObject();
@@ -681,6 +656,7 @@
 
         data: function () {
             return{
+                saveCanvasVar: null,
                 isLoading: false,
                 isError: false,
                 counter_seats: 0,
