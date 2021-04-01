@@ -21356,7 +21356,7 @@ window.Vue = require('vue').default;
 
 Vue.component('fabric-component',require('./components/fabricComponent.vue').default);
 Vue.component('example-component', require('./components/ExampleComponent.vue').default);
-Vue.component('time_converter-component', require('./components/startTimeConverter.vue').default);
+// Vue.component('time_converter-component', require('./components/startTimeConverter.vue').default);
 Vue.component('canvas-component', require('./components/canvasComponent.vue').default);
 
 
