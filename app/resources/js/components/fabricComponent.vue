@@ -53,20 +53,21 @@
                             <b-card-body>
                                 <br/><br/>
 
-                                <button id="checkCanvas" class="clickable">Check Canvas</button>
+                                <button id="checkCanvas" class="clickable">Save Canvas</button>
+                                <br/>
+                                <br/>
 
-                                <form @submit.prevent="saveCanvas" id="saveForm" style="visibility: hidden;">
-                                    <input type="hidden" name="canvas" v-model="saveCanvasVar">
-                                    <input type="hidden" name="_token" :value="csrf">
-                                    <input type="submit" id="saveCanvas" value="Save Canvas" class="clickable">
-                                </form>
-                                <div class="wrapper">
-                                    <div v-if="isError">Save Status: Error Occured</div>
-                                    <div v-else-if="isLoading">Save Status: Saving...</div>
-                                    <div v-else="isLoading">Save Status: Saved.</div>
+                                <div id="status box">
+                                    Status:
+                                    <br/>
+                                    <div id="isError" class="redBackground" style="visibility:hidden;">Error</div>
+                                    <div id="isSaved"  class="greenBackground"  style="visibility:hidden;" >Saved</div>
+                                    <div id="isUnsaved"  class="yellowBackground "  style="visibility:visible;">Unsaved Changes</div>
                                 </div>
 
-                                <br/><br/>
+
+                                <br/>
+                                <br/>
                             </b-card-body>
 
                         </b-collapse>
@@ -170,24 +171,15 @@
         </b-collapse>
 
 
-
-
                 </b-collapse>
 
         </b-sidebar>
 
 
-
-
-
-
-
-
-
         <br/><br/>
-
-
-
+        Error {{ isError}}
+        <br/>
+        Changed {{ isChanged }}
         <canvas ref="can" width="900" height="900"  style="border: 1px solid grey;"></canvas>
 
 <br/>
@@ -205,11 +197,27 @@
     import { VBTogglePlugin } from 'bootstrap-vue'
     Vue.use(VBTogglePlugin)
     export default {
+
         components: {
             VueSlider
         },
+
+
         props:['image_name'],
-        mounted() {
+
+        data() {
+            return{
+                saveCanvasVar: "",
+                isError: false,
+                isChanged: true,
+                counter_seats: 0,
+                // csrf: document.head.querySelector('meta[name="csrf-token"]').content,
+            }
+        },
+
+
+
+        mounted: function(){
 
             //Define + create canvas
             const ref = this.$refs.can;
@@ -230,8 +238,9 @@
             var counter_exclusionArea = 0;
             var seatColour = '#baf312';
             var seatColour_clash = '#ff0000';
-
-
+            // var saveCanvasVar = null;
+            var isError = false;
+            var isChanged = true;
 
             //////////Draw Shapes
             var circle = new fabric.Circle({
@@ -246,12 +255,12 @@
             circle.hasControls = false;
 
 
-            var circle2 = new fabric.Circle({
-                radius: 50,
-                left: 175,
-                top: 75,
-                fill: seatColour,
-            });
+            // var circle2 = new fabric.Circle({
+            //     radius: 50,
+            //     left: 175,
+            //     top: 75,
+            //     fill: seatColour,
+            // });
             // canvas.add(circle2);
             // circle2.hasControls = false;
 
@@ -272,6 +281,12 @@
                 objectRadius = this.value;
                 canvas.requestRenderAll();
             };
+
+            // triggerSave.onclick = function(){
+            //     var obj = this;
+            //     obj.saveCanvas();
+            // }
+
 
             addmore_seatingArea.onclick = function() {
                 if(seatingAreaSet == false){
@@ -366,9 +381,9 @@
 
             unsetSeatArea.onclick = function() {
                 canvas.discardActiveObject();
-                canvas.forEachObject(function(obj) {
-                    if( obj.get('type') != "rect") return;
-                    obj.selectable = true;
+                canvas.forEachObject(function(object) {
+                    if( object.get('type') != "rect") return;
+                    object.selectable = true;
                 });
                 seatingAreaSet = false;
             }
@@ -398,18 +413,26 @@
             }
 
             checkCanvas.onclick = function(){
-                var errorFound = false;
+                isError = false;
+                document.getElementById("isError").style.visibility = "visible";
+                document.getElementById("isSaved").style.visibility = "hidden";
+                document.getElementById("isUnsaved").style.visibility = "hidden";
                 // var outOfBounds = false;
                 var withinASeatingArea = false;
                 var errorWhatIsWrong = "Could not save as: \n ";
 
-                if(seatingAreaSet == false) {
-                    errorFound = true;
-                    errorWhatIsWrong = errorWhatIsWrong + "\n Seating Area Has Not Been Set!";
 
+                if(seatingAreaSet == false) {
+                    isError = true;
+                    errorWhatIsWrong = errorWhatIsWrong + "\n -Seating Area Has Not Been Set!";
                 }
 
-                if(errorFound == false){
+                if(counter_seats ==0){
+                    isError = true;
+                    errorWhatIsWrong = errorWhatIsWrong + "\n -No seats added.";
+                }
+
+                if(isError == false){
                     canvas.forEachObject(function(objx) {
                         withinASeatingArea = false;
 
@@ -439,7 +462,7 @@
                                 if ((objy.get('name') == 'exclusionArea') && (objx.intersectsWithObject(objy))) {
 
                                     objx.set('fill', seatColour_clash);
-                                    errorFound = true;
+                                    isError = true;
                                     errorWhatIsWrong = errorWhatIsWrong + "\n  - A seat overlaps with an exclusion zone";
 
                                     throw new Error('SeatPositionException');
@@ -448,7 +471,7 @@
 
                                 if ((objy.get('name') == 'seatingArea') && !(objx.isContainedWithinObject(objy)) && (withinASeatingArea == false)) {
                                     objx.set('fill', seatColour_clash);
-                                    errorFound = true;
+                                    isError = true;
                                     withinASeatingArea = false;
                                     errorWhatIsWrong = errorWhatIsWrong + "\n   - A seat is not fully in a zone";
 
@@ -458,7 +481,7 @@
 
                                 if ((objy.get('type') == "circle") && (objx.intersectsWithObject(objy))) {
                                     objx.set('fill', seatColour_clash);
-                                    errorFound = true;
+                                    isError = true;
                                     errorWhatIsWrong = errorWhatIsWrong + "\n   - A seat overlaps with another seat";
 
 
@@ -478,15 +501,44 @@
 
                 }
 
-                if(errorFound == true){
-                    document.getElementById("saveForm").style.visibility = "hidden";
+                if(isError == true){
+                    // document.getElementById("saveButton").style.visibility = "hidden";
                     alert(errorWhatIsWrong);
                 }
                 else {
+                    isError = false;
                     this.saveCanvasVar = JSON.stringify(canvas)
-                    console.log(this.saveCanvasVar);
-                    document.getElementById("saveForm").style.visibility = "visible";
+                    // console.log(this.saveCanvasVar);
+                    // document.getElementById("saveButton").style.visibility = "visible";
+                    try{
+                        let obj = this;
+                        obj.isChanged = true;
+                        // console.log("canvasObject");
+                        // console.log(canvasObject);
+                        // console.log(this.saveCanvasVar);
 
+                        axios.post('/rooms/saveCanvas', {
+                            canvas: obj.saveCanvasVar,
+                            // canvas: canvasObject,
+                        }).then(function(response) {
+                            console.log("response");
+                            // console.log(response);
+                        }).catch(function(error) {
+                            console.log("error");
+                            // console.log(error);
+                        })
+
+                    }
+                    catch(err)
+                    {
+                        isError = true;
+                    }
+                    finally {
+                        isChanged = false;
+                        document.getElementById("isSaved").style.visibility = "visible";
+                        document.getElementById("isUnsaved").style.visibility = "hidden";
+                        document.getElementById("isError").style.visibility = "hidden";
+                    }
                 }
             }
 
@@ -494,16 +546,16 @@
 
 
             deleteSelection.onclick = function() {
-                var obj = canvas.getActiveObject();
+                var object = canvas.getActiveobject();
 
-                canvas.remove( canvas.getActiveObject()) ;
+                canvas.remove( canvas.getActiveobject()) ;
 
-                if(obj.get('name') == 'seatingArea'){
+                if(object.get('name') == 'seatingArea'){
                     counter_seatingArea = counter_seatingArea - 1;
-                }else if( obj.get('name') == 'seatingArea'){
+                }else if( object.get('name') == 'seatingArea'){
                     counter_exclusionArea = counter_exclusionArea - 1;
 
-                }else if ( obj.get('circle') ) {
+                }else if ( object.get('type') == 'circle' ) {
                     counter_seats = counter_seats - 1;
                 }
             }
@@ -514,39 +566,40 @@
             }
 
             alterColour_01.onclick = function() {
-                canvas.forEachObject(function(obj) {
-                    if( obj.get('type') != "circle") return;
-                    obj.set('fill' ,'#1E88E5');
+                canvas.forEachObject(function(object) {
+                    if( object.get('type') != "circle") return;
+                    object.set('fill' ,'#1E88E5');
                 });
                 seatColour = "#1E88E5";
                 seatColour_clash = "#FFC107";
                 canvas.requestRenderAll();
-
             }
+
             alterColour_02.onclick = function() {
-                canvas.forEachObject(function(obj) {
-                    if( obj.get('type') != "circle") return;
-                    obj.set('fill' ,'#40B0A6');
+                canvas.forEachObject(function(object) {
+                    if( object.get('type') != "circle") return;
+                    object.set('fill' ,'#40B0A6');
                 });
                 seatColour = "#40B0A6";
                 seatColour_clash = "#E1BE6A";
                 canvas.requestRenderAll();
-
             }
+
             alterColour_03.onclick = function() {
-                canvas.forEachObject(function(obj) {
-                    if( obj.get('type') != "circle") return;
-                    obj.set('fill' ,'#FEFE62');
+                canvas.forEachObject(function(object) {
+                    if( object.get('type') != "circle") return;
+                    object.set('fill' ,'#FEFE62');
                 });
                 seatColour = "#FEFE62";
                 seatColour_clash = "#D35FB7";
                 canvas.requestRenderAll();
 
             }
+
             resetColours.onclick = function() {
-                canvas.forEachObject(function(obj) {
-                    if( obj.get('type') != "circle") return;
-                    obj.set('fill' ,'#baf312');
+                canvas.forEachObject(function(object) {
+                    if( object.get('type') != "circle") return;
+                    object.set('fill' ,'#baf312');
                 });
                 seatColour = "#baf312";
                 seatColour_clash = "#ff0000";
@@ -567,7 +620,7 @@
                 canvas.zoomToPoint({ x: opt.e.offsetX, y: opt.e.offsetY }, zoom);
                 opt.e.preventDefault();
                 opt.e.stopPropagation();
-                            });
+            });
 
 
 
@@ -604,71 +657,72 @@
             });
 
             function onChange(options) {
-                document.getElementById("saveForm").style.visibility = "hidden";
+                if(isChanged == false){
+                    document.getElementById("isSaved").style.visibility = "hidden";
+                    document.getElementById("isUnsaved").style.visibility = "visible";
+                    isChanged = true;
+                }
+
                 options.target.setCoords();
                 if( options.target.get('type') != "circle") return;
 
-                canvas.forEachObject(function(obj) {
-                    if (obj != options.target) {
-                        if ((obj.get('type') == "rect") && (obj.get('name') == 'exclusionArea')) {
-                            options.target.set('fill', options.target.intersectsWithObject(obj) ? seatColour_clash : seatColour);
-                        } else {
+                canvas.forEachObject(function(object) {
+                    if (object != options.target) {
 
-                            if (obj.get('type') == "rect") return;
-                            obj.set('fill', options.target.intersectsWithObject(obj) ? seatColour_clash : seatColour);
+                        if ((object.get('type') == "rect") && (object.get('name') == 'exclusionArea')) {
+                            options.target.set('fill', options.target.intersectsWithObject(object) ? seatColour_clash : seatColour);
+                        }
+                        else {
+
+                            if (object.get('type') == "rect") return;
+                            object.set('fill', options.target.intersectsWithObject(object) ? seatColour_clash : seatColour);
 
                         }
                     }
                 });
             };
 
-
-
-
             canvas.on({
                 'object:moving': onChange,
             });
 
 
-        },
-        methods:{
-            async saveCanvas(){
-                try{
-                    this.isLoading = true;
-                    console.log(this.saveCanvasVar);
-
-                    axios.post('/rooms/saveCanvas', {
-                        canvas: this.saveCanvasVar,
-                    }).then(function(response) {
-                        console.log(response);
-                    }).catch(function(error) {
-                        console.log(error);
-                    })
 
 
-
-                }
-                catch(err)
-                {
-                    this.isError = true;
-                }
-                finally {
-                    this.isLoading = false;
-                }
-
-            }
         },
 
-
-        data: function () {
-            return{
-                saveCanvasVar: null,
-                isLoading: false,
-                isError: false,
-                counter_seats: 0,
-                csrf: document.head.querySelector('meta[name="csrf-token"]').content,
-            }
-        },
-
-};
+        // methods:{
+        //     saveCanvas: function(){
+        //         try{
+        //             let obj = this;
+        //             obj.isChanged = true;
+        //             console.log("canvasObject");
+        //             // console.log(canvasObject);
+        //             console.log(this.saveCanvasVar);
+        //
+        //             axios.post('/rooms/saveCanvas', {
+        //                 canvas: obj.saveCanvasVar,
+        //                 // canvas: canvasObject,
+        //             }).then(function(response) {
+        //                 console.log("response");
+        //                 console.log(response);
+        //             }).catch(function(error) {
+        //                 console.log("error");
+        //                 console.log(error);
+        //             })
+        //
+        //
+        //
+        //         }
+        //         catch(err)
+        //         {
+        //             this.isError = true;
+        //         }
+        //         finally {
+        //             this.isChanged = false;
+        //         }
+        //
+        //     }
+        // },
+    };
 </script>

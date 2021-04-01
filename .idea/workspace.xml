@@ -7,8 +7,13 @@
     <list default="true" id="11180f2f-39ae-4934-a9d8-ad60633b4e6e" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/app/Http/Controllers/RoomsController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/app/Http/Controllers/RoomsController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/app/Models/Rooms.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/app/Models/Rooms.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/database/migrations/2021_03_26_162715_add_canvas_to_room.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/database/migrations/2021_03_26_162715_add_canvas_to_room.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/public/css/app.css" beforeDir="false" afterPath="$PROJECT_DIR$/app/public/css/app.css" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/public/js/app.js" beforeDir="false" afterPath="$PROJECT_DIR$/app/public/js/app.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/resources/js/app.js" beforeDir="false" afterPath="$PROJECT_DIR$/app/resources/js/app.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/resources/js/components/fabricComponent.vue" beforeDir="false" afterPath="$PROJECT_DIR$/app/resources/js/components/fabricComponent.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/resources/js/components/startTimeConverter.vue" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -186,19 +191,6 @@
       <recent name="C:\Users\Matty B\Documents\Uni_Y4\OneDrive - University of Leeds\Project\SeatReservationSystem\app\resources\views\auth\institution" />
     </key>
   </component>
-  <component name="RunManager">
-    <configuration default="true" type="ArquillianJUnit" factoryName="" nameIsGenerated="true">
-      <option name="arquillianRunConfiguration">
-        <value>
-          <option name="containerStateName" value="" />
-        </value>
-      </option>
-      <option name="TEST_OBJECT" value="class" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-  </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
@@ -247,21 +239,23 @@
       <workItem from="1616863159885" duration="60000" />
       <workItem from="1617089058619" duration="7324000" />
       <workItem from="1617120618915" duration="1000" />
-      <workItem from="1617174655711" duration="28961000" />
+      <workItem from="1617174655711" duration="29269000" />
+      <workItem from="1617261688617" duration="27211000" />
     </task>
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
   </component>
-  <component name="XDebuggerManager">
-    <breakpoint-manager>
-      <breakpoints>
-        <line-breakpoint enabled="true" type="javascript">
-          <url>file://$PROJECT_DIR$/app/resources/js/components/startTimeConverter.vue</url>
-          <option name="timeStamp" value="1" />
-        </line-breakpoint>
-      </breakpoints>
-    </breakpoint-manager>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
   </component>
 </project>

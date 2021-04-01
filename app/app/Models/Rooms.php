@@ -11,5 +11,6 @@ class Rooms extends Model
     protected $casts = [
         'room_details' => 'array',
         'floor_plan',
+        'room_canvas',
     ];
 }

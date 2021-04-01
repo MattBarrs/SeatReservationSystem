@@ -14,7 +14,7 @@ class AddCanvasToRoom extends Migration
     public function up()
     {
         Schema::table('rooms', function (Blueprint $table) {
-            $table->string('room_canvas');
+            $table->text('room_canvas',16300);
         });
     }
 
@@ -26,7 +26,7 @@ class AddCanvasToRoom extends Migration
     public function down()
     {
         Schema::table('room', function (Blueprint $table) {
-            //
+            $table->dropColumn('room_canvas');
         });
     }
 }

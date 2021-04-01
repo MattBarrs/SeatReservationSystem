@@ -48,24 +48,48 @@ class RoomsController extends Controller
         }
     }
 
-    public function  createCanvas(Request $request){
-
-    }
+//    public function  createCanvas(Request $request){
+//
+//    }
 
     public function saveCanvas(Request $request){
+        error_log("Start of function ");
+//
+        error_log("Attempting request get() ");
+        $canvasObject = $request->get('canvas');
+        error_log( gettype($canvasObject) );
+        error_log( $canvasObject);
+
+//        error_log("Current Institute");
         $institute = $request->session()->get('institution_name');
+//        error_log($institute);
+
+//        error_log("Current Room");
         $room = $request->session()->get('selected_room');
+//        error_log( $room);
+        //        error_log($request->all());
 
-        $canvasObject = $request('canvas');
-        error_log("___________________");
-        error_log($canvasObject);
+        error_log("+++++++++++++");
 
-        Rooms::
-            where('room_name',$room)
-            ->where('institution_name',$institute)
-            ->update('room_canvas',$canvasObject);
+        $roomQ = Rooms::where('institution_name',$institute)->where('room_name',$room)->first();
+        error_log($roomQ);
+        Rooms::where('institution_name',$institute)->where('room_name',$room)->update(['room_canvas'=>$canvasObject]);;
 
-        return redirect('/dashboard');
+//        Rooms::where('institution_name',$institute)->where('room_name',$room)->update(["reference_length",11]);
+//        error_log($roomQ);
+//
+//
+//        $roomQ->update(["room_canvas",$canvasObject]);
+//        error_log($roomQ);
+
+        //        $room = Rooms::where('room_name',$room)->where('institution_name',$institute)-get();
+        //        error_log($room);
+        //            ->update('room_canvas',$canvasObject);
+
+        error_log("End of function, returning ");
+
+        return response()->json([$request->all()]);
+//        return response()->200;
 
 
     }
