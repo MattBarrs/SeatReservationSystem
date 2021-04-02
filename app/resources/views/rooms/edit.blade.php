@@ -8,16 +8,21 @@
     <div class="py-12">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 bg-white overflow-hidden shadow-xl sm:rounded-lg">
 
-            <div class="wrapper display-index">
+            <div class="wrapper create-booking">
 
                 <div class="title"> Edit Room Details</div>
 
                     <div class = "content" style="align-content:center;">
                         <div class = "content" style="align-content:center;">
-                            <div class="display-item"  style="border-width:2px;border-radius:5px;border-color:#000000;">
                                 Room Selected: {{$rooms->room_name}}<br/>
-
                                     <a href="{{ route('rooms.selectEdit') }}" class="clickable">Select Different Room</a>
+
+                                    <form action="{{ route('rooms.delete', $rooms->room_name)}}" method="POST">
+                                        @csrf
+                                        @method('DELETE')
+                                        <button class="redButton">Delete Room</button>
+                                    </form>
+
                                     <form action="{{ route('rooms.edit') }}" method="POST">
                                         @csrf
                                         <table style="margin-left:auto;margin-right: auto;text-align:left;vertical-align:middle;" >
@@ -64,16 +69,10 @@
                                         <br/>
 
                                     </form>
-                                    <fabric-component  image_name="{{$rooms->floor_plan}}"></fabric-component>
+                                    </div>
+                                    <fabric-component  image_name="{{$rooms->floor_plan}}"  previouscanvas="{{$rooms->room_canvas}}" style="width:95%"></fabric-component>
 
-                                <br/><br/>
-                                    <form action="{{ route('rooms.delete', $rooms->room_name)}}" method="POST">
-                                        @csrf
-                                        @method('DELETE')
-                                        <button class="redButton">Delete Room</button>
-                                    </form>
-                                </div>
-                            </div>
+
                     </div>
                 </div>
             </div>

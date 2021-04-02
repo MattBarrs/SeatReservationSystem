@@ -53,8 +53,19 @@ class DashboardController extends Controller
         return view('dashboard', ['booking' => $booking, 'institutes'=>$institutes_all, 'upcoming_bookings'=>$upcoming_bookings]);
     }
 
-    public function sandbox(){
-        return view('sandbox');
+    public function sandbox(Request $request){
+        $institute = $request->session()->get('institution_name');
+        $roomSelected = $request->session()->get('selected_room');
+
+        $rooms  = Rooms::
+            where('institution_name',$institute)
+            ->where('room_name',$roomSelected)
+            ->first();
+//        error_log($institute);
+//        error_log($roomSelected);
+//        error_log($rooms->room_canvas);
+        return view('sandbox')
+            ->with('rooms',$rooms);
     }
 
 }

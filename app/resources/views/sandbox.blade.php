@@ -8,13 +8,14 @@
 
     <div class="py-12">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 bg-white overflow-hidden shadow-xl sm:rounded-lg">
-            <div class="wrapper create-booking" style="width:80%;">
+            <div class="wrapper create-booking">
                 <div class="title">Canvas Sandbox</div>
                 <br/>< Before JS><br/>
 
                 <br/>
 <!--                <canvas-component></canvas-component>-->
-                <fabric-component></fabric-component>
+<!--                <fabric-component></fabric-component>-->
+                <showCanvas-component roomcanvas="{{$rooms->room_canvas}}" style="width:95%"></showCanvas-component>
                 <br/>< After JS ><br/>
 
         </div>
