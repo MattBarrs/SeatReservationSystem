@@ -29,14 +29,10 @@
                         <thead>
                         <tr>
                             <th>
-                                <div class="display-block">
-                                    New Booking?
-                                    <div class="display-item" style="border-width:2px;border-radius:5px;border-color:#000000;">
-                                        <a href="{{ route('bookings.create') }}" class="clickable" style="width:100%;white-space:nowrap;">Book A Seat</a>
-                                    </div>
-                                </div>
+                                <div></div>
                             </th>
                             <th>
+                                <br/>
                                 <div class="display-block">
                                     Current Institute
                                     <div class="display-item" style="border-width:2px;border-radius:5px;border-color:#000000;">
@@ -66,18 +62,11 @@
                                     </div>
                                 </div>
                             </th>
-                            <th rowspan="2">
 
-                                <div class="display-block">
-                                    <p>Room Last Used</p>
-                                    <div class="display-item" style="margin-left:auto;margin-right:auto; text-align:center;height:100%;">
-                                        <p style="padding: 125px 10px 100px 10px;">IMAGE OF ROOM</p>
-                                    </div>
-                                </div>
-                            </th>
                         </tr>
                         <tr>
                             <td colspan="2">
+                                <br/>
                                 <div class="display-block">
                                     <p>Your Latest Booking</p>
 
@@ -112,6 +101,7 @@
                         <tbody>
                             <tr>
                                 <td colspan="3">
+                                    <br/>
                                     <div class="display-block">
                                         <p>Upcoming Bookings</p>
 
@@ -150,6 +140,16 @@
                                 </td>
                             </tr>
                         </tbody>
+                        <br/>
+                        <th colspan="2">
+                            <br/>
+                            <div class="display-block">
+                                <p>Room Last Used</p>
+                                <div class="display-item" style="margin-left:auto;margin-right:auto; text-align:center;height:100%;">
+                                    <p style="padding: 125px 10px 100px 10px;">IMAGE OF ROOM</p>
+                                </div>
+                            </div>
+                        </th>
                     </table>
                 </div>
             </div>
