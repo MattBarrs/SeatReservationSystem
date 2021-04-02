@@ -1,88 +1,83 @@
 <template>
     <div>
 
-        <b-button v-b-toggle href="#accessibility-sidebar" @click.prevent class="clickable">Controls & Accessibilty</b-button>
-        <b-button v-b-toggle.collapse-0 variant="primary" class="clickable" style="margin-left:10px;">Toggle Instructions</b-button>
-        <b-collapse id="collapse-0" class="mt-2" style="width:95%">
-            <b-card>
-                Instructions:<br/>
-                - 'ALT' + 'Left Click': Move view of canvas<br/>
-                - 'Mouse wheel': Changes level of zoom<br/>
-                - 'Alter Slider': Changes size of shapes<br/>
-            </b-card>
-        </b-collapse>
 
-        <b-sidebar visible id="accessibility-sidebar" title="Controls & Accessibilty" shadow>
+
+        <b-sidebar  id="accessibility-sidebar" title="Controls & Accessibilty" right shadow>
             <div class="px-3 py-2">
-                <div class="accordion" role="tablist">
-                    <b-card no-body class="mb-1">
-                        <b-card-header header-tag="header" class="p-1" role="tab">
-                            <b-button block v-b-toggle.accordion-1 variant="info">Step 1: Mark Seating Area</b-button>
-                        </b-card-header>
-                        <b-collapse  visible id="accordion-1" accordion="task-accordion" role="tabpanel">
-                            <b-card-body>
-                                <b-card-text>Add a square to define where the seats must be within </b-card-text>
-                                    <button id="addmore_seatingArea" class="clickable">Add Seating Area</button>
-                                    <button id="addmore_exclusionArea" class="clickable">Add Exclusion Area</button>
-                                    <button id="setSeatArea" class="clickable">Set Seat Area</button>
-                                    <button id="unsetSeatArea" class="clickable">Unset Seat Area</button>
-                                </b-card-body>
-                        </b-collapse>
+                <b-collapse visible class="mt-2">
+                    <b-card>
+
+                        <button id="discard" class="clickable">Discard Selection</button>
+                        <button id="deleteSelection" class="redButton">Delete Object</button>
+
+                        <div class="accordion" role="tablist">
+                            <b-card no-body class="mb-1">
+                                <b-card-header header-tag="header" class="p-1" role="tab">
+                                    <b-button block v-b-toggle.accordion-1 variant="info">Step 1: Mark Seating Area</b-button>
+                                </b-card-header>
+                                <b-collapse  visible id="accordion-1" accordion="task-accordion" role="tabpanel">
+                                    <b-card-body>
+                                        <b-card-text>Add a square to define where the seats must be within </b-card-text>
+                                            <button id="addmore_seatingArea" class="clickable">Add Seating Area</button>
+                                            <button id="addmore_exclusionArea" class="clickable">Add Exclusion Area</button>
+                                            <button id="setSeatArea" class="clickable">Set Seat Area</button>
+                                            <button id="unsetSeatArea" class="clickable">Unset Seat Area</button>
+                                        </b-card-body>
+                                </b-collapse>
+                            </b-card>
+
+                            <b-card no-body class="mb-1">
+                                <b-card-header header-tag="header" class="p-1" role="tab">
+                                    <b-button block v-b-toggle.accordion-2 variant="info">Step 2: Add Seats</b-button>
+                                </b-card-header>
+                                <b-collapse id="accordion-2" accordion="task-accordion" role="tabpanel">
+                                    <b-card-body>
+                                        <button id="addmore_seat" class="clickable">Add more Seats</button>
+                                        <br/>
+                                        Size of seats: <input type="range" id="scale-control" value="1" min="0.1" max="3" step="0.1">
+                                        <br/><br/>
+
+                                    </b-card-body>
+                                </b-collapse>
+                            </b-card>
+
+                            <b-card no-body class="mb-1">
+                                <b-card-header header-tag="header" class="p-1" role="tab">
+                                    <b-button block v-b-toggle.accordion-3 variant="info">Step 3: Group Seats Into Sections</b-button>
+                                </b-card-header>
+                                <b-collapse id="accordion-3" accordion="task-accordion" role="tabpanel">
+                                    <b-card-body>
+                                        <br/><br/>
+
+                                        <button id="checkCanvas" class="clickable">Save Canvas</button>
+                                        <br/>
+                                        <br/>
+
+
+
+                                        <br/>
+                                        <br/>
+                                    </b-card-body>
+
+                                </b-collapse>
+                            </b-card>
+                        </div>
+                        <div id="status box" style="width:75%;margin:auto;">
+                            <div id="isUnsaved"  class="yellowBackground "  style="visibility:visible;">Unsaved Changes</div>
+                            <div id="isSaved"  class="greenBackground"  style="visibility:hidden;" >Saved</div>
+                            <div id="isError" class="redBackground" style="visibility:hidden;">Error</div>
+                        </div>
                     </b-card>
-
-                    <b-card no-body class="mb-1">
-                        <b-card-header header-tag="header" class="p-1" role="tab">
-                            <b-button block v-b-toggle.accordion-2 variant="info">Step 2: Add Seats</b-button>
-                        </b-card-header>
-                        <b-collapse id="accordion-2" accordion="task-accordion" role="tabpanel">
-                            <b-card-body>
-                                <button id="addmore_seat" class="clickable">Add more Seats</button>
-                                <br/>
-                                Size of seats: <input type="range" id="scale-control" value="1" min="0.1" max="3" step="0.1">
-                                <br/><br/>
-
-                            </b-card-body>
-                        </b-collapse>
-                    </b-card>
-
-                    <b-card no-body class="mb-1">
-                        <b-card-header header-tag="header" class="p-1" role="tab">
-                            <b-button block v-b-toggle.accordion-3 variant="info">Step 3: Group Seats Into Sections</b-button>
-                        </b-card-header>
-                        <b-collapse id="accordion-3" accordion="task-accordion" role="tabpanel">
-                            <b-card-body>
-                                <br/><br/>
-
-                                <button id="checkCanvas" class="clickable">Save Canvas</button>
-                                <br/>
-                                <br/>
-
-                                <div id="status box">
-                                    Status:
-                                    <br/>
-                                    <div id="isError" class="redBackground" style="visibility:hidden;">Error</div>
-                                    <div id="isSaved"  class="greenBackground"  style="visibility:hidden;" >Saved</div>
-                                    <div id="isUnsaved"  class="yellowBackground "  style="visibility:visible;">Unsaved Changes</div>
-                                </div>
-
-
-                                <br/>
-                                <br/>
-                            </b-card-body>
-
-                        </b-collapse>
-                    </b-card>
-                </div>
-            <button id="discard" class="clickable">Discard Selection</button>
-            <button id="deleteSelection" class="redButton">Delete Object</button>
-
-
-
+                </b-collapse>
         </div>
 
+        <br/>
+        <br/>
+        <br/>
+        <br/>
 
-        <b-button v-b-toggle.collapse-1 variant="primary" class="clickable" style="margin-top:150px;margin-left:10px;">Toggle Colour Options</b-button>
-        <b-collapse id="collapse-1" class="mt-2" style="width:95%">
+        <b-collapse visible class="mt-2" style="width:90%;align:center;padding-left:10px;">
             <b-card>
                 <button id="resetColours" class="clickable" style="margin-bottom:10px;">Reset Colours</button>
 
@@ -92,7 +87,7 @@
                     <b-button block v-b-toggle.accordion-4 variant="info">Colour Options 01</b-button>
 
                 </b-card-header>
-                <b-collapse visible id="accordion-4" accordion="colour-accordion" role="tabpanel">
+                <b-collapse id="accordion-4" accordion="colour-accordion" role="tabpanel">
                 <b-card-body>
                 <b-card-text>
 
@@ -176,11 +171,27 @@
         </b-sidebar>
 
 
-        <br/><br/>
-        Error {{ isError}}
-        <br/>
-        Changed {{ isChanged }}
-        <canvas ref="can" width="900" height="900"  style="border: 1px solid grey;"></canvas>
+    <br/><br/>
+    <b-button v-b-toggle.collapse-1 id="loadcanvas" variant="primary" class="clickable" style="margin-left:10px;" href="#accessibility-sidebar" >Edit Room</b-button>
+    <b-collapse id="collapse-1" class="mt-2">
+        <b-card>
+            <b-button v-b-toggle href="#accessibility-sidebar" @click.prevent class="clickable">Controls & Accessibilty</b-button>
+
+            <b-button v-b-toggle.collapse-0 variant="primary" class="clickable" style="margin-left:10px;">Toggle Instructions</b-button>
+            <br/>
+            <br/>
+            <b-collapse id="collapse-0" class="mt-2" style="width:95%">
+                <b-card>
+                    Instructions:<br/>
+                    - 'ALT' + 'Left Click': Move view of canvas<br/>
+                    - 'Mouse wheel': Changes level of zoom<br/>
+                    - 'Alter Slider': Changes size of shapes<br/>
+                </b-card>
+            </b-collapse>
+
+            <canvas ref="can" width="750" height="750"  style="border: 1px solid grey;"></canvas>
+        </b-card>
+    </b-collapse>
 
 <br/>
 
@@ -203,7 +214,8 @@
         },
 
 
-        props:['image_name'],
+        props:['image_name', 'previouscanvas'],
+        //all lower case as does not like uppercase
 
         data() {
             return{
@@ -218,18 +230,6 @@
 
 
         mounted: function(){
-
-            //Define + create canvas
-            const ref = this.$refs.can;
-            const canvas = new fabric.Canvas(ref);
-            var backgroundURL = "/uploads/floor_plan/" + this.image_name;
-            canvas.setBackgroundImage(backgroundURL, canvas.renderAll.bind(canvas));
-
-            var $ = function(id){return document.getElementById(id)};
-            fabric.Object.prototype.transparentCorners = false;
-            // canvas.setBackgroundImage('../img/default_floorplan.jpg', canvas.renderAll.bind(canvas));
-
-
             // // Define variables
             var counter_seats = 1;
             var objectRadius = 1;
@@ -242,17 +242,51 @@
             var isError = false;
             var isChanged = true;
 
-            //////////Draw Shapes
-            var circle = new fabric.Circle({
-                radius: 50,
-                left: 75,
-                top: 75,
-                fill: seatColour,
-                name: 1,
-            });
 
-            canvas.add(circle);
-            circle.hasControls = false;
+            //Define + create canvas
+            const ref = this.$refs.can;
+            const canvas = new fabric.Canvas(ref);
+
+            if(this.previouscanvas != "None" ){
+                canvas.loadFromJSON(this.previouscanvas, canvas.renderAll.bind(canvas));
+                canvas.requestRenderAll();
+            }
+            else{
+                var backgroundURL = "/uploads/floor_plan/" + this.image_name;
+                canvas.setBackgroundImage(backgroundURL, canvas.renderAll.bind(canvas));
+            }
+
+            var width = (window.innerWidth > 0) ? window.innerWidth : screen.width;
+            var height = (window.innerHeight > 0) ? window.innerHeight : screen.height;
+            width = width*0.6;
+            height = height*0.6;
+            if(width>1000) width=1000;
+
+            canvas.setWidth(width);
+            canvas.setHeight(height);
+
+
+            var $ = function(id){return document.getElementById(id)};
+            fabric.Object.prototype.transparentCorners = false;
+            // canvas.setBackgroundImage('../img/default_floorplan.jpg', canvas.renderAll.bind(canvas));
+
+
+
+
+
+            // //////////Draw Shapes
+            // var circle = new fabric.Circle({
+            //     radius: 50,
+            //     left: 75,
+            //     top: 75,
+            //     fill: seatColour,
+            //     name: 1,
+            //     strokeWidth: 2,
+            //     stroke: "black",
+            // });
+
+            // canvas.add(circle);
+            // circle.hasControls = false;
 
 
             // var circle2 = new fabric.Circle({
@@ -287,6 +321,28 @@
             //     obj.saveCanvas();
             // }
 
+            loadcanvas.onclick = function() {
+                canvas.forEachObject(function(object) {
+                    console.log( object.get('name') );
+                    if (object.get('name') == 'seatingArea') {
+                        counter_seatingArea = counter_seatingArea + 1;
+                    } else if (object.get('name') == 'exclusion') {
+                        counter_exclusionArea = counter_exclusionArea + 1;
+
+                    } else if (object.get('type') == 'circle') {
+                        counter_seats = counter_seats + 1;
+                        object.hasControls = false;
+                    }
+                    ;
+
+                });
+                canvas.forEachObject(function(objx) {
+                    if( objx.get('type') != "rect") return;
+                    canvas.sendToBack(objx);
+                    objx.selectable = false;
+                });
+                seatingAreaSet = true;
+            }
 
             addmore_seatingArea.onclick = function() {
                 if(seatingAreaSet == false){
@@ -298,10 +354,20 @@
                         strokeDashArray: [1, 1],
                         stroke: 'black',
                         strokeWidth: 3,
-                        name: 'seatingArea',
                         fill: 'rgba(0,125,0,0.1)',
                     });
+
+                    rectangle.toObject = (function(toObject) {
+                        return function() {
+                            return fabric.util.object.extend(toObject.call(this), {
+                                name: this.name
+                            });
+                        };
+                    })(rectangle.toObject);
+
                     canvas.add(rectangle);
+                    rectangle.name = 'seatingArea';
+                    console.log(rectangle.name);
                     counter_seatingArea = counter_seatingArea + 1;
                 }
                 else{
@@ -321,11 +387,19 @@
 
                         strokeDashArray: [1, 1],
                         stroke: 'black',
-                        name: 'exclusionArea',
                         strokeWidth: 3,
                         fill: 'rgba(125,0,0,0.1)',
                     });
+                    rectangle.toObject = (function(toObject) {
+                        return function() {
+                            return fabric.util.object.extend(toObject.call(this), {
+                                name: this.name
+                            });
+                        };
+                    })(rectangle.toObject);
+
                     canvas.add(rectangle);
+                    rectangle.name = 'exclusionArea';
                     counter_exclusionArea = counter_exclusionArea + 1;
                 }
                 else{
@@ -334,7 +408,9 @@
                 }
             }
 
-            setSeatArea.onclick = function() {
+
+
+            function setSeatingArea(){
                 if(counter_seatingArea>0)
                 {
                     var overlaps = false;
@@ -378,7 +454,9 @@
 
             }
 
-
+            setSeatArea.onclick = function() {
+                setSeatingArea();
+            }
             unsetSeatArea.onclick = function() {
                 canvas.discardActiveObject();
                 canvas.forEachObject(function(object) {
@@ -391,16 +469,28 @@
 
 
             addmore_seat.onclick = function() {
+
                 if(seatingAreaSet == true) {
                     var seat = new fabric.Circle({
                         radius: 50,
                         left: 275,
                         top: 75,
                         fill: seatColour,
-                        name: counter_seats,
-
+                        strokeWidth: 2,
+                        stroke: "black",
                     });
+
+                    seat.toObject = (function(toObject) {
+                        return function() {
+                            return fabric.util.object.extend(toObject.call(this), {
+                                name: this.name
+                            });
+                        };
+                    })(seat.toObject);
+
                     canvas.add(seat);
+                    seat.name = counter_seats;
+
                     seat.scaleX = objectRadius;
                     seat.scaleY = objectRadius;
                     seat.hasControls = false;
@@ -507,24 +597,31 @@
                 }
                 else {
                     isError = false;
-                    this.saveCanvasVar = JSON.stringify(canvas)
+
+                    var temp = [];
+                    temp.push(seatColour);
+                    temp.push(seatColour_clash);
+                    changeColours('#baf312','#ff0000');
+
+                    this.saveCanvasVar = JSON.stringify(canvas);
+
+                    changeColours(temp[0],temp[1]);
+
+                    // console.log(JSON.stringify(canvas));
                     // console.log(this.saveCanvasVar);
                     // document.getElementById("saveButton").style.visibility = "visible";
                     try{
                         let obj = this;
                         obj.isChanged = true;
-                        // console.log("canvasObject");
-                        // console.log(canvasObject);
-                        // console.log(this.saveCanvasVar);
 
                         axios.post('/rooms/saveCanvas', {
                             canvas: obj.saveCanvasVar,
                             // canvas: canvasObject,
                         }).then(function(response) {
-                            console.log("response");
+                            console.log("Save Success");
                             // console.log(response);
                         }).catch(function(error) {
-                            console.log("error");
+                            console.log("Error with Save");
                             // console.log(error);
                         })
 
@@ -546,9 +643,9 @@
 
 
             deleteSelection.onclick = function() {
-                var object = canvas.getActiveobject();
+                var object = canvas.getActiveObject();
 
-                canvas.remove( canvas.getActiveobject()) ;
+                canvas.remove( canvas.getActiveObject()) ;
 
                 if(object.get('name') == 'seatingArea'){
                     counter_seatingArea = counter_seatingArea - 1;
@@ -565,44 +662,33 @@
                 canvas.requestRenderAll();
             }
 
-            alterColour_01.onclick = function() {
+            alterColour_01.onclick = function() { changeColours("#1E88E5", "#FFC107");}
+
+            alterColour_02.onclick = function() { changeColours( "#40B0A6", "#E1BE6A");}
+
+            alterColour_03.onclick = function() { changeColours("#FEFE62", "#D35FB7" );}
+
+            resetColours.onclick = function() { changeColours('#baf312', '#ff0000');}
+
+
+            function changeColours(colour1,colour2){
+                canvas.discardActiveObject();
+
                 canvas.forEachObject(function(object) {
                     if( object.get('type') != "circle") return;
-                    object.set('fill' ,'#1E88E5');
-                });
-                seatColour = "#1E88E5";
-                seatColour_clash = "#FFC107";
-                canvas.requestRenderAll();
-            }
 
-            alterColour_02.onclick = function() {
-                canvas.forEachObject(function(object) {
-                    if( object.get('type') != "circle") return;
-                    object.set('fill' ,'#40B0A6');
-                });
-                seatColour = "#40B0A6";
-                seatColour_clash = "#E1BE6A";
-                canvas.requestRenderAll();
-            }
+                    if(object.get('fill') == seatColour){
+                        object.set('fill' ,colour1);
+                    }
+                    else if(object.get('fill') == seatColour_clash) {
+                        object.set('fill' ,colour2);
 
-            alterColour_03.onclick = function() {
-                canvas.forEachObject(function(object) {
-                    if( object.get('type') != "circle") return;
-                    object.set('fill' ,'#FEFE62');
-                });
-                seatColour = "#FEFE62";
-                seatColour_clash = "#D35FB7";
-                canvas.requestRenderAll();
+                    }
 
-            }
-
-            resetColours.onclick = function() {
-                canvas.forEachObject(function(object) {
-                    if( object.get('type') != "circle") return;
-                    object.set('fill' ,'#baf312');
                 });
-                seatColour = "#baf312";
-                seatColour_clash = "#ff0000";
+                seatColour = colour1;
+                seatColour_clash = colour2;
+
                 canvas.requestRenderAll();
 
             }
@@ -614,8 +700,8 @@
 
                 var zoom = canvas.getZoom();
                 zoom *= 0.999 ** delta;
-                if (zoom > 3 ) zoom = 3;
-                if (zoom < 0.75) zoom = 0.75;
+                if (zoom > 8 ) zoom = 8;
+                if (zoom < 0.25) zoom = 0.25;
 
                 canvas.zoomToPoint({ x: opt.e.offsetX, y: opt.e.offsetY }, zoom);
                 opt.e.preventDefault();

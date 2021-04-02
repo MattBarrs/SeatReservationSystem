@@ -53,12 +53,12 @@ class RoomsController extends Controller
 //    }
 
     public function saveCanvas(Request $request){
-        error_log("Start of function ");
+//        error_log("Start of function ");
 //
-        error_log("Attempting request get() ");
+//        error_log("Attempting request get() ");
         $canvasObject = $request->get('canvas');
-        error_log( gettype($canvasObject) );
-        error_log( $canvasObject);
+//        error_log( gettype($canvasObject) );
+//        error_log( $canvasObject);
 
 //        error_log("Current Institute");
         $institute = $request->session()->get('institution_name');
@@ -69,10 +69,10 @@ class RoomsController extends Controller
 //        error_log( $room);
         //        error_log($request->all());
 
-        error_log("+++++++++++++");
+//        error_log("+++++++++++++");
 
         $roomQ = Rooms::where('institution_name',$institute)->where('room_name',$room)->first();
-        error_log($roomQ);
+//        error_log($roomQ);
         Rooms::where('institution_name',$institute)->where('room_name',$room)->update(['room_canvas'=>$canvasObject]);;
 
 //        Rooms::where('institution_name',$institute)->where('room_name',$room)->update(["reference_length",11]);
@@ -86,7 +86,7 @@ class RoomsController extends Controller
         //        error_log($room);
         //            ->update('room_canvas',$canvasObject);
 
-        error_log("End of function, returning ");
+//        error_log("End of function, returning ");
 
         return response()->json([$request->all()]);
 //        return response()->200;

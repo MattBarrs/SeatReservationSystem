@@ -5,9 +5,11 @@ namespace App\Http\Controllers;
 use App\Models\Bookings;
 use App\Models\Institution;
 use App\Models\User_Booking;
+use App\Models\Rooms;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Carbon\Carbon;
+
 
 #controller for the main page - known as  dashboard
 class DashboardController extends Controller
