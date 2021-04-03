@@ -64,9 +64,9 @@
                             </b-card>
                         </div>
                         <div id="status box" style="width:75%;margin:auto;">
-                            <div id="isUnsaved"  class="yellowBackground "  style="visibility:visible;">Unsaved Changes</div>
-                            <div id="isSaved"  class="greenBackground"  style="visibility:hidden;" >Saved</div>
-                            <div id="isError" class="redBackground" style="visibility:hidden;">Error</div>
+                            <div id="isUnsaved"  class="yellowBackground "  style="visibility:visible;border-radius:15px;border:2px solid black;">Unsaved Changes</div>
+                            <div id="isSaved"  class="greenBackground"  style="visibility:hidden;border-radius:15px;border:2px solid black;" >Saved</div>
+                            <div id="isError" class="redBackground" style="visibility:hidden;border-radius:15px;border:2px solid black;">Error</div>
                         </div>
                     </b-card>
                 </b-collapse>
@@ -172,7 +172,7 @@
 
 
     <br/><br/>
-    <b-button v-b-toggle.collapse-1 id="loadcanvas" variant="primary" class="clickable" style="margin-left:10px;" href="#accessibility-sidebar" >Edit Room</b-button>
+    <b-button v-b-toggle.collapse-1 id="loadcanvas" variant="primary" class="clickable" href="#accessibility-sidebar" >Edit Room</b-button>
     <b-collapse id="collapse-1" class="mt-2">
         <b-card>
             <b-button v-b-toggle href="#accessibility-sidebar" @click.prevent class="clickable">Controls & Accessibilty</b-button>

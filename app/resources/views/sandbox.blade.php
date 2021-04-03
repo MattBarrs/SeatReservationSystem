@@ -15,7 +15,10 @@
                 <br/>
 <!--                <canvas-component></canvas-component>-->
 <!--                <fabric-component></fabric-component>-->
-                <showCanvas-component roomcanvas="{{$rooms->room_canvas}}" style="width:95%"></showCanvas-component>
+<!--                <showCanvas-component input_roomcanvas="{{$rooms->room_canvas}}"></showCanvas-component>-->
+<!--                    <datetime-component roomcanvas="{{$rooms->room_canvas}}"></datetime-component>-->
+
+                <bookseat-component roomcanvas="{{$rooms->room_canvas}}"></bookseat-component>
                 <br/>< After JS ><br/>
 
         </div>

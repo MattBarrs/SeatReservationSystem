@@ -114,13 +114,10 @@
 
         </b-sidebar>
 
-
-        <br/><br/>
-        <b-button v-b-toggle.collapse-1 id="loadcanvas" variant="primary" class="clickable" style="margin-left:10px;">Check Availability</b-button>
+        <b-button v-b-toggle.collapse-1 id="loadcanvas" variant="primary" class="clickable" style="margin-left:10px;" placeholder="time_end">Check Availability</b-button>
         <b-collapse id="collapse-1" class="mt-2">
             <b-card>
                 <b-button v-b-toggle href="#accessibility-sidebar" @click.prevent class="clickable">Accessibilty</b-button>
-
                 <br/>
                 <br/>
                 <canvas ref="can" width="750" height="750"  style="border: 1px solid grey;"></canvas>
@@ -135,36 +132,114 @@
 
 <script>
     import { fabric } from 'fabric';
+
     import VueSlider from 'vue-slider-component'
     import 'vue-slider-component/theme/antd.css'
+
     import { VBToggle } from 'bootstrap-vue'
      Vue.directive('b-toggle', VBToggle)
+
     import { VBTogglePlugin } from 'bootstrap-vue'
     Vue.use(VBTogglePlugin)
-    export default {
+
+    import 'vue2-timepicker/dist/VueTimepicker.css'
+    import VueTimepicker from 'vue2-timepicker/src/vue-timepicker.vue'
+
+    import Datepicker from 'vuejs-datepicker';
+
+export default {
 
         components: {
-            VueSlider
+            VueSlider,
+            VueTimepicker,
+            Datepicker,
         },
 
 
-        props:['roomcanvas'],
+        // props:['input_roomcanvas', 'given_time_start','give_time_end'],
+        props:['input_roomcanvas'],
         // props:['image_name'],
 
-        // data() {
-        //     return{
-        //         // saveCanvasVar: "",
-        //         // isError: false,
-        //         // isChanged: true,
-        //         // counter_seats: 0,
-        //         // csrf: document.head.querySelector('meta[name="csrf-token"]').content,
-        //     }
-        // },
+        data() {
+            return{
+                timeFormat: 'hh:mm',
+
+                time_opening: '6',
+                time_closing: '20',
+
+                time_input:{
+                    hh:'0',
+                    mm:'0'
+                },
+
+                time_end:{
+                    hh:'0',
+                    mm:'0'
+                },
+
+                // saveCanvasVar: "",
+                // isError: false,
+                // isChanged: true,
+                // counter_seats: 0,
+                // csrf: document.head.querySelector('meta[name="csrf-token"]').content,
+            }
+        },
+
+        methods:{
+            checkAvailable(eventData)
+            {
+                if( !(eventData['displayTime'].includes("H")) && !(eventData['displayTime'].includes("h")) && !(eventData['displayTime'].includes("m") ) &&  eventData['displayTime'] != ""  ){
+                    var timeInterval = 59;
+
+                    var temp_split = eventData['displayTime'].split(":");
+
+                    var temp_hh, temp_mm;
+                    temp_split[0] = parseInt(temp_split[0]);
+                    temp_split[1] = parseInt(temp_split[1]);
+
+                    if( temp_split[1] + timeInterval > 60)
+                    {
+                        console.log("IF");
+                        temp_mm = temp_split[1] + timeInterval;
+                        var remainder = temp_mm % 60;
+                        var divisions = (temp_mm - remainder)/60;
+
+                        temp_hh = temp_split[0] + divisions;
+                        temp_mm = remainder;
+                        if(temp_hh>=24) temp_hh= temp_hh%24;
+
+                    }
+                    else{
+                        console.log("Else");
+
+                        temp_hh = parseInt(temp_split[0]);
+                        temp_mm = parseInt(temp_split[1]) + timeInterval;
 
 
+                    }
+
+                    // console.log(eventData['displayTime']);
+                    console.log(eventData['data']);
+
+                    console.log(temp_mm);
+                    console.log(temp_hh);
+
+                    this.time_end['hh'] = temp_hh;
+                    this.time_end['mm'] = temp_mm;
+
+                    var endTime = temp_hh + ":"+ temp_mm;
+
+                    document.getElementById("time_end").placeholder = endTime;
+
+                }
+            },
+        },
 
         mounted: function(){
-            // console.log(this.canvas);
+
+            function checkAvailability() {
+            }
+                // console.log(this.canvas);
 
             //Define + create canvas
             const ref = this.$refs.can;
@@ -216,10 +291,11 @@
             //     name: 1,
             // });
             // console.log("___________________________");
-            // console.log("CANVAS", this.roomcanvas);
-            if(this.roomcanvas != ""){
-                canvas.loadFromJSON(this.roomcanvas, canvas.renderAll.bind(canvas));
+            // console.log("CANVAS", this.input_roomcanvas);
+            if(this.input_roomcanvas != ""){
+                canvas.loadFromJSON(this.input_roomcanvas, canvas.renderAll.bind(canvas));
                 canvas.requestRenderAll();
+
             }
 
             loadcanvas.onclick = function() {
@@ -292,12 +368,10 @@
 
             canvas.on('mouse:down', function(opt) {
                 var evt = opt.e;
-                if (evt.altKey === true) {
-                    this.isDragging = true;
-                    this.selection = false;
-                    this.lastPosX = evt.clientX;
-                    this.lastPosY = evt.clientY;
-                }
+                this.isDragging = true;
+                this.selection = false;
+                this.lastPosX = evt.clientX;
+                this.lastPosY = evt.clientY;
             });
 
 

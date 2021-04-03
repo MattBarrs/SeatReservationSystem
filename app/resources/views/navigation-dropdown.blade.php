@@ -13,25 +13,25 @@
                 <!-- Navigation Links -->
 
 
-                <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
+                <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex" style="text-decoration: none;">
 
 
-                    <x-jet-nav-link href="{{ route('dashboard') }}" :active="request()->routeIs('dashboard')">
+                    <x-jet-nav-link href="{{ route('dashboard') }}" :active="request()->routeIs('dashboard')" style="text-decoration: none;">
                         {{ __('Dashboard') }}
                     </x-jet-nav-link>
 
-                    <x-jet-nav-link href="{{ route('bookings.create') }}" :active="request()->routeIs('bookings.create')">
+                    <x-jet-nav-link href="{{ route('bookings.create') }}" :active="request()->routeIs('bookings.create')" style="text-decoration: none;">
                         {{ __('Book A Seat') }}
                     </x-jet-nav-link>
 
-                    <x-jet-nav-link href="{{ route('bookings.index') }}" :active="request()->routeIs('bookings.index')">
+                    <x-jet-nav-link href="{{ route('bookings.index') }}" :active="request()->routeIs('bookings.index')" style="text-decoration: none;">
                         {{ __('View Bookings') }}
                     </x-jet-nav-link>
 
                     @foreach (Auth::user()->allTeams() as $team)
                         @if( $team->name == "SuperUser's Team")
                         <div class="hidden sm:flex sm:items-center sm:ml-6">
-                            <x-jet-dropdown align="right" width="48">
+                            <x-jet-dropdown align="right" width="48" style="text-decoration: none;">
                                 <x-slot name="trigger">
                                     <button class="flex items-center text-sm font-medium text-gray-500 hover:text-gray-700 hover:border-gray-300 focus:outline-none focus:text-gray-700 focus:border-gray-300 transition duration-150 ease-in-out">
                                         <div>Extra</div>

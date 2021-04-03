@@ -21323,23 +21323,23 @@
  */
 import Vue from 'vue'
 import { BootstrapVue, IconsPlugin } from 'bootstrap-vue'
+import axios from 'axios'
+import VueAxios from 'vue-axios'
+
 
 // Import Bootstrap an BootstrapVue CSS files (order is important)
 import 'bootstrap/dist/css/bootstrap.css'
 import 'bootstrap-vue/dist/bootstrap-vue.css'
 
 
-import axios from 'axios'
-import VueAxios from 'vue-axios'
 
 Vue.use(VueAxios, axios)
-
 // Make BootstrapVue available throughout your project
 Vue.use(BootstrapVue)
 // Optionally install the BootstrapVue icon components plugin
 Vue.use(IconsPlugin)
-require('./bootstrap');
 
+require('./bootstrap');
 window.Vue = require('vue').default;
 
 /**
@@ -21354,11 +21354,13 @@ window.Vue = require('vue').default;
 // files.keys().map(key => Vue.component(key.split('/').pop().split('.')[0], files(key).default))
 
 
+// Vue.component('time_converter-component', require('./components/startTimeConverter.vue').default);
 Vue.component('fabric-component',require('./components/fabricComponent.vue').default);
 Vue.component('example-component', require('./components/ExampleComponent.vue').default);
-// Vue.component('time_converter-component', require('./components/startTimeConverter.vue').default);
 Vue.component('canvas-component', require('./components/canvasComponent.vue').default);
 Vue.component('showcanvas-component', require('./components/showCanvasComponent.vue').default);
+Vue.component('datetime-component', require('./components/inputdatetimeComponent.vue').default);
+Vue.component('bookseat-component', require('./components/bookSeatComponent.vue').default);
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to
