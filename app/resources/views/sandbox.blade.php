@@ -9,16 +9,16 @@
     <div class="py-12">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 bg-white overflow-hidden shadow-xl sm:rounded-lg">
             <div class="wrapper create-booking">
-                <div class="title">Canvas Sandbox</div>
+                <div class="title">Sandbox</div>
                 <br/>< Before JS><br/>
 
                 <br/>
 <!--                <canvas-component></canvas-component>-->
-<!--                <fabric-component></fabric-component>-->
+<!--                <createroom-component></createroom-component>-->
 <!--                <showCanvas-component input_roomcanvas="{{$rooms->room_canvas}}"></showCanvas-component>-->
 <!--                    <datetime-component roomcanvas="{{$rooms->room_canvas}}"></datetime-component>-->
 
-                <bookseat-component roomcanvas="{{$rooms->room_canvas}}"></bookseat-component>
+                <bookseat-component roomcanvas="{{$rooms->room_canvas}}" opentime="{{$rooms->open_time}}" closetime="{{$rooms->close_time}}"></bookseat-component>
                 <br/>< After JS ><br/>
 
         </div>

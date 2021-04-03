@@ -1,13 +1,20 @@
-import showCanvasComponent from "./showCanvasComponent.vue";
+import showCanvasComponent from "./showRoomComponent.js";
 
 <template>
     <div>
         Select Date
-        <datepicker></datepicker>
-        <br/><br/>
-        From <vue-timepicker v-model="time_input"  hide-disabled-hours :minute-interval="20" :hour-range="[ [time_opening, time_closing] ]" placeholder="Start Time" @change="checkAvailable"></vue-timepicker> &nbsp;To&nbsp;
-        <vue-timepicker disabled v-model="time_end" id="time_end" placeholder="End Time"></vue-timepicker>
 
+
+        <datepicker v-model="date_input" :disabled-dates="uptoToday" ></datepicker>
+        <div id="isDateError" class="redBackground hiddenError" >Invalid Date</div>
+
+        <br/><br/>
+
+        From <vue-timepicker close-on-complete v-model="time_input"  hide-disabled-hours :minute-interval="20" :hour-range="[ [timeOpen, timeClose] ]" placeholder="Start Time" @change="checkAvailable"></vue-timepicker> &nbsp;To&nbsp;
+        <vue-timepicker disabled v-model="time_end" id="time_end" placeholder="End Time"></vue-timepicker>
+        <br/>
+        <div id="isTimeError" class="redBackground hiddenError" >Invalid Time</div>
+        <button @click="onClickButton()" class="clickable">Submit</button>
 
 
     <br/>
@@ -15,10 +22,6 @@ import showCanvasComponent from "./showCanvasComponent.vue";
 </template>
 
 <script>
-    import { fabric } from 'fabric';
-
-    import VueSlider from 'vue-slider-component'
-    import 'vue-slider-component/theme/antd.css'
 
     import { VBToggle } from 'bootstrap-vue'
      Vue.directive('b-toggle', VBToggle)
@@ -38,36 +41,79 @@ export default {
         Datepicker,
     },
 
-    props:['roomcanvas'],
-
-    // props:['roomcanvas'],
-    // props:['image_name'],
+    props:['input_opentime','input_closetime'],
 
     data() {
         return {
-            timeFormat: 'hh:mm',
+            // timeFormat: 'hh:mm',
 
-            time_opening: '6',
-            time_closing: '20',
+            date_input:null,
+            timeClose:null,
+            timeOpen:null,
 
             time_input: {
-                hh: '0',
-                mm: '0'
+                hh: null,
+                mm: null,
             },
 
             time_end: {
                 hh: '0',
                 mm: '0'
-            }
-            // saveCanvasVar: "",
-            // isError: false,
-            // isChanged: true,
-            // counter_seats: 0,
-            // csrf: document.head.querySelector('meta[name="csrf-token"]').content,
+            },
+
+            uptoToday: {
+                'to': new Date()
+            },
+
         }
     },
 
-    methods: {
+    mounted() {
+        var temp_split;
+        temp_split = this.input_opentime.split(":");
+        this.timeOpen = temp_split[0];
+        temp_split = this.input_closetime.split(":");
+        this.timeClose = temp_split[0];
+    },
+
+        methods: {
+
+        onClickButton (event){
+            try{
+                // console.log(this.time_input['HH']);
+                // console.log(this.time_input['mm']);
+                // console.log(this.date_input);
+
+                var temp_hh = this.time_input['HH'];
+                var temp_mm= this.time_input['mm'];
+                var temp_date = this.date_input;
+                var errorFound = false;
+
+                // if(  (Number.isInteger(this.time_input['HH']) ) && (Number.isInteger(this.time_input['mm']) ) && (this.time_input['HH'] != "")  && (this.time_input['mm'] != "") ){
+                if( (temp_hh.includes("H") ) || (temp_hh.includes("h")) || (temp_mm.includes("m")) || (temp_mm == null) || (temp_hh == null) || (temp_mm == "") || (temp_hh == "") ) {
+                    errorFound = true;
+                    document.getElementById("isTimeError").style.visibility = "visible";
+                }
+
+                if( (temp_date == null) || (temp_date == "") ){
+                    errorFound = true;
+                    document.getElementById("isDateError").style.visibility = "visible";
+                }
+
+                if(errorFound == false) {
+                    document.getElementById("isTimeError").style.visibility = "hidden";
+                    document.getElementById("isDateError").style.visibility = "hidden";
+                    this.$emit('clicked',[this.time_input, this.date_input]);
+
+                }
+                // this.$emit('clicked',"CLICKED");
+            }
+            catch ( error){
+
+            }
+
+        },
+
         checkAvailable(eventData) {
             if (!(eventData['displayTime'].includes("H")) && !(eventData['displayTime'].includes("h")) && !(eventData['displayTime'].includes("m")) && eventData['displayTime'] != "") {
                 var timeInterval = 59;
@@ -103,7 +149,7 @@ export default {
                 console.log(temp_mm);
                 console.log(temp_hh);*/
 
-                this.time_end['hh'] = temp_hh;
+                this.time_end['HH'] = temp_hh;
                 this.time_end['mm'] = temp_mm;
 
                 var endTime = temp_hh + ":" + temp_mm;

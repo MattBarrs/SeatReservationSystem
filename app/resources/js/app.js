@@ -21355,12 +21355,15 @@ window.Vue = require('vue').default;
 
 
 // Vue.component('time_converter-component', require('./components/startTimeConverter.vue').default);
-Vue.component('fabric-component',require('./components/fabricComponent.vue').default);
-Vue.component('example-component', require('./components/ExampleComponent.vue').default);
-Vue.component('canvas-component', require('./components/canvasComponent.vue').default);
-Vue.component('showcanvas-component', require('./components/showCanvasComponent.vue').default);
+Vue.component('createroom-component',require('./components/createRoomComponent.vue').default);
+Vue.component('uploadroom-component',require('./components/uploadRoomComponent.vue').default);
+Vue.component('showcanvas-component', require('./components/showRoomComponent.vue').default);
+
+// Vue.component('example-component', require('./components/ExampleComponent.vue').default);
+// Vue.component('canvas-component', require('./components/canvasComponent.vue').default);
 Vue.component('datetime-component', require('./components/inputdatetimeComponent.vue').default);
 Vue.component('bookseat-component', require('./components/bookSeatComponent.vue').default);
+Vue.component('editseats-component', require('./components/editSeatsComponent.vue').default);
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to

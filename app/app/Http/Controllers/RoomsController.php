@@ -53,45 +53,42 @@ class RoomsController extends Controller
 //    }
 
     public function saveCanvas(Request $request){
-//        error_log("Start of function ");
-//
-//        error_log("Attempting request get() ");
+
         $canvasObject = $request->get('canvas');
-//        error_log( gettype($canvasObject) );
 //        error_log( $canvasObject);
+        $numOfSeats = substr_count($canvasObject,"circle");
+//        error_log( $numOfSeats);
 
-//        error_log("Current Institute");
         $institute = $request->session()->get('institution_name');
-//        error_log($institute);
-
-//        error_log("Current Room");
         $room = $request->session()->get('selected_room');
-//        error_log( $room);
-        //        error_log($request->all());
-
-//        error_log("+++++++++++++");
-
-        $roomQ = Rooms::where('institution_name',$institute)->where('room_name',$room)->first();
-//        error_log($roomQ);
         Rooms::where('institution_name',$institute)->where('room_name',$room)->update(['room_canvas'=>$canvasObject]);;
 
-//        Rooms::where('institution_name',$institute)->where('room_name',$room)->update(["reference_length",11]);
-//        error_log($roomQ);
-//
-//
-//        $roomQ->update(["room_canvas",$canvasObject]);
-//        error_log($roomQ);
+        Workstation::where('room_name', '=', $room)->where('institution_name','=',$institute)->delete();
 
-        //        $room = Rooms::where('room_name',$room)->where('institution_name',$institute)-get();
-        //        error_log($room);
-        //            ->update('room_canvas',$canvasObject);
 
-//        error_log("End of function, returning ");
+        for($i = 0;$i<$numOfSeats;$i++)
+        {
+            $findWorkstation = Workstation::where('room_name', '=', $room)
+                            ->where('institution_name','=',$institute)
+                            ->where('seat_name','=',$i+1)
+                            ->first();
+            if($findWorkstation === null){
+                $workstation = new Workstation();
+
+                $workstation->room_name = $room;
+                $workstation->institution_name = $institute;
+
+                $workstation->seat_name = $i+1;
+                $workstation->coord_x = 0; //used in javascript map
+                $workstation->coord_y = 0; //used in javascript map
+
+                $workstation->save();
+            }
+
+        }
+
 
         return response()->json([$request->all()]);
-//        return response()->200;
-
-
     }
 
     public function saveRoom(Request $request)
