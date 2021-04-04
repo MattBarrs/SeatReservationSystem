@@ -93,6 +93,31 @@ class RoomsController extends Controller
 
     public function saveRoom(Request $request)
     {
+
+//        error_log($request);
+//        error_log($request->get('blob'));
+//
+//        error_log($request->get('file'));
+//        error_log($request->get('file'));
+//        error_log($request->get('files'));
+        error_log("DATA1");
+        $data = $request->get('data');
+        $newstr = substr_replace($data, "\"data\":[", 1, 0);
+        $newstr = substr_replace($newstr, "]", strlen($newstr)-1, 0);
+//        $newstr = substr_replace($newstr, "'", 0, 0);
+//        $newstr = substr_replace($newstr, "'", strlen($newstr), 0);
+        error_log("DATA2") ;
+        error_log("DECODE STRING");
+        error_log($newstr);
+
+        $jsonData = json_decode($newstr, true,2);
+        error_log("As JSON ");
+        error_log("Data ",$jsonData);
+        error_log($jsonData);
+
+        error_log($request->get('data')) ;
+
+//        error_log($request('data'));
         #new instance of room
         $room = new Rooms();
 
@@ -108,14 +133,12 @@ class RoomsController extends Controller
             'room_name' => ['required',Rule::unique('Rooms')->where('institution_name', $institute)],
             'open_time' => 'required',
             'close_time' => 'required|after:open_time',
-//            'numOfSeats' => 'required',
             'floor_plan' => 'required|mimes:jpg,jpeg,png,bmp,pdf',
 //            'reference_length' => 'required',
         ];
 
         $customMessages = [
             'close_time.after' => "Closing time must be after Opening time.",
-            'numOfSeats.required' => "The number of seats is required.",
             'floor_plan.required' => "Please upload a floor plan"
         ];
 

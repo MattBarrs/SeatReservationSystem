@@ -5,21 +5,12 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="11180f2f-39ae-4934-a9d8-ad60633b4e6e" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/app/resources/js/components/editSeatsComponent.vue" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/resources/js/components/uploadRoomComponent.vue" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/app/Http/Controllers/RoomsController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/app/Http/Controllers/RoomsController.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/public/css/app.css" beforeDir="false" afterPath="$PROJECT_DIR$/app/public/css/app.css" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/public/js/app.js" beforeDir="false" afterPath="$PROJECT_DIR$/app/public/js/app.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/resources/js/app.js" beforeDir="false" afterPath="$PROJECT_DIR$/app/resources/js/app.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/resources/js/components/bookSeatComponent.vue" beforeDir="false" afterPath="$PROJECT_DIR$/app/resources/js/components/bookSeatComponent.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/resources/js/components/fabricComponent.vue" beforeDir="false" afterPath="$PROJECT_DIR$/app/resources/js/components/createRoomComponent.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/resources/js/components/inputdatetimeComponent.vue" beforeDir="false" afterPath="$PROJECT_DIR$/app/resources/js/components/inputdatetimeComponent.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/resources/js/components/showCanvasComponent.vue" beforeDir="false" afterPath="$PROJECT_DIR$/app/resources/js/components/showRoomComponent.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/resources/js/components/uploadRoomComponent.vue" beforeDir="false" afterPath="$PROJECT_DIR$/app/resources/js/components/uploadRoomComponent.vue" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/resources/sass/app.scss" beforeDir="false" afterPath="$PROJECT_DIR$/app/resources/sass/app.scss" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/resources/views/rooms/create.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/resources/views/rooms/create.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/resources/views/rooms/edit.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/resources/views/rooms/edit.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/resources/views/sandbox.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/resources/views/sandbox.blade.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -197,19 +188,6 @@
       <recent name="C:\Users\Matty B\Documents\Uni_Y4\OneDrive - University of Leeds\Project\SeatReservationSystem\app\resources\views\auth\institution" />
     </key>
   </component>
-  <component name="RunManager">
-    <configuration default="true" type="ArquillianJUnit" factoryName="" nameIsGenerated="true">
-      <option name="arquillianRunConfiguration">
-        <value>
-          <option name="containerStateName" value="" />
-        </value>
-      </option>
-      <option name="TEST_OBJECT" value="class" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-  </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
@@ -262,6 +240,7 @@
       <workItem from="1617261688617" duration="27211000" />
       <workItem from="1617347069082" duration="29113000" />
       <workItem from="1617440325138" duration="37708000" />
+      <workItem from="1617520919590" duration="14087000" />
     </task>
     <servers />
   </component>
