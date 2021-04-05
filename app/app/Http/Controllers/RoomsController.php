@@ -93,93 +93,91 @@ class RoomsController extends Controller
 
     public function saveRoom(Request $request)
     {
+//        error_log("Start");
+//       error_log($request['data']);
+        $stringData = strval($request['data'] );
 
-//        error_log($request);
-//        error_log($request->get('blob'));
+        $request['data'] = json_decode($stringData,true);
+        $data = json_decode($stringData,true);
+
+//        error_log(print_r($request['data'],TRUE));
 //
-//        error_log($request->get('file'));
-//        error_log($request->get('file'));
-//        error_log($request->get('files'));
-        error_log("DATA1");
-        $data = $request->get('data');
-        $newstr = substr_replace($data, "\"data\":[", 1, 0);
-        $newstr = substr_replace($newstr, "]", strlen($newstr)-1, 0);
-//        $newstr = substr_replace($newstr, "'", 0, 0);
-//        $newstr = substr_replace($newstr, "'", strlen($newstr), 0);
-        error_log("DATA2") ;
-        error_log("DECODE STRING");
-        error_log($newstr);
-
-        $jsonData = json_decode($newstr, true,2);
-        error_log("As JSON ");
-        error_log("Data ",$jsonData);
-        error_log($jsonData);
-
-        error_log($request->get('data')) ;
-
-//        error_log($request('data'));
-        #new instance of room
-        $room = new Rooms();
+        $open_time = $data['open_time'];
+        $close_time = $data['close_time'];
+        $room_name = $data['room_name'];
+        $room_details = $data['details'];
 
         #get name and institute data
-        $room_name_input = request('room_name');
         $institute = $request->session()->get('institution_name');
 
-        $request->session()->put('selected_room', $room_name_input);
 
-        #validation rules
-        $rules =
-        [
-            'room_name' => ['required',Rule::unique('Rooms')->where('institution_name', $institute)],
-            'open_time' => 'required',
-            'close_time' => 'required|after:open_time',
+//        $customMessages = [
+//            'close_time.after' => "Closing time must be after Opening time.",
+//            'floor_plan.required' => "Please upload a floor plan"
+//        ];
+
+        $request->validate([
+            'data.room_name' => 'unique:Rooms,room_name',
+//            'data.room_name' => [Rule::unique('Rooms')->where('institution_name', $institute)],
+//            'data.room_name' => ['required|unique:Rooms,[room_name,)'],//            > ['required',],
+            'data.open_time' => 'required',
+            'data.close_time' => 'required|after:open_time',
             'floor_plan' => 'required|mimes:jpg,jpeg,png,bmp,pdf',
-//            'reference_length' => 'required',
-        ];
-
-        $customMessages = [
-            'close_time.after' => "Closing time must be after Opening time.",
-            'floor_plan.required' => "Please upload a floor plan"
-        ];
-
-        $this->validate($request, $rules, $customMessages);
+        ]);
 
 
+        // Read file contents...
+//        $contents = file_get_contents($request->->path());
+           #new instance of room
+        $room = new Rooms();
+
+        $request->session()->put('selected_room', $room_name);
         #add data to the room instance
         $room->institution_name = $institute;
-        $room->room_name = $room_name_input;
-        $room->open_time = request('open_time');
-        $room->close_time = request('close_time');
-        $room->room_details = request('room_details');
-
-        // Store the record, using the new file hashname which will be it's new filename identity.
-
-        $file = request('floor_plan');
-        Storage::disk('public')->put('floor_plan', $file,'public');
-        $room->floor_plan = $file->HashName();
-
-        $room->reference_length = 10.0; //Reference length to allow distance guaging
+        $room->room_name = $room_name;
+        $room->open_time =  $open_time;
+        $room->close_time = $close_time;
+        $room->room_details = $room_details;
         $room->room_canvas = "None";
 
+        #validation rules
+
+        $file = $request['floor_plan'];
+        $contents = file_get_contents($file->path());
+        Storage::disk('public')->put('floor_plan', $file,'public');
+        $room->floor_plan =$file->HashName();
         #save room
-        $room->save();
-
-        #create an instance of workstation/seats specified by the user
-        $numOfSeats = request('numOfSeats');
-        for($i = 0;$i<$numOfSeats;$i++)
-        {
-            $workstation = new Workstation();
-
-            $workstation->room_name = $room_name_input;
-            $workstation->institution_name = $institute;
-
-            $workstation->seat_name = $i+1;
-            $workstation->coord_x = 0; //used in javascript map
-            $workstation->coord_y = 0; //used in javascript map
-
-            $workstation->save();
-
+        error_log(print_r($room,TRUE));
+        try{
+            $room->save();
         }
+        catch(Exception $e){
+            // do task when error
+            error_log(print_r($e->getMessage(),TRUE));   // insert query
+        }
+        return response()->json([$data]);
+        // Store the record, using the new file hashname which will be it's new filename identity.
+
+
+
+
+//
+//        #create an instance of workstation/seats specified by the user
+//        $numOfSeats = request('numOfSeats');
+//        for($i = 0;$i<$numOfSeats;$i++)
+//        {
+//            $workstation = new Workstation();
+//
+//            $workstation->room_name = $room_name_input;
+//            $workstation->institution_name = $institute;
+//
+//            $workstation->seat_name = $i+1;
+//            $workstation->coord_x = 0; //used in javascript map
+//            $workstation->coord_y = 0; //used in javascript map
+//
+//            $workstation->save();
+//
+//        }
 
         #redirected to edit room so the user can edit details about the workstations
         return redirect('/rooms/edit');
@@ -250,6 +248,80 @@ class RoomsController extends Controller
         return view('rooms.edit')
             ->with('seats',$seats)
             ->with('rooms',$rooms);
+    }
+    #Once room is selected to edit
+    public function editSeats(Request $request)
+    {
+        $value   = request("submit");
+
+        $institute = $request->session()->get('institution_name');
+        $room = $request->session()->get('selected_room');
+
+
+        $seats = "";
+
+        if($value != NULL)
+        {
+            $request->session()->put('selected_room',$value);
+            return redirect(route('rooms.edit'));
+        }
+        elseif( $institute == "")
+        {
+            return redirect('/institution');
+        }
+        elseif($room == "" ) {
+            return redirect('/rooms/selectEdit');
+        }
+        else
+        {
+            $rooms  = Rooms::
+            where('institution_name',$institute)
+                ->where('room_name',$room)
+                ->first();
+
+            $seats = Workstation::
+            where('room_name',$room)
+                ->where('institution_name',$institute)
+                ->get();
+        }
+
+
+        return view('rooms.editseats')
+            ->with('seats',$seats)
+            ->with('rooms',$rooms);
+    }
+
+    public function saveSeats(Request $request)
+    {
+        $value = request("submit");
+        $room = $request->session()->get('selected_room');
+        $institute = $request->session()->get('institution_name');
+
+        $seats = Workstation::
+        where('room_name',$room)
+            ->where('institution_name',$institute)
+            ->get();
+
+        foreach($seats as $seat)
+        {
+            #revert the -'s back to spaces
+            $inputBoxName = str_replace(' ','_', $seat->seat_name);
+            $seat_details = request("detailsFor_$inputBoxName");
+
+            #only update name if a new name has been inputted by user
+                Workstation::
+                where('room_name',$seat->room_name)
+                    ->where('institution_name',$seat->institution_name)
+                    ->where('seat_name',"$seat->seat_name")
+                    ->update(['seat_details'=>$seat_details]);
+        }
+        #blank the session data
+        $request->session()->put('selected_room', "");
+        $request->session()->put('open_time',"");
+        $request->session()->put('close_time',"");
+
+        return redirect('/')->with('mssg','Room Details Updated Successfully');
+
     }
 
     #save the details of the room once the user has inputted the new data

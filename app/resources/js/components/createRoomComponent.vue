@@ -51,6 +51,7 @@
                                         <br/><br/>
 
                                         <button id="checkCanvas" class="clickable">Save Canvas</button>
+                                        <button id="editSeats" class="clickable" style="margin-bottom:10px;visibility:hidden;">Edit Seat Details</button>
                                         <br/>
                                         <br/>
 
@@ -519,6 +520,7 @@
                 document.getElementById("isError").style.visibility = "visible";
                 document.getElementById("isSaved").style.visibility = "hidden";
                 document.getElementById("isUnsaved").style.visibility = "hidden";
+                document.getElementById("editSeats").style.visibility = "hidden";
                 // var outOfBounds = false;
                 var withinASeatingArea = false;
                 var errorWhatIsWrong = "Could not save as: \n ";
@@ -644,6 +646,7 @@
                     finally {
                         isChanged = false;
                         document.getElementById("isSaved").style.visibility = "visible";
+                        document.getElementById("editSeats").style.visibility = "visible";
                         document.getElementById("isUnsaved").style.visibility = "hidden";
                         document.getElementById("isError").style.visibility = "hidden";
                     }
@@ -756,6 +759,7 @@
             function onChange(options) {
                 if(isChanged == false){
                     document.getElementById("isSaved").style.visibility = "hidden";
+                    document.getElementById("editSeats").style.visibility = "hidden";
                     document.getElementById("isUnsaved").style.visibility = "visible";
                     isChanged = true;
                 }
@@ -783,43 +787,9 @@
                 'object:moving': onChange,
             });
 
-
-
-
+            editSeats.onclick = function() {
+                window.location.replace("/rooms/editseats/");
+            }
         },
-
-        // methods:{
-        //     saveCanvas: function(){
-        //         try{
-        //             let obj = this;
-        //             obj.isChanged = true;
-        //             console.log("canvasObject");
-        //             // console.log(canvasObject);
-        //             console.log(this.saveCanvasVar);
-        //
-        //             axios.post('/rooms/saveCanvas', {
-        //                 canvas: obj.saveCanvasVar,
-        //                 // canvas: canvasObject,
-        //             }).then(function(response) {
-        //                 console.log("response");
-        //                 console.log(response);
-        //             }).catch(function(error) {
-        //                 console.log("error");
-        //                 console.log(error);
-        //             })
-        //
-        //
-        //
-        //         }
-        //         catch(err)
-        //         {
-        //             this.isError = true;
-        //         }
-        //         finally {
-        //             this.isChanged = false;
-        //         }
-        //
-        //     }
-        // },
     };
 </script>

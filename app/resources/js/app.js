@@ -21358,6 +21358,7 @@ window.Vue = require('vue').default;
 Vue.component('createroom-component',require('./components/createRoomComponent.vue').default);
 Vue.component('uploadroom-component',require('./components/uploadRoomComponent.vue').default);
 Vue.component('showcanvas-component', require('./components/showRoomComponent.vue').default);
+Vue.component('showroomwithnum-component', require('./components/showRoomWithNumComponent.vue').default);
 
 // Vue.component('example-component', require('./components/ExampleComponent.vue').default);
 // Vue.component('canvas-component', require('./components/canvasComponent.vue').default);

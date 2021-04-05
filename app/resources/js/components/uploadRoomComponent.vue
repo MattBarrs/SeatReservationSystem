@@ -2,35 +2,23 @@ import showCanvasComponent from "./showRoomComponent.js";
 
 <template>
     <div>
-        <label for ="room_name">Room Name
-        <input type="input" v-model="room_name" value="room_name">
-
-        <div class="tooltip" style="width:10%;height:10%;">
-        <img src="/img/question.png" class="inline" alt="RoomCode Tooltip" title="Please ask your local admim or staff if you do not the room code"></a>
-            <span class="tooltiptext">
-            Name for the room - So it's easier for people to remember
-        </span>
-        </div>
-        </label>
-
+        Room Name<input type="input" v-model="room_name" value="room_name" @change="checkName">
 
         <br/><br/>
         <table>
             <tr>
                 <td style="padding-bottom:15px;">Opening Time</td>
-                <td style="padding-bottom:15px;"><vue-timepicker close-on-complete v-model="openingtime"  hide-disabled-hours :minute-interval="5"  placeholder="Opening Time"   @change="checkVariables"></vue-timepicker></td>
+                <td style="padding-bottom:15px;"><vue-timepicker close-on-complete v-model="openingtime"  hide-disabled-hours :minute-interval="5"  placeholder="Opening Time"   @change="checkTime"></vue-timepicker></td>
             </tr>
             <tr>
                 <td style="padding-bottom:15px;">Closing Time</td>
-                <td style="padding-bottom:15px;"><vue-timepicker  id="closingtime" close-on-complete v-model="closingtime" :hour-range="[[minclosingtime,23]]"  hide-disabled-hours :minute-interval="5"  placeholder="Closing Time" @change="checkVariables"></vue-timepicker></td>
+                <td style="padding-bottom:15px;"><vue-timepicker  id="closingtime" close-on-complete v-model="closingtime" :hour-range="[[minclosingtime,23]]"  hide-disabled-hours :minute-interval="5"  placeholder="Closing Time" @change="checkTime"></vue-timepicker></td>
             </tr>
             <div id="isTimeError" class="redBackground hiddenError" style="width:100%">Invalid Time</div>
         </table>
-
         <br/>
 
-
-    <br/><br/>
+        <br/><br/>
         <b>Room Facilities & Details</b>
         <br/>
         <button class="clickable" @click="toggle"> Select All</button>
@@ -53,11 +41,20 @@ import showCanvasComponent from "./showRoomComponent.js";
         <br/>
 
         <label for ="floor_plan">Upload floor plan of room</label>
-        <input type="file"  id="floor_plan" name="floor_plan" @change="checkVariables">
+        <input type="file"  id="floor_plan" name="floor_plan" @change="checkUpload">
             <br/><br/>
+
+        <div v-if="errors" class="failAlertMessage">
+            <div v-for="(v, k) in errors" :key="k">
+                <p v-for="error in v" :key="error" class="text-sm">
+                    {{ error }}
+                </p>
+            </div>
+        </div>
 
         <div id="missingFields" class="redBackground hiddenError">Missing Fields</div>
         <button id="submitButton" class="clickable" value="Submit"  @click="submit"> Submit</button>
+
 
 </form>
 
@@ -87,7 +84,15 @@ export default {
     },
 
     watch: {
-
+        'validName': function(val,oldVal){
+            this.checkVariables();
+        },
+        'validTime': function(val,oldVal) {
+            this.checkVariables();
+        },
+        'validFile': function(val,oldVal) {
+            this.checkVariables();
+        },
     },
 
     props:['input_opentime','input_closetime'],
@@ -103,6 +108,12 @@ export default {
 
             minclosingtime:null,
             isEmpty:true,
+
+            validName:false,
+            validFile:false,
+            validTime:false,
+
+            errors:"",
         }
     },
 
@@ -118,7 +129,7 @@ export default {
 
             toggle(source) {
                 var checkboxes = document.getElementsByName('room_details');
-                console.log(checkboxes);
+                // console.log(checkboxes);
                 for(var i=0, n=checkboxes.length;i<n;i++) {
                     console.log(checkboxes[i].checked);
                     checkboxes[i].checked = true;
@@ -127,22 +138,22 @@ export default {
 
             untoggle(source) {
                 var checkboxes = document.getElementsByName('room_details');
-                console.log(checkboxes);
+                // console.log(checkboxes);
                 for(var i=0, n=checkboxes.length;i<n;i++) {
-                    console.log(checkboxes[i].checked);
+                    // console.log(checkboxes[i].checked);
                     checkboxes[i].checked = false;
                 }
             },
 
             checkVariables(event){
-                console.log("checkingVariables");
-                var timeValid = this.updateTime();
-                var uploadValid = this.checkUpload();
-                var nameValid = this.checkName();
-                console.log(timeValid);
-                console.log(uploadValid);
+                // console.log(this.validName);
+                // console.log("validName");
+                // console.log(this.validFile);
+                // console.log("validFile");
+                // console.log(this.validTime);
+                // console.log("validTime");
 
-                if( timeValid && uploadValid){
+                if( this.validFile && this.validTime && this.validName){
                     document.getElementById("submitButton").style.visibility = "visible";
                     document.getElementById("missingFields").style.visibility= "hidden";
 
@@ -154,98 +165,66 @@ export default {
             },
 
             checkName(event){
-                var checkBool=false;
-                var name = this.room_name;
+                if((this.room_name == null) || (this.room_name==="") ){
+                    this.validName = false;
+                }else{
+                    this.validName = true;
 
-                if((name!= null) || (name!="") ){
-                    checkBool=true;
                 }
-                return checkBool;
             },
 
 
             checkUpload(event){
-                var checkBool = false;
-                console.log("chcking upload ");
+                this.validFile = false;
+
+                // console.log("chcking upload ");
+
+                this.floor_plan = event.target.files[0];
                 var uploadedFile =  document.getElementById("floor_plan").value;
-                console.log(uploadedFile);
+
+                // console.log(uploadedFile);
 
 
                 if( (uploadedFile != null) && (uploadedFile!="")   ) {
-                    checkBool = true;
+                    this.validFile = true;
                 }
+            },
+            submit (event) {
 
-                return checkBool;
+                let temp_otime_hh = this.openingtime['HH'];
+                let temp_otime_mm = this.openingtime['mm'];
+                let openTime = temp_otime_hh +  ":" + temp_otime_mm;
+                // console.log(openTime);
+
+                let temp_ctime_hh = this.closingtime['HH'];
+                let temp_ctime_mm = this.closingtime['mm'];
+                let closeTime = temp_ctime_hh +  ":" + temp_ctime_mm;
+                // console.log(closeTime);
+
+                const data = new FormData();
+                data.append('floor_plan', this.floor_plan);
+                const json = JSON.stringify({
+                    'open_time': openTime,
+                    'close_time': closeTime,
+                    'room_name':this.room_name,
+                    'details': this.room_details,
+                })
+                data.append('data',json)
+                axios.post("/rooms",data, {
+                    headers: {
+                        'Content-Type':'application/json',
+                    },
+                }).then(function(response) {
+                    window.location.replace("/rooms/edit/");
+                }).catch(e => {
+                    this.errors = e.response.data.errors;
+                });
             },
 
-            submit (event){
-            try{
-                let obj = this;
-                obj.isChanged = true;
 
+        checkTime(eventData) {
+            this.validTime = false;
 
-                var name = this.room_name;
-                var openTime = this.openingtime;
-                var closeTime = this.closingtime;
-                var details = this.room_details;
-
-                const object = {
-                    room_name: name,
-                    // open_time: openTime,
-                    // close_time: closeTime,
-                    // room_details: details,
-                };
-
-                const json = JSON.stringify(object);
-                const blob = new Blob([json],{
-                    type:'application/json'
-                });
-
-                const formData = new FormData();
-                formData.append("data",json);
-                // formData.append("data",blob);
-
-                const file_floorplan = document.querySelector('#floor_plan');
-                formData.append("file", file_floorplan.files[0]);
-
-                for (var key of formData.entries()) {
-                    console.log(key[0] + ', ' + key[1]);
-                }
-
-                axios.post('/rooms', formData, {
-                    headers: {
-                        'Content-Type': 'multipart/form-data',
-                    },
-                    data:formData,
-
-                }).then(function(response) {
-                    console.log("Save Success");
-                    // console.log(response);
-                }).catch(function(error) {
-                    console.log("Error with Save");
-                    console.log("ERRRR:: ",error.response.data.errors);
-                    // console.log(error);
-                })
-                // axios.post('/rooms', {
-                //     room_name: this.room_name,
-                //     open_time:this.openingtime,
-                //     close_time: this.closingtime,
-                //     floor_plan:this.floor_plan,
-                //     room_details:this.room_details,
-                // })
-
-            }
-            catch(error){
-                console.log("ERRRR:: ",error.response.data);
-            };
-
-        },
-
-
-        updateTime(eventData) {
-            // console.log("Open", this.openingtime);
-            var checkBool = false;
-            console.log(this.closingtime);
             var openTime = this.openingtime;
             var closeTime = this.closingtime;
 
@@ -265,7 +244,7 @@ export default {
                 //     document.getElementById("closingtime").disabled = false;
                 // }
             }
-            console.log(this.closingtime);
+            // console.log(this.closingtime);
 
             if (closeTime != null){
                 close_hh = closeTime['HH'];
@@ -276,13 +255,12 @@ export default {
                         document.getElementById("isTimeError").style.visibility = "visible"
                     }else{
                         document.getElementById("isTimeError").style.visibility = "hidden";
-                        checkBool = true;
+                        this.validTime = true;
                     };
                 }
             }
-            console.log(this.closingtime);
+            // console.log(this.closingtime);
 
-            return checkBool;
         },
 
 

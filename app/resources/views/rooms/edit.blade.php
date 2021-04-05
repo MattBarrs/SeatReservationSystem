@@ -26,54 +26,7 @@
 
 
                                     <br/><br/>
-                                    <a data-toggle="collapse" href="#collapse" class="clickable">Toggle Edit Seats</a>
-                                    <div id="collapse" class="panel-collapse collapse">
-                                        <form action="{{ route('rooms.edit') }}" method="POST">
-                                            @csrf
-                                            <table style="margin-left:auto;margin-right: auto;text-align:left;vertical-align:middle;" >
-                                                <br/>
-                                                <tr style="border:1px solid black;">
-                                                    <td style="padding: 0 20px 0 0;" >
-                                                        Seat
-                                                    </td>
-                                                    <td style="padding: 0 20px 0 0;width:30%;" >
-                                                        Seat Details
-                                                    </td>
-                                                    <td style="padding: 0 20px 0 0;width:40%;" >
-                                                        Accessibility
-                                                    </td>
 
-                                                </tr>
-
-                                                @foreach($seats as $seat)
-                                                    <tr style="border:1px solid black;">
-                                                        <td style="padding: 0 20px 0 0;" >
-                                                            Seat: {{ str_replace("_"," ", $seat->seat_name) }}
-                                                        </td>
-                                                        <fieldset>
-                                                            <td style="padding: 0 20px 0 0;" >
-                                                                <input type="checkbox" name="detailsFor_{{$seat->seat_name}}[]" value="Computer" checked> Computer
-                                                                <br/>
-                                                                <input type="checkbox" name="detailsFor_{{$seat->seat_name}}[]" value="TouchScreen" @if(is_array(old('detailsFor_{{$seat->seat_name}}')) && in_array('TouchScreen', old('detailsFor_{{$seat->seat_name}}'))) checked @endif> Touch Screen
-                                                                <br/>
-                                                                <input type="checkbox" name="detailsFor_{{$seat->seat_name}}[]" value="StandingDesk"@if(is_array(old('detailsFor_{{$seat->seat_name}}')) && in_array('StandingDesk', old('detailsFor_{{$seat->seat_name}}'))) checked @endif> Standing Desk
-                                                            </td>
-                                                            <td>
-                                                                <input type="checkbox" name="detailsFor_{{$seat->seat_name}}[]" value="ColourBlindFriendly" @if(is_array(old('detailsFor_{{$seat->seat_name}}')) && in_array('ColourBlindFriendly', old('detailsFor_{{$seat->seat_name}}'))) checked @endif> Colour Blind Friendly
-                                                                <br/>
-                                                                <input type="checkbox" name="detailsFor_{{$seat->seat_name}}[]" value="VisuallyImpairedFriendly" @if(is_array(old('detailsFor_{{$seat->seat_name}}')) && in_array('VisuallyImpairedFriendly', old('detailsFor_{{$seat->seat_name}}'))) checked @endif> Visually Impaired Friendly
-                                                                <br/>
-                                                            </td>
-
-                                                        </fieldset>
-
-                                                    </tr>
-                                                @endforeach
-                                            </table>
-                                            <br/>
-
-                                        </form>
-                                    </div>
                                 </div>
                             <createroom-component  image_name="{{$rooms->floor_plan}}"  previouscanvas="{{$rooms->room_canvas}}" style="width:95%"></createroom-component>
                         </div>

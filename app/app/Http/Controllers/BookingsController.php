@@ -80,9 +80,27 @@ class BookingsController extends Controller
                 ->where('institution_name',$institution)
                 ->select('Workstations.seat_name')
                 ->get();
-            return view('bookings.create', ['seats'=>$seats]);
+            $rooms  = Rooms::
+                where('institution_name',$institution)
+                ->where('room_name',$room)
+                ->first();
+//            return view('sandbox')
+//                ->with('rooms',$rooms);
+
+            return view('bookings.create')
+                    ->with('rooms',$rooms)
+                    ->with('seats',$seats);
         }
+//  return view('sandbox')
+//            ->with('rooms',$rooms);
     }
+
+
+
+
+
+
+
 
     #storing the data for the new booking
     public function store(Request $request){
