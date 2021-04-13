@@ -6,6 +6,7 @@ use App\Http\Controllers\RoomsController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\InstitutionController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\CovidController;
 
 
 /*
@@ -40,6 +41,8 @@ Route::delete('/bookings/{id}', [BookingsController::class,'destroy'])->name('bo
 
 Route::get('/bookings/create/rooms', [BookingsController::class, 'selectRoom'])->name('bookings.selectRoom')->middleware('auth');
 Route::post('/bookings/create/rooms', [BookingsController::class, 'filterRooms'])->name('bookings.filterRooms')->middleware('auth');
+Route::post('/bookings/getAvailable', [BookingsController::class, 'getAvailable'])->name('bookings.getAvailable')->middleware('auth');
+Route::post('/bookings/createBooking', [BookingsController::class, 'saveBooking'])->name('bookings.saveBooking')->middleware('auth');
 
 Route::get('/rooms', [RoomsController::class, 'index'])->name('rooms.index')->middleware('auth');
 Route::get('/rooms/create', [RoomsController::class,'create'])->name('rooms.create')->middleware('auth');
@@ -58,3 +61,7 @@ Route::get('/rooms/{room_name}', [RoomsController::class,'show'])->name('rooms.s
 Route::delete('/rooms/{room_name}', [RoomsController::class,'destroy'])->name('rooms.delete')->middleware('auth');
 
 Route::get('sandbox', [DashboardController::class, 'sandbox'])->name('sandbox')->middleware('auth');
+
+
+Route::get('/trackAndTrace', [CovidController::class,'trackAndTrace'])->name('covid.trackAndTrace')->middleware('auth');
+Route::post('/trackAndTrace', [CovidController::class,'returnContacts'])->name('covid.trackAndTrace')->middleware('auth');

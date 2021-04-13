@@ -1,7 +1,7 @@
 <x-app-layout>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            {{ __('Dashboard') }}
+            {{ __('View Booking') }}
         </h2>
     </x-slot>
 
@@ -10,10 +10,14 @@
 
             <div class="wrapper booking-details">
                 <div>
-                    <div class="title"  > Booking in room - {{ $Booking->room_name}}</div>
-                    <p class="seat"> Seat - {{ $Booking->seat_name}}</p>
-                    <p class="start_date"> Start Date - {{ $Booking->start_time}}</p>
-                    <p class="end_time"> End Time - {{ $Booking->end_time}}</p>
+                    <div class="title"><b>{{ $Booking->room_name}}<b/></div>
+                    <div class="seat"><b>Seat: </b>{{ $Booking->seat_name}}</div>
+                    <div class="start_date"><b> Date: </b> {{ \Carbon\Carbon::parse($Booking->start_date)->format('j F, Y') }}</div>
+
+                    <br/>
+                    <div class="start_time"><b>Start Time: </b> {{ \Carbon\Carbon::createFromFormat('H:i:s', $Booking->start_time)->format('H:i') }}</div>
+                    <div class="end_time"><b>End Time: </b>{{ \Carbon\Carbon::createFromFormat('H:i:s', $Booking->end_time)->format('H:i') }}</div>
+
                     <ul>
                         @if($Booking->seat_details != null)
                         <p class="toppings"> Special Requirements:</p>

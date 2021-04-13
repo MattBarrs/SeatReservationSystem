@@ -1,7 +1,7 @@
 <x-app-layout>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            {{ __('Dashboard') }}
+            {{ __('Room Edit') }}
         </h2>
     </x-slot>
 
@@ -13,7 +13,7 @@
                 <div class="display-item">
                     <img src="/img/roomIcon.png" alt="room-item" style="width:5%;height:5%;">
                     <h4>
-                        <a href="/rooms/{{ $room->id }}"> {{ $room->room_name }} - {{$room->open_time}} - {{ $room->institution_name }} </a>
+                        <a href="/rooms/{{ $room->id }}" style="text-decoration:none;color:black;"> {{ $room->room_name }} - {{ $room->institution_name }} </a>
                     </h4>
                 </div>
                 @endforeach

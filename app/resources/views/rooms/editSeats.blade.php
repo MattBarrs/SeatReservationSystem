@@ -15,8 +15,11 @@
                     <div class = "content" style="align-content:center;">
                         <div class = "content" style="align-content:center;">
                                 Room Selected: {{$rooms->room_name}}<br/>
+                                <br/>
+                                <br/>
                                     <a href="{{ route('rooms.selectEdit') }}" class="clickable">Select Different Room</a>
-
+                                <br/>
+                                <br/>
                                     <form action="{{ route('rooms.delete', $rooms->room_name)}}" method="POST">
                                         @csrf
                                         @method('DELETE')
@@ -72,7 +75,7 @@
                                             <input type="submit" value="Submit" class="clickable">
 
                                         </form>
-                        <showroomwithnum-component  input_roomcanvas="{{$rooms->room_canvas}}"style="width:95%"></showroomwithnum-component>
+                        <showroomwithnum-component  input_roomcanvas="{{$rooms->room_canvas}}"style="width:95%;margin-right:auto;margin-left:auto;"></showroomwithnum-component>
                         </div>
                     </div>
                 </div>

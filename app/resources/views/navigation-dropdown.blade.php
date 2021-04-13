@@ -5,7 +5,7 @@
             <div class="flex">
                 <!-- Logo -->
 
-                    <x-jet-nav-link style="width:6%;height:6%; padding-top:3%;padding-bottom:3%;" href="{{ route('dashboard') }}" :active="request()->routeIs('dashboard')">
+                    <x-jet-nav-link style="width:6%;height:6%; padding-top:3%;padding-bottom:3%;margin-top:auto;" href="{{ route('dashboard') }}" :active="request()->routeIs('dashboard')">
                         <img src="/img/bookingIcon.png"></a>
                     </x-jet-nav-link>
 
@@ -21,7 +21,7 @@
                     </x-jet-nav-link>
 
                     <x-jet-nav-link href="{{ route('bookings.create') }}" :active="request()->routeIs('bookings.create')" style="text-decoration: none;">
-                        {{ __('Book A Seat') }}
+                        {{ __('Book a Seat') }}
                     </x-jet-nav-link>
 
                     <x-jet-nav-link href="{{ route('bookings.index') }}" :active="request()->routeIs('bookings.index')" style="text-decoration: none;">
@@ -45,24 +45,24 @@
 
                             <x-slot name="content">
                                 <!-- Account Management -->
-                                <div class="block px-4 py-2 text-xs text-gray-400">
+                                <div class="block px-4 py-2 text-xs text-gray-400" style="text-decoration: none;">
                                     {{ __('Manage Extras') }}
                                 </div>
-                                 <x-jet-dropdown-link href="{{ route('institution.create') }}" :active="request()->routeIs('rooms.create')">
+                                 <x-jet-dropdown-link href="{{ route('institution.create') }}" :active="request()->routeIs('rooms.create')" style="text-decoration: none;">
                                     {{ __('Add Institution') }}
                                 </x-jet-dropdown-link>
 
-                                <x-jet-dropdown-link href="{{ route('institution.select') }}" :active="request()->routeIs('institution.select')">
+                                <x-jet-dropdown-link href="{{ route('institution.select') }}" :active="request()->routeIs('institution.select')" style="text-decoration: none;">
                                     {{ __('Select Institution') }}
                                 </x-jet-dropdown-link>
 
                                 <div class="border-t border-gray-100"></div>
 
-                                <x-jet-dropdown-link href="{{ route('rooms.create') }}" :active="request()->routeIs('rooms.create')">
+                                <x-jet-dropdown-link href="{{ route('rooms.create') }}" :active="request()->routeIs('rooms.create')" style="text-decoration: none;">
                                     {{ __('Create Room') }}
                                 </x-jet-dropdown-link>
 
-                                <x-jet-dropdown-link href="{{ route('rooms.edit') }}" :active="request()->routeIs('rooms.edit')">
+                                <x-jet-dropdown-link href="{{ route('rooms.edit') }}" :active="request()->routeIs('rooms.edit') " style="text-decoration: none;">
                                     {{ __('Edit Room') }}
                                 </x-jet-dropdown-link>
 
@@ -82,8 +82,8 @@
             </div>
 
             <!-- Settings Dropdown -->
-            <div class="hidden sm:flex sm:items-center sm:ml-6">
-                <x-jet-dropdown align="right" width="48">
+            <div class="hidden sm:flex sm:items-center sm:ml-6" style="text-decoration: none;">
+                <x-jet-dropdown align="right" width="48" style="text-decoration: none;">
                     <x-slot name="trigger">
                         @if (Laravel\Jetstream\Jetstream::managesProfilePhotos())
                             <button class="flex text-sm border-2 border-transparent rounded-full focus:outline-none focus:border-gray-300 transition duration-150 ease-in-out">
@@ -108,16 +108,16 @@
                             {{ __('Manage Account') }}
                         </div>
 
-                        <x-jet-dropdown-link href="{{ route('institution.select') }}" :active="request()->routeIs('institution.select')">
+                        <x-jet-dropdown-link style="text-decoration: none;" href="{{ route('institution.select') }}" :active="request()->routeIs('institution.select')">
                             {{ __('Select Institution') }}
                         </x-jet-dropdown-link>
 
-                        <x-jet-dropdown-link href="{{ route('profile.show') }}">
+                        <x-jet-dropdown-link style="text-decoration: none;" href="{{ route('profile.show') }}">
                             {{ __('Profile') }}
                         </x-jet-dropdown-link>
 
                         @if (Laravel\Jetstream\Jetstream::hasApiFeatures())
-                            <x-jet-dropdown-link href="{{ route('api-tokens.index') }}">
+                            <x-jet-dropdown-link  style="text-decoration: none;" href="{{ route('api-tokens.index') }}">
                                 {{ __('API Tokens') }}
                             </x-jet-dropdown-link>
                         @endif
@@ -131,12 +131,12 @@
                             </div>
 
                             <!-- Team Settings -->
-                            <x-jet-dropdown-link href="{{ route('teams.show', Auth::user()->currentTeam->id) }}">
+                            <x-jet-dropdown-link style="text-decoration: none;" href="{{ route('teams.show', Auth::user()->currentTeam->id) }}">
                                 {{ __('Team Settings') }}
                             </x-jet-dropdown-link>
 
                             @can('create', Laravel\Jetstream\Jetstream::newTeamModel())
-                                <x-jet-dropdown-link href="{{ route('teams.create') }}">
+                                <x-jet-dropdown-link  style="text-decoration: none;" href="{{ route('teams.create') }}">
                                     {{ __('Create New Team') }}
                                 </x-jet-dropdown-link>
                             @endcan
@@ -144,12 +144,12 @@
                             <div class="border-t border-gray-100"></div>
 
                             <!-- Team Switcher -->
-                            <div class="block px-4 py-2 text-xs text-gray-400">
+                            <div class="block px-4 py-2 text-xs text-gray-400" style="text-decoration: none;">
                                 {{ __('Switch Teams') }}
                             </div>
 
                             @foreach (Auth::user()->allTeams() as $team)
-                                <x-jet-switchable-team :team="$team" />
+                                <x-jet-switchable-team style="text-decoration: none;" :team="$team" />
                             @endforeach
 
                             <div class="border-t border-gray-100"></div>
@@ -159,7 +159,7 @@
                         <form method="POST" action="{{ route('logout') }}">
                             @csrf
 
-                            <x-jet-dropdown-link href="{{ route('logout') }}"
+                            <x-jet-dropdown-link style="text-decoration: none;" href="{{ route('logout') }}"
                                                 onclick="event.preventDefault();
                                                             this.closest('form').submit();">
                                 {{ __('Logout') }}

@@ -34,16 +34,16 @@
                             <th>
                                 <br/>
                                 <div class="display-block">
-                                    Current Institute
+                                    <h1 style="font-size:3em;"><b>Current Institute</b></h1>
                                     <div class="display-item" style="border-width:2px;border-radius:5px;border-color:#000000;">
                                         @if( session('institution_name') != null)
-                                            <h1>{{ session('institution_name') }}</h1>
-                                            <a href="{{ route('institution.select') }}" class="clickable" style="text-align:center;white-space:nowrap;">Change Institution</a>
+                                            <h6 style="font-size:2em;">{{ session('institution_name') }}</h6>
+                                            <br/><a href="{{ route('institution.select') }}" class="clickable" style="text-decoration:none;font-colour: #FFFFFF;text-align:center;white-space:nowrap;">Change Institution</a>
 
                                         @elseif( empty($institutes))
                                             <p>No Institutes Found. Please contact administrator </p>
                                         @else
-                                            <h1>No Institute Selected <br/>Please Select Your Institution</h1>
+                                            <b>No Institute Selected <br/>Please Select Your Institution</b>
                                             <form action="{{ route('institution.select') }} " method="POST" style=" border-width:2px;border-radius:5px;border-color:#000000;">
                                                 @csrf
 
@@ -56,7 +56,7 @@
                                                 <br/>
                                                 <input type="text" name="access_code" id="access_code"value="{{ old('access_code') }}" placeholder="Access Code" style="margin-top:10px;">
                                                 <br/>
-                                                <input type="submit" value="Submit" class="clickable" style="margin-top:10px;">
+                                                <input type="submit" value="Submit" class="clickable" style="text-decoration:none;font-colour: #FFFFFF;">
                                             </form>
                                         @endif
                                     </div>
@@ -68,27 +68,30 @@
                             <td colspan="2">
                                 <br/>
                                 <div class="display-block">
-                                    <p>Your Latest Booking</p>
+                                    <h1 style="font-size:3em;"><b><p>Your Latest Booking</p></b></h1>
 
                                         @if( empty($booking) )
                                             <div class="display-item">
                                                 <p> You have no bookings</p>
                                             </div>
                                         @else
-                                            <a href="/bookings/{{ $booking->id }}">
+                                            <a href="/bookings/{{ $booking->id }}" class="styledLinks" style="text-decoration:none;color:black;">
                                                 <div class="display-item">
 
                                                     <table class="display-table">
                                                         <tr>
                                                             <td><img src="/img/workplace.png" alt="display-item"></td>
+                                                            <td class="cellWidth"> {{ $booking->room_name }}</td>
+                                                            <td class="cellWidth">Seat: {{ $booking->seat_name }}</td>
                                                             <td>{{ \Carbon\Carbon::parse($booking->start_date )->format('d/m/Y') }}</td>
                                                             <td>
-                                                                Starts {{ \Carbon\Carbon::createFromFormat('H:i:s', $booking->start_time)->format('h:i A') }}
+                                                                Starts {{ \Carbon\Carbon::createFromFormat('H:i:s', $booking->start_time)->format('H:i') }}
                                                                 <br/>
-                                                                Ends {{ \Carbon\Carbon::createFromFormat('H:i:s', $booking->end_time)->format('h:i A') }}
+                                                                Ends {{ \Carbon\Carbon::createFromFormat('H:i:s', $booking->end_time)->format('H:i ') }}
                                                             </td>
+
                                                             <td>
-                                                                <a href="/bookings/{{ $booking->id}}" class="clickable" style="color: #FFFFFFFF">View</a>
+                                                                <a href="/bookings/{{ $booking->id}}" class="clickable" style="text-decoration:none;font-colour: #FFFFFF;">View</a>
                                                             </td>
                                                         </tr>
                                                     </table>
@@ -103,31 +106,32 @@
                                 <td colspan="3">
                                     <br/>
                                     <div class="display-block">
-                                        <p>Upcoming Bookings</p>
+                                        <h1 style="font-size:3em;"><b><p>Upcoming Bookings</p></b></h1>
 
                                         <div class="display-item" style="border-width:2px;border-radius:5px;border-color:#000000;">
 
                                             @if( empty($upcoming_bookings) )
                                                 <p> You have no upcoming bookings</p>
                                             @else
-                                                <a href="{{ route('bookings.index') }}" class="clickable">View All</a>
-
+                                                <a href="{{ route('bookings.index') }}" class="clickable" style="text-decoration:none;font-colour: #FFFFFF;">View All</a>
+                                                <br/>
+                                                <br/>
                                                 @foreach($upcoming_bookings as $booking)
-                                                    <a href="/bookings/{{ $booking->id }}" style="stext-decoration:none;">
+                                                    <a href="/bookings/{{ $booking->id }}" style="text-decoration:none;color:black;">
                                                         <div class="display-item" >
                                                             <table class="display-table">
                                                                 <tr>
                                                                     <td><img src="/img/workplace.png" alt="display-item"></td>
                                                                     <td class="cellWidth"> {{ $booking->room_name }}</td>
                                                                     <td class="cellWidth">Seat: {{ $booking->seat_name }}</td>
-                                                                    <td class="cellWidth">Date {{ \Carbon\Carbon::parse($booking->start_date )->format('d/m/Y') }}</td>
+                                                                    <td class="cellWidth">{{ \Carbon\Carbon::parse($booking->start_date )->format('d/m/Y') }}</td>
                                                                     <td>
-                                                                        Starts {{ \Carbon\Carbon::createFromFormat('H:i:s', $booking->start_time)->format('h:i A') }}
+                                                                        Start {{ \Carbon\Carbon::createFromFormat('H:i:s', $booking->start_time)->format('H:i ') }}
                                                                         <br/>
-                                                                        Ends {{ \Carbon\Carbon::createFromFormat('H:i:s', $booking->end_time)->format('h:i A') }}
+                                                                        End {{ \Carbon\Carbon::createFromFormat('H:i:s', $booking->end_time)->format('H:i ') }}
                                                                     </td>
                                                                     <td>
-                                                                        <a href="/bookings/{{ $booking->id}}" class="clickable" style="color: #FFFFFFFF">View</a>
+                                                                        <a href="/bookings/{{ $booking->id}}" class="clickable" style="text-decoration:none;font-colour:#00000;">View</a>
                                                                     </td>
                                                                 </tr>
                                                             </table>
@@ -141,15 +145,6 @@
                             </tr>
                         </tbody>
                         <br/>
-                        <th colspan="2">
-                            <br/>
-                            <div class="display-block">
-                                <p>Room Last Used</p>
-                                <div class="display-item" style="margin-left:auto;margin-right:auto; text-align:center;height:100%;">
-                                    <p style="padding: 125px 10px 100px 10px;">IMAGE OF ROOM</p>
-                                </div>
-                            </div>
-                        </th>
                     </table>
                 </div>
             </div>

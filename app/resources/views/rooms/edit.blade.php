@@ -15,7 +15,10 @@
                     <div class = "content" style="align-content:center;">
                         <div class = "content" style="align-content:center;">
                                 Room Selected: {{$rooms->room_name}}<br/>
-                                    <a href="{{ route('rooms.selectEdit') }}" class="clickable">Select Different Room</a>
+                                    <br/>
+                                    <a href="{{ route('rooms.selectEdit') }}" class="clickable" style="margin-top:30px;margin-right:auto;">Select Different Room</a>
+                                    <br/>
+                                    <br/>
 
                                     <form action="{{ route('rooms.delete', $rooms->room_name)}}" method="POST">
                                         @csrf
@@ -28,7 +31,7 @@
                                     <br/><br/>
 
                                 </div>
-                            <createroom-component  image_name="{{$rooms->floor_plan}}"  previouscanvas="{{$rooms->room_canvas}}" style="width:95%"></createroom-component>
+                            <createroom-component  image_name="{{$rooms->floor_plan}}"  previouscanvas="{{$rooms->room_canvas}}" style="width:95%;margin-left:auto;margin-right:auto;"></createroom-component>
                         </div>
                     </div>
                 </div>
