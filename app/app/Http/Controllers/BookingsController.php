@@ -22,13 +22,45 @@ class BookingsController extends Controller
         #Joins user bookings and bookings tables,
         #finds where the bookings belong to user
         #Returns the relevant details to be displayed
-        $booking = Bookings::
-            join('Rooms','Bookings.room_name','Rooms.room_name')
+//        $booking = Bookings::
+//            join('Rooms','Bookings.room_name','Rooms.room_name')
+//            ->join('User_Bookings','Bookings.id','User_Bookings.id')
+//            ->where('User_Bookings.user_id',$sessionId)
+//            ->select('Bookings.seat_name','Bookings.start_date','Bookings.start_time','Bookings.end_time','Bookings.id','Rooms.room_name', 'Bookings.institution_name')
+//            ->get();
+////        return view('bookings.index',['bookings' => $booking]);
+//
+//        $sessionId = Auth::id();
+
+        $pastBookings = Bookings::
+        join('Rooms','Bookings.room_name','Rooms.room_name')
             ->join('User_Bookings','Bookings.id','User_Bookings.id')
+
             ->where('User_Bookings.user_id',$sessionId)
-            ->select('Bookings.seat_name','Bookings.start_date','Bookings.start_time','Bookings.end_time','Bookings.id','Rooms.room_name')
+            ->where('Bookings.start_date','<',Carbon::today())
+
+            ->select('Bookings.seat_name','Bookings.start_date','Bookings.start_time','Bookings.end_time','Bookings.id','Rooms.room_name', 'Bookings.institution_name')
+            ->orderBy('Bookings.start_date','desc')
+            ->orderBy('Bookings.institution_name','desc')
             ->get();
-        return view('bookings.index',['bookings' => $booking]);
+
+        $futureBookings = Bookings::
+        join('Rooms','Bookings.room_name','Rooms.room_name')
+            ->join('User_Bookings','Bookings.id','User_Bookings.id')
+
+            ->where('User_Bookings.user_id',$sessionId)
+            ->where('bookings.start_date','>=',Carbon::today())
+
+            ->select('Bookings.seat_name','Bookings.start_date','Bookings.start_time','Bookings.end_time','Bookings.id','Rooms.room_name', 'Bookings.institution_name' )
+            ->orderBy('bookings.start_date','asc')
+            ->orderBy('Bookings.institution_name','desc')
+
+            ->get();
+
+        return view('bookings.index')
+            ->with(['futureBookings'=>$futureBookings])
+            ->with(['pastBookings'=>$pastBookings]);
+
     }
 
     #Show individual booking
@@ -55,6 +87,107 @@ class BookingsController extends Controller
     #Page used to select the institutions
     public function  selectInstitution(){
         return view('bookings.institution');
+    }
+
+    public function saveBooking(Request $request){
+//        error_log("Saving booking");
+        $stringData = strval($request['data'] );
+        $request['data'] = json_decode($stringData,true);
+        $data = json_decode($stringData,true);
+
+//        error_log(print_r($request['data'],TRUE));
+//
+        $hour = $data['start_hour'];
+        $minute = $data['start_minute'];
+        $startTime = $hour.":".$minute.":00";
+
+
+        $endMinute = $minute + 30;
+        $endHour = $hour;
+        if($endMinute>60) {
+            $endMinute = $endMinute % 60;
+            $endHour = $endHour + 1;
+        }
+        if($endHour>24) {
+            $endHour = $endHour % 24;
+        }
+        $endHour = $data['start_hour'];
+        $endMinute = $data['start_minute'];
+        $startTime = $hour.":".$minute.":00";
+
+        $endTime = $endHour.":".$endMinute.":00";
+
+        $date= $data['date'];
+        $date = date('Y-m-d', strtotime($date));
+        $seat = $data['seat'];
+
+        #get the room name and the institution name
+        $institution = $request->session()->get('institution_name');
+        $room = $request->session()->get('selected_room');
+
+        $sessionId = Auth::id(); #gets user ID from session
+
+//        $findBookings = Bookings::
+//            join('User_Bookings','Bookings.id','User_Bookings.id')
+////            ->where('User_Bookings.user_id',$sessionId)
+////            ->where('Bookings.start_date',$date)
+////
+//            ->get();
+        //////////////////
+        ///
+        ///
+        error_log($date);
+        $findBookings = Bookings::
+            join('User_Bookings','Bookings.id','User_Bookings.id')
+
+            ->where('User_Bookings.user_id',$sessionId)
+            ->where('Bookings.start_date', '=',$date)
+            ->where(function($query) use ($endTime, $startTime)
+            {
+                $query->orWhere('Bookings.start_time', '<=', $endTime)
+                    ->orWhere('Bookings.end_time', '>=', $startTime);
+            })
+            ->orderBy('Bookings.institution_name','desc')
+            ->get();
+        error_log($findBookings);
+
+
+
+        //////////////////////
+        if( $findBookings == "[]"){
+
+            $booking = new Bookings();
+            $booking->room_name = $room;
+            $booking->institution_name = $institution;
+            $booking->seat_name = $seat;
+            $booking->start_date = $date;
+            $booking->start_time = $startTime;
+            $booking->end_time = $endTime;
+
+            $booking->save();
+
+            $user_booking = new User_Booking();
+
+            $bookingID= Bookings::latest('created_at')->first()->id;
+            $userId = Auth::id();
+            $user_booking->id = $bookingID;
+            $user_booking->user_id = $userId;
+
+            $user_booking->save();
+        }
+        else{
+            $roomName = $findBookings->first()->room_name;
+            $errorMessage  = "You already have a booking at this time in the '". $roomName. "' room. ";
+            error_log($errorMessage);
+            return response()->json([
+                'status' => 'error',
+                'messages' => strval($errorMessage),
+
+            ], 400);
+        }
+
+
+
     }
 
     #Creating a new booking
@@ -235,6 +368,73 @@ class BookingsController extends Controller
         $user_booking->delete();
 
         return redirect('/dashboard')->with('mssg','Booking Deleted Successfully');
+    }
+
+    public function getAvailable(Request $request){
+        $institute = $request->session()->get('institution_name');
+        $room = $request->session()->get('selected_room');
+//        $stringData = strval($request['data'] );
+
+//        $request['data'] = json_decode($stringData,true);
+//        $data = json_decode($stringData,true);
+//        error_log($request['data']);
+//        error_log($data['hour']);
+//        error_log($fullTime);
+
+//        $endMinute = $request['minute'] + 30;
+//        $endHour = $request['hour'];
+//        if($endMinute>60) {
+//            $endMinute = $endMinute % 60;
+//            $endHour = $endHour + 1;
+//        }
+//        if($endHour>24) {
+//            $endHour = $endHour % 24;
+//        }
+
+
+        $data = json_decode($request['data'],true);
+        $startTime = $data['start_hour'] . ":" . $data['start_minute'].":00";
+
+        $date = $data['date'];
+        $date = date('Y-m-d', strtotime($date));
+
+//        $endTime = $endHour.":".$endMinute.":00";
+        $endTime = $data['end_hour'] . ":" . $data['end_minute'].":00";
+
+        //        error_log("Format Data :: ".$date);
+//        $findBooking = Bookings::all();
+//        $findBooking = Bookings::where('institution_name','=',$institute)->all();
+//        error_log("Room :: ".$room);
+//        error_log("Institute :: ".$institute);
+
+//        Reservation::whereBetween('reservation_from', [$from, $to])->get();
+        $booking = Bookings::where('room_name',$room)
+                ->where('institution_name',$institute)
+                ->where('start_date',$date)
+                ->where(function($query) use ($endTime, $startTime)
+                {
+                    $query->orWhere('start_time', '<=', $endTime)
+                    ->orWhere('end_time', '>=', $startTime);
+                })
+//                ->select('seat_name')
+                ->get();
+//                ->whereBetween('start_time',[$fullTime,$endTime])
+        error_log($booking);
+        return response()->json([$booking]);
+//        return response;
+//                -where('start_date','=',$date)
+//                ->all();
+//        error_log($findBooking);
+//        error_log($request['hour']);
+//        $data = $request->get('data');
+//        $hour = $request->get('hour');
+//        $minute = $request->get('minute');
+//        $date = $request->get('date');
+        //        error_log( $canvasObject);
+//        $numOfSeats = substr_count($canvasObject,"circle");
+//        error_log( $numOfSeats);
+
+
     }
 
 

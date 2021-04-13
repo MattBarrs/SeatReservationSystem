@@ -5,18 +5,34 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="11180f2f-39ae-4934-a9d8-ad60633b4e6e" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/app/resources/js/components/showRoomWithNumComponent.vue" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/resources/views/rooms/editSeats.blade.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/app/Http/Controllers/CovidController.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/resources/js/components/trackAndTrace.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/resources/views/covid/trackAndTrace.blade.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/app/Http/Controllers/BookingsController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/app/Http/Controllers/BookingsController.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/app/Http/Controllers/RoomsController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/app/Http/Controllers/RoomsController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/public/css/app.css" beforeDir="false" afterPath="$PROJECT_DIR$/app/public/css/app.css" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/public/js/app.js" beforeDir="false" afterPath="$PROJECT_DIR$/app/public/js/app.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/resources/js/app.js" beforeDir="false" afterPath="$PROJECT_DIR$/app/resources/js/app.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/resources/js/components/ExampleComponent.vue" beforeDir="false" afterPath="$PROJECT_DIR$/app/resources/js/components/ExampleComponent.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/resources/js/components/bookSeatComponent.vue" beforeDir="false" afterPath="$PROJECT_DIR$/app/resources/js/components/bookSeatComponent.vue" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/resources/js/components/createRoomComponent.vue" beforeDir="false" afterPath="$PROJECT_DIR$/app/resources/js/components/createRoomComponent.vue" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/resources/js/components/inputdatetimeComponent.vue" beforeDir="false" afterPath="$PROJECT_DIR$/app/resources/js/components/inputdatetimeComponent.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/resources/js/components/showRoomComponent.vue" beforeDir="false" afterPath="$PROJECT_DIR$/app/resources/js/components/showRoomComponent.vue" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/resources/js/components/uploadRoomComponent.vue" beforeDir="false" afterPath="$PROJECT_DIR$/app/resources/js/components/uploadRoomComponent.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/resources/sass/app.scss" beforeDir="false" afterPath="$PROJECT_DIR$/app/resources/sass/app.scss" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/resources/views/bookings/create.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/resources/views/bookings/create.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/resources/views/bookings/index.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/resources/views/bookings/index.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/resources/views/bookings/selectRoom.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/resources/views/bookings/selectRoom.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/resources/views/bookings/show.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/resources/views/bookings/show.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/resources/views/dashboard.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/resources/views/dashboard.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/resources/views/institution/create.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/resources/views/institution/create.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/resources/views/institution/select.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/resources/views/institution/select.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/resources/views/navigation-dropdown.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/resources/views/navigation-dropdown.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/resources/views/rooms/create.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/resources/views/rooms/create.blade.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/resources/views/rooms/edit.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/resources/views/rooms/edit.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/resources/views/rooms/editSeats.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/resources/views/rooms/editSeats.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/resources/views/rooms/index.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/resources/views/rooms/index.blade.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/routes/web.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/routes/web.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -185,28 +201,15 @@
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="C:\Users\Matty B\Documents\Uni_Y4\OneDrive - University of Leeds\Project\SeatReservationSystem\app\resources\js\components" />
+      <recent name="C:\Users\Matty B\Documents\Uni_Y4\OneDrive - University of Leeds\Project\SeatReservationSystem\app\app\Http\Controllers" />
+      <recent name="C:\Users\Matty B\Documents\Uni_Y4\OneDrive - University of Leeds\Project\SeatReservationSystem\app\resources\views" />
       <recent name="C:\Users\Matty B\Documents\Uni_Y4\OneDrive - University of Leeds\Project\SeatReservationSystem\app\resources\views\rooms" />
       <recent name="C:\Users\Matty B\Documents\Uni_Y4\OneDrive - University of Leeds\Project\SeatReservationSystem\app\resources\js" />
-      <recent name="C:\Users\Matty B\Documents\Uni_Y4\OneDrive - University of Leeds\Project\SeatReservationSystem\app\resources\views\institution" />
-      <recent name="C:\Users\Matty B\Documents\Uni_Y4\OneDrive - University of Leeds\Project\SeatReservationSystem\app\resources\views\bookings" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="C:\Users\Matty B\Documents\Uni_Y4\OneDrive - University of Leeds\Project\SeatReservationSystem\app\resources\views" />
       <recent name="C:\Users\Matty B\Documents\Uni_Y4\OneDrive - University of Leeds\Project\SeatReservationSystem\app\resources\views\auth\institution" />
     </key>
-  </component>
-  <component name="RunManager">
-    <configuration default="true" type="ArquillianJUnit" factoryName="" nameIsGenerated="true">
-      <option name="arquillianRunConfiguration">
-        <value>
-          <option name="containerStateName" value="" />
-        </value>
-      </option>
-      <option name="TEST_OBJECT" value="class" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
@@ -262,6 +265,16 @@
       <workItem from="1617440325138" duration="37708000" />
       <workItem from="1617520919590" duration="14087000" />
       <workItem from="1617536137808" duration="30156000" />
+      <workItem from="1617605047882" duration="604000" />
+      <workItem from="1617820137422" duration="614000" />
+      <workItem from="1617866020241" duration="36713000" />
+      <workItem from="1617906920022" duration="12859000" />
+      <workItem from="1617956569194" duration="15556000" />
+      <workItem from="1618075319916" duration="84000" />
+      <workItem from="1618129867200" duration="1199000" />
+      <workItem from="1618137128679" duration="13360000" />
+      <workItem from="1618211525149" duration="21274000" />
+      <workItem from="1618298655655" duration="1787000" />
     </task>
     <servers />
   </component>

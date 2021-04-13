@@ -21330,6 +21330,7 @@ import VueAxios from 'vue-axios'
 // Import Bootstrap an BootstrapVue CSS files (order is important)
 import 'bootstrap/dist/css/bootstrap.css'
 import 'bootstrap-vue/dist/bootstrap-vue.css'
+import '/css/app.css'
 
 
 
@@ -21365,6 +21366,8 @@ Vue.component('showroomwithnum-component', require('./components/showRoomWithNum
 Vue.component('datetime-component', require('./components/inputdatetimeComponent.vue').default);
 Vue.component('bookseat-component', require('./components/bookSeatComponent.vue').default);
 Vue.component('editseats-component', require('./components/editSeatsComponent.vue').default);
+
+Vue.component('trackandtrace-component', require('./components/trackAndTrace.vue').default);
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to

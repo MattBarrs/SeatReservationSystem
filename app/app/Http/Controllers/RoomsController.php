@@ -147,13 +147,13 @@ class RoomsController extends Controller
         Storage::disk('public')->put('floor_plan', $file,'public');
         $room->floor_plan =$file->HashName();
         #save room
-        error_log(print_r($room,TRUE));
+//        error_log(print_r($room,TRUE));
         try{
             $room->save();
         }
         catch(Exception $e){
             // do task when error
-            error_log(print_r($e->getMessage(),TRUE));   // insert query
+//            error_log(print_r($e->getMessage(),TRUE));   // insert query
         }
         return response()->json([$data]);
         // Store the record, using the new file hashname which will be it's new filename identity.

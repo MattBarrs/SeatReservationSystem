@@ -5,21 +5,19 @@ import showCanvasComponent from "./showRoomComponent.js";
         Select Date
 
 
-        <datepicker v-model="date_input" :disabled-dates="uptoToday" @change="checkVariables()"></datepicker>
+        <datepicker :calendar-button="true" v-model="date_input" :disabled-dates="uptoToday" @input="checkVariables"></datepicker>
         <div id="isDateError" class="redBackground hiddenError" >Invalid Date</div>
 
         <br/><br/>
-        {{input_closetime}}
-        From <vue-timepicker close-on-complete v-model="time_input"  hide-disabled-hours :minute-interval="20" :hour-range="[ [timeOpen, timeClose] ]" placeholder="Start Time" @change="checkAvailable"></vue-timepicker> &nbsp;To&nbsp;
+        From <vue-timepicker close-on-complete v-model="time_input"  hide-disabled-hours :minute-interval="20" :hour-range="[ [timeOpen_hh, timeClose_hh] ]" placeholder="Start Time" @change="checkAvailable"></vue-timepicker> &nbsp;To&nbsp;
         <vue-timepicker disabled v-model="time_end" id="time_end" placeholder="End Time"></vue-timepicker>
         <br/>
-        <div style="font-size:10px;"> Room Opens at: {{input_opentime }}</div>
-        <div style="font-size:10px;"> Room Closes at: {{input_closetime }}</div>
+        <div style="font-size:15px;"> Room Opens at: {{ timeOpen_hh}}:{{timeOpen_mm}}</div>
+        <div style="font-size:15px;"> Room Closes at: {{ timeClose_hh}}:{{timeClose_mm}}</div>
+
+
         <div id="isTimeError" class="redBackground hiddenError" >Invalid Time</div>
-
-        <br/>
-
-        <button @click="checkVariables()" class="clickable">Submit</button>
+        <button style="visibility:hidden;" @click="checkVariables()" class="clickable" id="showAvailable">Show Availability</button>
 
 
     <br/>
@@ -50,11 +48,12 @@ export default {
 
     data() {
         return {
-            // timeFormat: 'hh:mm',
-
             date_input:null,
-            timeClose:null,
-            timeOpen:null,
+
+            timeClose_hh:null,
+            timeClose_mm:null,
+            timeOpen_hh:null,
+            timeOpen_mm:null,
 
             time_input: {
                 hh: null,
@@ -76,30 +75,28 @@ export default {
     mounted() {
         var temp_split;
         temp_split = this.input_opentime.split(":");
-        this.timeOpen = temp_split[0];
+        this.timeOpen_hh = temp_split[0];
+        this.timeOpen_mm = temp_split[1];
         temp_split = this.input_closetime.split(":");
-        this.timeClose = temp_split[0];
+        this.timeClose_hh = temp_split[0];
+        this.timeClose_mm = temp_split[1];
     },
 
         methods: {
 
 
         checkVariables (event){
+            // console.log("CheckVariables :: Activated");
             try{
                 document.getElementById("isTimeError").style.visibility = "hidden";
                 document.getElementById("isDateError").style.visibility = "hidden";
-                // console.log(this.time_input['HH']);
-                // console.log(this.time_input['mm']);
-                // console.log(this.date_input);
 
                 var temp_hh = this.time_input['HH'];
                 var temp_mm= this.time_input['mm'];
                 var temp_date = this.date_input;
                 var errorFound = false;
 
-                // if(  (Number.isInteger(this.time_input['HH']) ) && (Number.isInteger(this.time_input['mm']) ) && (this.time_input['HH'] != "")  && (this.time_input['mm'] != "") ){
                 if( (temp_mm == null) || (temp_hh == null) || (temp_mm == "") || (temp_hh == "") ) {
-                    // console.log("Error Found 1");
                     errorFound = true;
                     document.getElementById("isTimeError").style.visibility = "visible";
                 }
@@ -128,7 +125,7 @@ export default {
                     errorFound = true;
                     document.getElementById("isTimeError").style.visibility = "visible";
                 }
-                else if( (end_hh == close_split[0] && end_mm>close_split[1]) || end_hh<open_split[0]){
+                else if( (end_hh == close_split[0] && end_mm>close_split[1]) || end_hh<open_split[0] || end_hh > close_split[0] ){
                     // console.log("Error Found 4");
                     errorFound = true;
                     document.getElementById("isTimeError").style.visibility = "visible";
@@ -143,7 +140,14 @@ export default {
                 if(errorFound == false) {
                     // document.getElementById("isTimeError").style.visibility = "hidden";
                     // document.getElementById("isDateError").style.visibility = "hidden";
-                    this.$emit('clicked',[this.time_input, this.date_input]);
+                    this.$emit('clicked',[this.time_input, this.time_end,  this.date_input]);
+                    document.getElementById("showAvailable").style.visibility = "visible";
+
+
+                }else{
+                    this.$emit('clicked',[false]);
+                    document.getElementById("showAvailable").style.visibility = "hidden";
+
 
                 }
                 // this.$emit('clicked',"CLICKED");
@@ -155,6 +159,9 @@ export default {
         },
 
         checkAvailable(eventData) {
+            // console.log("checkAvailable :: activated " );
+            // console.log(eventData);
+
             if (!(eventData['displayTime'].includes("H")) && !(eventData['displayTime'].includes("h")) && !(eventData['displayTime'].includes("m")) && eventData['displayTime'] != "") {
                 var timeInterval = 59;
 
@@ -186,8 +193,8 @@ export default {
                 // console.log(eventData['displayTime']);
                 // console.log(eventData['data']);
 
-                console.log(temp_mm);
-                console.log(temp_hh);
+                // console.log(temp_mm);
+                // console.log(temp_hh);
 
                 this.time_end['HH'] = temp_hh;
                 this.time_end['mm'] = temp_mm;

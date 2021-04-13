@@ -2,16 +2,17 @@ import showCanvasComponent from "./showRoomComponent.js";
 
 <template>
     <div>
-        Room Name<input type="input" v-model="room_name" value="room_name" @change="checkName">
+        <br/><br/>
+<b> Room Name &nbsp; </b><input type="input" v-model="room_name" @change="checkName">
 
         <br/><br/>
         <table>
             <tr>
-                <td style="padding-bottom:15px;">Opening Time</td>
+                <td style="padding-bottom:15px;"><b>Opening Time</b></td>
                 <td style="padding-bottom:15px;"><vue-timepicker close-on-complete v-model="openingtime"  hide-disabled-hours :minute-interval="5"  placeholder="Opening Time"   @change="checkTime"></vue-timepicker></td>
             </tr>
             <tr>
-                <td style="padding-bottom:15px;">Closing Time</td>
+                <td style="padding-bottom:15px;"><b>Closing Time</b></td>
                 <td style="padding-bottom:15px;"><vue-timepicker  id="closingtime" close-on-complete v-model="closingtime" :hour-range="[[minclosingtime,23]]"  hide-disabled-hours :minute-interval="5"  placeholder="Closing Time" @change="checkTime"></vue-timepicker></td>
             </tr>
             <div id="isTimeError" class="redBackground hiddenError" style="width:100%">Invalid Time</div>
@@ -19,30 +20,29 @@ import showCanvasComponent from "./showRoomComponent.js";
         <br/>
 
         <br/><br/>
-        <b>Room Facilities & Details</b>
-        <br/>
+        <div style="font-size:1.5em">Room Facilities & Details (Optional)</div>
         <button class="clickable" @click="toggle"> Select All</button>
         <button class="clickable" @click="untoggle"> De-Select All</button><br/>
-        <input type="checkbox" name="room_details" v-model="room_details" value="Catering" id="Catering"> Catering
+        &nbsp;&nbsp;<input type="checkbox" name="room_details" v-model="room_details" value="Catering" id="Catering"> Catering
         <br/>
-        <input type="checkbox" name="room_details" v-model="room_details" value="Disabled Toilets" id="Disabled Toilets"> Disabled Toilets
+        &nbsp;&nbsp;<input type="checkbox" name="room_details" v-model="room_details" value="Disabled Toilets" id="Disabled Toilets"> Disabled Toilets
         <br/>
-        <input type="checkbox" name="room_details" v-model="room_details" value="Guide-dog Friendly" id="Guide-dog Friendly">Guide Dog Friendly
+        &nbsp;&nbsp;<input type="checkbox" name="room_details" v-model="room_details" value="Guide-dog Friendly" id="Guide-dog Friendly"> Guide Dog Friendly
         <br/>
-        <input type="checkbox" name="room_details" v-model="room_details" value="Wheelchair Access" id="Wheelchair Access">Wheel Chair Access
+        &nbsp;&nbsp;<input type="checkbox" name="room_details" v-model="room_details" value="Wheelchair Access" id="Wheelchair Access"> Wheel Chair Access
         <br/>
-        <input type="checkbox" name="room_details" v-model="room_details" value="Lifts" id="Lifts">Lifts
+        &nbsp;&nbsp;<input type="checkbox" name="room_details" v-model="room_details" value="Lifts" id="Lifts"> Lifts
         <br/>
-        <input type="checkbox" name="room_details" v-model="room_details" value="Prayer Room" id="Prayer Room">Prayer Room
+        &nbsp;&nbsp;<input type="checkbox" name="room_details" v-model="room_details" value="Prayer Room" id="Prayer Room"> Prayer Room
         <br/>
-        <input type="checkbox" name="room_details" v-model="room_details" value="Quiet Room" id="Quiet Room">Quiet Room
+        &nbsp;&nbsp;<input type="checkbox" name="room_details" v-model="room_details" value="Quiet Room" id="Quiet Room"> Quiet Room
         <br/>
-        <input type="checkbox" name="room_details" v-model="room_details" value="Toilets" id="Toilets">Toilets
-        <br/>
+        &nbsp;&nbsp;<input type="checkbox" name="room_details" v-model="room_details" value="Toilets" id="Toilets"> Toilets
 
-        <label for ="floor_plan">Upload floor plan of room</label>
+        <br/><br/>
+        <div style="font-size:1.5em">Upload floor plan of room</div>
         <input type="file"  id="floor_plan" name="floor_plan" @change="checkUpload">
-            <br/><br/>
+        <br/><br/>
 
         <div v-if="errors" class="failAlertMessage">
             <div v-for="(v, k) in errors" :key="k">
@@ -103,7 +103,7 @@ export default {
             closingtime:null,
             floor_plan:null,
             file_floorplan:null,
-            room_name:"Fight Arena",
+            room_name:null,
             room_details:[],
 
             minclosingtime:null,
@@ -131,7 +131,7 @@ export default {
                 var checkboxes = document.getElementsByName('room_details');
                 // console.log(checkboxes);
                 for(var i=0, n=checkboxes.length;i<n;i++) {
-                    console.log(checkboxes[i].checked);
+                    // console.log(checkboxes[i].checked);
                     checkboxes[i].checked = true;
                 }
             },

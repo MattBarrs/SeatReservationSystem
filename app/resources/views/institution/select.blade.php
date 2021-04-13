@@ -9,37 +9,32 @@
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 bg-white overflow-hidden shadow-xl sm:rounded-lg">
 
             <div class="wrapper create-booking">
-                @if( session('institution_name') != null)
-                    <h1>Current Institute Selected: {{ session('institution_name') }}</h1>
-                @else
-                    <h1>No Institute Selected <br/>Please Select Your Institution</h1>
-                @endif
+                <div class="title">Select Institute</div>
 
                 @if( empty($institutes))
-                    <p>No Institutes Found. Please contact adminastrator </p>
+                <p>No Institutes Found. Please contact adminastrator </p>
                 @else
+                    <br/>
                     <form action="{{ route('institution.select') }} " method="POST">
                         @csrf
+                        @if( session('institution_name') != null)
+                            <h1 style="font-size:20px;"><b>Current Institute Selected: {{ session('institution_name') }}</b></h1>
+                        @else
+                            <h1 style="font-size:20px;"> No Institute Selected </h1>
+                        @endif
 
-                        <label for ="institution"></label>
+
                         <select name="institution" id="institution">
                             @foreach($institutes as $institute)
                                 <option value="{{$institute->institution_name}}">{{$institute->institution_name}}</option>
                             @endforeach
                         </select>
                         <br/>
-                        <label for ="access_code">
-                            Access Code
-                            <div class="tooltip"style="max-width: 20px;max-height: 20px;"> <img src="img/question.png">
-                                <span class="tooltiptext">
-                                Please ask your local staff or admin if you do not know the access code.
-                            </span>
-                            </div>
-                        </label>
-
+                        <label for ="access_code"><p style="font-size:20px;"><b>Access Code<b></p></label>
                         <input type="text" name="access_code" id="access_code"value="{{ old('access_code') }}">
+
                         @if( session('mssg') != null )
-                            <div class = "failAlertMessage">
+                            <div class = "failAlertMessage" style="text-align:center; max-width:200px;">
                                 <p class="mssg" >{{ session('mssg') }}</p>
                             </div>
                         @endif
@@ -50,6 +45,7 @@
                                 </ul>
                             </div>
                         @endforeach
+                        <br/>
                         <br/>
                         <input type="submit" value="Submit" class="clickable">
                     </form>
