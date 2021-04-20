@@ -19,3 +19,6 @@ app/public/uploads
 node_modules/
 node_modules/vue2-timepicker
 
+.idea/php.xml
+.idea/misc.xml
+.idea/vcs.xml
