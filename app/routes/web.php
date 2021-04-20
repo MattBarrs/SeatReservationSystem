@@ -44,9 +44,9 @@ Route::post('/bookings/create/rooms', [BookingsController::class, 'filterRooms']
 Route::post('/bookings/getAvailable', [BookingsController::class, 'getAvailable'])->name('bookings.getAvailable')->middleware('auth');
 Route::post('/bookings/createBooking', [BookingsController::class, 'saveBooking'])->name('bookings.saveBooking')->middleware('auth');
 
-Route::get('/rooms', [RoomsController::class, 'index'])->name('rooms.index')->middleware('auth');
 Route::get('/rooms/create', [RoomsController::class,'create'])->name('rooms.create')->middleware('auth');
 Route::post('rooms', [RoomsController::class,'saveRoom'])->name('rooms.saveRoom')->middleware('auth');
+
 
 Route::get('/rooms/edit', [RoomsController::class,'edit'])->name('rooms.edit')->middleware('auth');
 Route::get('/rooms/editseats', [RoomsController::class,'editSeats'])->name('rooms.editSeats')->middleware('auth');
@@ -59,8 +59,6 @@ Route::delete('/rooms/edit/{seat_name}', [BookingsController::class,'destroy'])-
 
 Route::get('/rooms/{room_name}', [RoomsController::class,'show'])->name('rooms.show')->middleware('auth');
 Route::delete('/rooms/{room_name}', [RoomsController::class,'destroy'])->name('rooms.delete')->middleware('auth');
-
-Route::get('sandbox', [DashboardController::class, 'sandbox'])->name('sandbox')->middleware('auth');
 
 
 Route::get('/trackAndTrace', [CovidController::class,'trackAndTrace'])->name('covid.trackAndTrace')->middleware('auth');

@@ -20,7 +20,7 @@
                 <br/>
                 <br/>
 
-                <bookseat-component roomcanvas="{{$rooms->room_canvas}}" opentime="{{$rooms->open_time}}" closetime="{{$rooms->close_time}}"></bookseat-component>
+                <seatbooking-component roomcanvas="{{$rooms->room_canvas}}" opentime="{{$rooms->open_time}}" closetime="{{$rooms->close_time}}"></seatbooking-component>
 
             </div>
         </div>

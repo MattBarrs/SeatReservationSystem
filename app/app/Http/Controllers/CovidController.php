@@ -28,13 +28,11 @@ class CovidController extends Controller
             ->where('User_Bookings.user_id',$sessionId)
             ->select('Bookings.seat_name','Bookings.start_date','Bookings.start_time','Bookings.end_time','Bookings.id','Rooms.room_name')
             ->get();
-        return view('covid.trackAndTrace' , ['institutes'=>$institutes_all, 'rooms'=>$rooms_all]);
-//        return view('dashboard', ['booking' => $booking, 'institutes'=>$institutes_all, 'upcoming_bookings'=>$upcoming_bookings]);
 
+        return view('covid.trackAndTrace' , ['institutes'=>$institutes_all, 'rooms'=>$rooms_all]);
     }
 
     public function returnContacts(Request $request){
-//        error_log("Starting");
 
 
         $stringData = strval($request['data']);
@@ -43,39 +41,65 @@ class CovidController extends Controller
         $room = $data['room'];
         $institute = $data['institute'];
 
-        $time_HH = $data['time']['HH'];
-        $time_mm = $data['time']['mm'];
-        $time =  $time_HH.":". $time_mm . ":00";
+        $start_time_HH = $data['time']['HH'];
+        $start_time_mm = $data['time']['mm'];
+        $start_time =  $start_time_HH.":". $start_time_mm . ":00";
 
+
+        $end_time_HH = $start_time_HH ;
+        $end_time_mm = $start_time_mm + 59;
+        if($end_time_mm>60){
+            $end_time_mm = $end_time_mm % 60;
+            $end_time_HH = $end_time_HH + 1;
+        }
+        if($end_time_HH>24){
+            $end_time_HH = $end_time_HH % 24;
+        }
+        $end_time =  $end_time_HH.":". $end_time_mm . ":00";
+        error_log(print_r($end_time, TRUE) );
         $date = $data['date'];
         $date = date('Y-m-d', strtotime($date));
 
-        $bookings = Bookings::
+        $userIDs = Bookings::
             join('Rooms','Bookings.room_name','=','Rooms.room_name')
             ->join('User_Bookings','Bookings.id','=','User_Bookings.id')
             ->where('Bookings.room_name','=',$room)
             ->where('Bookings.institution_name','=',$institute)
-            ->where('Bookings.start_time','=',$time)
+            ->where(function($query) use ($end_time, $start_time)
+            {
+                $query->where(function($query) use ($start_time){
+                    $query->where('Bookings.start_time', '<=', $start_time)
+                        ->where('Bookings.end_time', '>=',  $start_time);
+                })
+                    ->orWhere(function($query) use ($end_time) {
+                        $query->where('Bookings.start_time', '<=', $end_time)
+                            ->where('Bookings.end_time', '>=', $end_time);
+                    });
+            })
             ->where('Bookings.start_date','=',$date)
             ->select('User_Bookings.user_id')
             ->get();
 
-        $userIDs = array();
-        foreach ($bookings as $booking){
-            if( ! (in_array($booking->user_id, $userIDs)) ) {
-                $int = $booking->user_id ;
-                array_push($userIDs, strval($int) );
+
+        $userIDs_array = array();
+        foreach ($userIDs as $uID){
+//            error_log($uID->user_id);
+
+            if( ! (in_array($uID->user_id, $userIDs_array)) ) {
+                error_log("adding");
+                $int = $uID->user_id ;
+                array_push($userIDs_array, strval($int) );
 
             }
         }
 
         $userEmails = array();
-        foreach($userIDs as $id){
+        foreach($userIDs_array as $id){
             $userEmail = User::where('id',$id)->select('email')->first();
-            array_push($userEmails, strval($userEmail) );
+            array_push($userEmails, strval($userEmail->email) );
 
         }
-
+//        error_log( print_r ($userEmails, TRUE));
         return response()->json([$userEmails]);
 
     }

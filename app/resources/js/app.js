@@ -21351,29 +21351,15 @@ window.Vue = require('vue').default;
  * Eg. ./components/ExampleComponent.vue -> <example-component></example-component>
  */
 
-// const files = require.context('./', true, /\.vue$/i)
-// files.keys().map(key => Vue.component(key.split('/').pop().split('.')[0], files(key).default))
-
-
-// Vue.component('time_converter-component', require('./components/startTimeConverter.vue').default);
-Vue.component('createroom-component',require('./components/createRoomComponent.vue').default);
 Vue.component('uploadroom-component',require('./components/uploadRoomComponent.vue').default);
-Vue.component('showcanvas-component', require('./components/showRoomComponent.vue').default);
+Vue.component('createroom-component',require('./components/createRoomComponent.vue').default);
+
 Vue.component('showroomwithnum-component', require('./components/showRoomWithNumComponent.vue').default);
 
-// Vue.component('example-component', require('./components/ExampleComponent.vue').default);
-// Vue.component('canvas-component', require('./components/canvasComponent.vue').default);
-Vue.component('datetime-component', require('./components/inputdatetimeComponent.vue').default);
-Vue.component('bookseat-component', require('./components/bookSeatComponent.vue').default);
-Vue.component('editseats-component', require('./components/editSeatsComponent.vue').default);
 
 Vue.component('trackandtrace-component', require('./components/trackAndTrace.vue').default);
 
-/**
- * Next, we will create a fresh Vue application instance and attach it to
- * the page. Then, you may begin adding components to this application
- * or customize the JavaScript scaffolding to fit your unique needs.
- */
+Vue.component('seatbooking-component', require('./components/seatBookingComponent.vue').default);
 
 
 
@@ -21391,7 +21377,6 @@ const app = new Vue({
         timeConvert: function () {
             this.startTimeMinutes = this.startTimeInput/60;
             this.intervalTimeMinutes = this.intervalTimeInput/60;
-            //e.target.value = this.inputTime/60;
         },
 
     }

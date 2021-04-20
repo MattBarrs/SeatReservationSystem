@@ -186,11 +186,6 @@ export default {
                         temp_mm = parseInt(temp_split[1]) + timeInterval;
                     }
 
-                    // console.log(eventData['data']);
-                    //
-                    // console.log(temp_mm);
-                    // console.log(temp_hh);
-
                     this.time_end['hh'] = temp_hh;
                     this.time_end['mm'] = temp_mm;
 
@@ -219,10 +214,6 @@ export default {
             canvas.setWidth(width);
             canvas.setHeight(height);
 
-            // var backgroundURL = "/uploads/floor_plan/" + this.image_name;
-            // var backgroundURL = "/uploads/floor_plan/" + this.image_name;
-            // canvas.setBackgroundImage(backgroundURL, canvas.renderAll.bind(canvas));
-
             var $ = function(id){return document.getElementById(id)};
             fabric.Object.prototype.transparentCorners = false;
             fabric.Group.prototype.hasControls = false
@@ -237,16 +228,6 @@ export default {
             let seatNotAvailable = '#ff0000';
             let previousColourState = [];
 
-            //////////Draw Shapes
-            // var circle = new fabric.Circle({
-            //     radius: 50,
-            //     left: 75,
-            //     top: 75,
-            //     fill: seatAvailable,
-            //     name: 1,
-            // });
-            // console.log("___________________________");
-            // console.log("CANVAS", this.input_roomcanvas);
             if(this.input_roomcanvas != ""){
                 canvas.loadFromJSON(this.input_roomcanvas, canvas.renderAll.bind(canvas));
                 canvas.requestRenderAll();
@@ -256,18 +237,18 @@ export default {
             loadcanvas.onclick = function() {
                 canvas.forEachObject(function(object) {
                     if( object.get('type') == "rect") object.visible = false;
-                    // object.set('fill' ,'#1E88E5');
+                    if( object.get('type') == "line") object.visible = false;
+
                     object.hasControls = false;
                     object.lockMovementX = true;
                     object.lockMovementY = true;
-                    canvas.requestRenderAll();
+
                     if( object.get('type') == "group") previousColourState.push(object.item(0).get('fill'));
 
-
+                    canvas.requestRenderAll();
                 });
                 changeColours('#808080','#baf312','#ff0000');
 
-                // console.log(previousColourState);
             }
 
             alterColour_01.onclick = function() { changeColours("#48453E","#1E88E5", "#FFC107");}

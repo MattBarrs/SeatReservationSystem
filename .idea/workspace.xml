@@ -5,34 +5,27 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="11180f2f-39ae-4934-a9d8-ad60633b4e6e" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/app/app/Http/Controllers/CovidController.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/resources/js/components/trackAndTrace.vue" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/resources/views/covid/trackAndTrace.blade.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/database/migrations/2021_04_18_170635_remove_seat_coords.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/app/Http/Controllers/BookingsController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/app/Http/Controllers/BookingsController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/app/Http/Controllers/CovidController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/app/Http/Controllers/CovidController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/app/Http/Controllers/DashboardController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/app/Http/Controllers/DashboardController.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/app/Http/Controllers/RoomsController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/app/Http/Controllers/RoomsController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/public/css/app.css" beforeDir="false" afterPath="$PROJECT_DIR$/app/public/css/app.css" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/public/js/app.js" beforeDir="false" afterPath="$PROJECT_DIR$/app/public/js/app.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/resources/js/app.js" beforeDir="false" afterPath="$PROJECT_DIR$/app/resources/js/app.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/resources/js/components/ExampleComponent.vue" beforeDir="false" afterPath="$PROJECT_DIR$/app/resources/js/components/ExampleComponent.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/resources/js/components/bookSeatComponent.vue" beforeDir="false" afterPath="$PROJECT_DIR$/app/resources/js/components/bookSeatComponent.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/resources/js/components/ExampleComponent.vue" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/resources/js/components/bookSeatComponent.vue" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/resources/js/components/canvasComponent.vue" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/app/resources/js/components/createRoomComponent.vue" beforeDir="false" afterPath="$PROJECT_DIR$/app/resources/js/components/createRoomComponent.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/resources/js/components/inputdatetimeComponent.vue" beforeDir="false" afterPath="$PROJECT_DIR$/app/resources/js/components/inputdatetimeComponent.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/resources/js/components/showRoomComponent.vue" beforeDir="false" afterPath="$PROJECT_DIR$/app/resources/js/components/showRoomComponent.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/resources/js/components/uploadRoomComponent.vue" beforeDir="false" afterPath="$PROJECT_DIR$/app/resources/js/components/uploadRoomComponent.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/resources/sass/app.scss" beforeDir="false" afterPath="$PROJECT_DIR$/app/resources/sass/app.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/resources/js/components/editSeatsComponent.vue" beforeDir="false" afterPath="$PROJECT_DIR$/app/resources/js/components/editSeatsComponent.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/resources/js/components/inputdatetimeComponent.vue" beforeDir="false" afterPath="$PROJECT_DIR$/app/resources/js/components/seatBookingComponent.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/resources/js/components/showRoomComponent.vue" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/resources/js/components/showRoomWithNumComponent.vue" beforeDir="false" afterPath="$PROJECT_DIR$/app/resources/js/components/showRoomWithNumComponent.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/resources/js/components/trackAndTrace.vue" beforeDir="false" afterPath="$PROJECT_DIR$/app/resources/js/components/trackAndTrace.vue" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/resources/views/bookings/create.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/resources/views/bookings/create.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/resources/views/bookings/index.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/resources/views/bookings/index.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/resources/views/bookings/selectRoom.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/resources/views/bookings/selectRoom.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/resources/views/bookings/show.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/resources/views/bookings/show.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/resources/views/dashboard.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/resources/views/dashboard.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/resources/views/institution/create.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/resources/views/institution/create.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/resources/views/institution/select.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/resources/views/institution/select.blade.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/resources/views/navigation-dropdown.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/resources/views/navigation-dropdown.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/resources/views/rooms/create.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/resources/views/rooms/create.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/resources/views/rooms/edit.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/resources/views/rooms/edit.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/resources/views/rooms/editSeats.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/resources/views/rooms/editSeats.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/resources/views/rooms/index.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/resources/views/rooms/index.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/resources/views/sandbox.blade.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/resources/views/vendor/jetstream/components/application-logo.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/resources/views/vendor/jetstream/components/application-logo.blade.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/routes/web.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/routes/web.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -179,11 +172,15 @@
     </include_path>
   </component>
   <component name="ProjectId" id="1lsdsRkJhH5nRZ0YGakqsFGWQax" />
+  <component name="ProjectLevelVcsManager">
+    <ConfirmationsSetting value="2" id="Add" />
+  </component>
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
   <component name="PropertiesComponent">
+    <property name="ASKED_ADD_EXTERNAL_FILES" value="true" />
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
@@ -210,6 +207,19 @@
       <recent name="C:\Users\Matty B\Documents\Uni_Y4\OneDrive - University of Leeds\Project\SeatReservationSystem\app\resources\views" />
       <recent name="C:\Users\Matty B\Documents\Uni_Y4\OneDrive - University of Leeds\Project\SeatReservationSystem\app\resources\views\auth\institution" />
     </key>
+  </component>
+  <component name="RunManager">
+    <configuration default="true" type="ArquillianJUnit" factoryName="" nameIsGenerated="true">
+      <option name="arquillianRunConfiguration">
+        <value>
+          <option name="containerStateName" value="" />
+        </value>
+      </option>
+      <option name="TEST_OBJECT" value="class" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
@@ -274,7 +284,17 @@
       <workItem from="1618129867200" duration="1199000" />
       <workItem from="1618137128679" duration="13360000" />
       <workItem from="1618211525149" duration="21274000" />
-      <workItem from="1618298655655" duration="1787000" />
+      <workItem from="1618298655655" duration="3774000" />
+      <workItem from="1618327014890" duration="1275000" />
+      <workItem from="1618385409110" duration="9132000" />
+      <workItem from="1618472133421" duration="4257000" />
+      <workItem from="1618560443569" duration="1015000" />
+      <workItem from="1618650051211" duration="760000" />
+      <workItem from="1618733973450" duration="974000" />
+      <workItem from="1618761317312" duration="16007000" />
+      <workItem from="1618857922812" duration="1066000" />
+      <workItem from="1618902267956" duration="5418000" />
+      <workItem from="1618910024318" duration="6396000" />
     </task>
     <servers />
   </component>
@@ -292,5 +312,8 @@
       </map>
     </option>
     <option name="oldMeFiltersMigrated" value="true" />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
   </component>
 </project>

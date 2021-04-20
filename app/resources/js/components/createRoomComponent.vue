@@ -9,7 +9,6 @@
                     <b-card>
 
                         <button id="discard" class="clickable">Discard Selection</button>
-                        <button id="deleteSelection" class="redButton">Delete Object</button>
 
                         <div class="accordion" role="tablist">
 
@@ -31,11 +30,12 @@
                                         <p style="font-size: 15px">
                                             Real-Life Length (metres)
                                         </p>
-                                        <input type="number" id="length_value" min="1" max="100"  style="width:50px;border-style:solid;border-width:4px;border-radius:4px;">
+                                        <input type="number" id="length_value" min="0.001" step="0.001" max="100"  style="width:100px;border-style:solid;border-width:4px;border-radius:4px;">
                                         <br/>
                                         <br/>
                                         <button id="setReference" class="clickable" name="setReference" >Set Reference</button>
                                         <button id="unsetReference" class="clickable" name="unsetReference" style="visibility:hidden;">Unset Reference</button>
+                                        <p style="font-size:0.9em">(See instructions if unsure)</p>
                                         </div>
                                     </b-card-body>
                                 </b-collapse>
@@ -52,7 +52,9 @@
                                             <button id="addmore_exclusionArea" class="clickable">Add Exclusion Area</button>
                                             <button id="setSeatArea" class="clickable"style="visibility:hidden;">Set Seat Area</button>
                                             <button id="unsetSeatArea" class="clickable" style="visibility:hidden;">Unset Seat Area</button>
-                                        </b-card-body>
+                                            <button id="deleteArea" class="redButton">Delete Area</button>
+                                            <p style="font-size:0.9em">(See instructions if unsure)</p>
+                                    </b-card-body>
                                 </b-collapse>
                             </b-card>
 
@@ -64,8 +66,11 @@
                                     <b-card-body>
                                         <button id="addmore_seat" class="clickable">Add More Seats</button>
                                         <br/>
+                                        <button id="deleteSeat"class="redButton">Delete Seat</button>
+                                        <br/>
                                         Size of seats: <input type="range" id="scale-control" value="1" min="0.1" max="3" step="0.1">
                                         <br/><br/>
+                                        <p style="font-size:0.9em">(See instructions if unsure)</p>
 
                                     </b-card-body>
                                 </b-collapse>
@@ -209,22 +214,50 @@
     <b-button v-b-toggle.collapse-1 id="loadcanvas" variant="primary" class="clickable" href="#accessibility-sidebar" >Edit Room</b-button>
     <b-collapse id="collapse-1" class="mt-2">
         <b-card>
-            <b-button v-b-toggle href="#accessibility-sidebar" @click.prevent class="clickable">Controls & Accessibilty</b-button>
 
             <b-button v-b-toggle.collapse-0 variant="primary" class="clickable" style="margin-left:10px;">Toggle Instructions</b-button>
-            <b-button id="resetZoom" class="clickable">Reset View</b-button>
             <br/>
             <br/>
-            <b-collapse id="collapse-0" class="mt-2" style="width:95%">
+            <b-collapse   id="collapse-0" class="mt-2" style="width:95%;">
                 <b-card>
-                    Set reference length so that distance can be checked
-                    Instructions:<br/>
+                    <u>How to use canvas</u>
+                    <br/>
                     - 'ALT' + 'Left Click': Move view of canvas<br/>
                     - 'Mouse wheel': Changes level of zoom<br/>
                     - 'Alter Slider': Changes size of shapes<br/>
+                    <br/>
+                    <br/>
+
+                    <u>Step 1</u>
+                    <br/>
+                    The reference length is used to ensure that seats are socially distanced. Find the length of a real world wall/room/area and align the reference length to it. Then input the real world length (in metres) and the systems will do everything else
+                    <br/>
+                    <u>Step 2</u>
+                    <br/>
+                    Seating Area, where the seats will be. Each area is an enclosed space so will only check the social distancing for the seats within the area
+                    Exclusion Area, where seats aren't allowed to be
+                    Set Seat Area, once the seating areas are where you want them be they need to be 'set' so that its easier to add the seats
+                    Unset seat area, if there's a problem with the seating areas you can unset them and change them
+                    Delete Area, can delete a seating area or exclusion area if its not needed
+                    <br/>
+                    <u>Step 3</u>
+                    <br/>
+                    Add the number of the seats required
+                    Can resize all of the seats with the slider
+                    Delete seat, can delete un-needed seats. Delete the highest numbered seats first
+
+                    <br/>
+                    <u>Step 4</u>
+                    <br/>
+                    Enter the distance that you would like the seats to be apart (minimum)
+                    When attempting to save the system will alert you to any errors.
+
+                    <br/><br/>
+                    Please ask admin for extra documentation if required.
                 </b-card>
             </b-collapse>
-
+            <b-button v-b-toggle href="#accessibility-sidebar" @click.prevent class="clickable">Controls & Accessibilty</b-button>
+            <b-button id="resetZoom" class="clickable">Reset View</b-button>
             <canvas ref="can" width="750" height="750"  style="border: 1px solid grey;"></canvas>
         </b-card>
     </b-collapse>
@@ -383,7 +416,7 @@
 
             function setReferenceLength(){
 
-                if (value_length.value >= 1) {
+                if (value_length.value >= 0.001) {
                     // console.log(value_length.value)
 
                     canvas.forEachObject(function (object) {
@@ -438,7 +471,7 @@
                         };
                     })(object.toObject);
 
-                    console.log( object.get('name') );
+                    // console.log( object.get('name') );
 
 
                     // if (object.get('name') == 'referenceLength') {
@@ -610,6 +643,7 @@
             addmore_seat.onclick = function() {
 
                 if(seatingAreaSet == true) {
+                    //add circle
                     let circle = new fabric.Circle({
                         radius: 50,
                         left: 275,
@@ -618,7 +652,7 @@
                         strokeWidth: 2,
                         stroke: "black",
                     });
-
+                    //add name to seat
                     let seatName = counter_seats.toString();
                     let text = new fabric.Text(seatName,{
                         top:125,
@@ -672,7 +706,7 @@
                             if (seatA === seatB) return;
                             if( seatB.get('type') != "group") return;
                             if (! (seatB.isContainedWithinObject(objA)) )return;
-                            console.log("Comparing :: ", seatA.get('name') ,' :: ', seatB.get('name'));
+                            // console.log("Comparing :: ", seatA.get('name') ,' :: ', seatB.get('name'));
 
                             let temp_x2 = seatB.left;
                             let temp_y2 = seatB.top;
@@ -824,7 +858,7 @@
                     changeColours('#baf312','#ff0000');
 
                     this.saveCanvasVar = JSON.stringify(canvas);
-                    console.log(this.saveCanvasVar);
+                    // console.log(this.saveCanvasVar);
                     changeColours(temp[0],temp[1]);
                     canvas.forEachObject(function (object) {
                         if (object.get('name') != 'referenceLength') return;
@@ -863,13 +897,11 @@
                 }
             }
 
-
-
-
-            deleteSelection.onclick = function() {
+            deleteArea.onclick = function() {
+                if (!canvas.getActiveObject()) { return; }
                 let object = canvas.getActiveObject();
 
-                if(object.type != "line"){
+                if(object.type == "rect"){
                     canvas.remove( canvas.getActiveObject()) ;
                 }
 
@@ -877,10 +909,34 @@
                     counter_seatingArea = counter_seatingArea - 1;
                 }else if( object.get('name') == 'exclusionArea'){
                     counter_exclusionArea = counter_exclusionArea - 1;
+                }
+            }
 
-                }else{
+
+            deleteSeat.onclick = function() {
+                if (!canvas.getActiveObject()) { return; }
+                let object = canvas.getActiveObject();
+
+                if(object.type == "group"){
+                    canvas.remove( canvas.getActiveObject()) ;
                     counter_seats = counter_seats - 1;
                 }
+                // counter_seats = counter_seats - 1;
+
+                // console.log(object.item(0));
+                let counter = 1;
+                canvas.forEachObject(function(object) {
+                    if( object.get('type') != "group") return;
+
+                    object.set('name',counter.toString());
+                    object.item(1).set('text',counter.toString());
+                    // object.item(1).setText(counter);
+                    counter = counter + 1;
+                    console.log(object.get('name'));
+                    console.log(object.item(1).get('text'));
+                });
+
+                // console.log(object.item(1).get('text'));
             }
 
             discard.onclick = function() {

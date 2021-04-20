@@ -12,7 +12,7 @@ import showCanvasComponent from "./showRoomComponent.js";
         <select v-model="room_input" id="rooms"></select>
 
         <br/><br/>
-        Time <vue-timepicker close-on-complete v-model="time_input"  hide-disabled-hours :minute-interval="20" placeholder="Time"></vue-timepicker>
+        Start Time <vue-timepicker close-on-complete v-model="time_input"  hide-disabled-hours :minute-interval="20" placeholder="Time"></vue-timepicker>
         <br/>
         <div id="isTimeError" class="redBackground hiddenError" >Invalid Time</div>
         <button @click="submit()" class="clickable">Submit</button>
@@ -108,14 +108,16 @@ export default {
             var room = this.room_input;
             var institute = this.institute_input;
             this.postData(date,time,room,institute).then((result)=> {
-                // console.log(result.data);
+                console.log(result.data);
+                // console.log(result.data[0]);
                 var temp = result.data[0];
-                if (temp.length >1){
+                // console.log(temp);
+                if (temp.length >= 1){
                     document.getElementById("noContacts").style.visibility = "hidden";
                     document.getElementById("isContact").style.visibility = "visible";
 
                     this.contactEmails = [];
-                    temp.forEach(element => this.contactEmails.push(this.returnEmail(element))  );
+                    temp.forEach(element => this.contactEmails.push(element)  );
                     // console.log(this.contactEmails);
 
                     var addresses = this.contactEmails;//between the speech mark goes the receptient. Seperate addresses with a ;

@@ -14,18 +14,6 @@ use Illuminate\Support\Facades\Storage;
 
 class RoomsController extends Controller
 {
-    public function index(Request $request)
-    {
-        #find list of rooms for the institute
-        $institution = $request->session()->get('institution_name');
-
-        $room = Rooms::latest()
-                ->where('institution_name',$institution)
-                ->get();
-
-        return view
-        ('rooms.index',['rooms' => $room]);
-    }
 
     #show selected room
     public function show($id)
@@ -36,9 +24,11 @@ class RoomsController extends Controller
 
     #creating a room
     public function  create(Request $request){
-        #ensures user has an institution selected
+
+        #get users selected institute
         $institution = $request->session()->get('institution_name');
 
+        #if no institute selected then redirect
         if( $institution == null)
         {
             return redirect('/institution');
@@ -48,24 +38,23 @@ class RoomsController extends Controller
         }
     }
 
-//    public function  createCanvas(Request $request){
-//
-//    }
-
     public function saveCanvas(Request $request){
 
+        #extract the canvas object
         $canvasObject = $request->get('canvas');
-//        error_log( $canvasObject);
-        $numOfSeats = substr_count($canvasObject,"circle");
-//        error_log( $numOfSeats);
 
+        #count number of cirlces/each cirlce is a seat
+        $numOfSeats = substr_count($canvasObject,"circle");
+
+        #get institute and room name
         $institute = $request->session()->get('institution_name');
         $room = $request->session()->get('selected_room');
-        Rooms::where('institution_name',$institute)->where('room_name',$room)->update(['room_canvas'=>$canvasObject]);;
 
+        #attach the canvas to the room
+        Rooms::where('institution_name',$institute)->where('room_name',$room)->update(['room_canvas'=>$canvasObject]);;
         Workstation::where('room_name', '=', $room)->where('institution_name','=',$institute)->delete();
 
-
+        #create instances of seats
         for($i = 0;$i<$numOfSeats;$i++)
         {
             $findWorkstation = Workstation::where('room_name', '=', $room)
@@ -79,8 +68,6 @@ class RoomsController extends Controller
                 $workstation->institution_name = $institute;
 
                 $workstation->seat_name = $i+1;
-                $workstation->coord_x = 0; //used in javascript map
-                $workstation->coord_y = 0; //used in javascript map
 
                 $workstation->save();
             }
@@ -93,15 +80,14 @@ class RoomsController extends Controller
 
     public function saveRoom(Request $request)
     {
-//        error_log("Start");
-//       error_log($request['data']);
+
+        #retrieve post data and convert to string
         $stringData = strval($request['data'] );
 
         $request['data'] = json_decode($stringData,true);
         $data = json_decode($stringData,true);
 
-//        error_log(print_r($request['data'],TRUE));
-//
+        #asign to variables
         $open_time = $data['open_time'];
         $close_time = $data['close_time'];
         $room_name = $data['room_name'];
@@ -109,13 +95,10 @@ class RoomsController extends Controller
 
         #get name and institute data
         $institute = $request->session()->get('institution_name');
+        $request->session()->put('selected_room', $room_name);
 
 
-//        $customMessages = [
-//            'close_time.after' => "Closing time must be after Opening time.",
-//            'floor_plan.required' => "Please upload a floor plan"
-//        ];
-
+        #validate the data
         $request->validate([
             'data.room_name' => 'unique:Rooms,room_name',
 //            'data.room_name' => [Rule::unique('Rooms')->where('institution_name', $institute)],
@@ -126,12 +109,9 @@ class RoomsController extends Controller
         ]);
 
 
-        // Read file contents...
-//        $contents = file_get_contents($request->->path());
-           #new instance of room
+        #new instance of room
         $room = new Rooms();
 
-        $request->session()->put('selected_room', $room_name);
         #add data to the room instance
         $room->institution_name = $institute;
         $room->room_name = $room_name;
@@ -140,47 +120,21 @@ class RoomsController extends Controller
         $room->room_details = $room_details;
         $room->room_canvas = "None";
 
-        #validation rules
-
+        #request uesrs uploaded file then store
         $file = $request['floor_plan'];
         $contents = file_get_contents($file->path());
         Storage::disk('public')->put('floor_plan', $file,'public');
+
+        // Store the record, using the new file hashname which will be it's new filename identity.
         $room->floor_plan =$file->HashName();
-        #save room
-//        error_log(print_r($room,TRUE));
+
+        #attempt to save room
         try{
             $room->save();
-        }
-        catch(Exception $e){
-            // do task when error
-//            error_log(print_r($e->getMessage(),TRUE));   // insert query
-        }
+        }catch(Exception $e){}
+
+
         return response()->json([$data]);
-        // Store the record, using the new file hashname which will be it's new filename identity.
-
-
-
-
-//
-//        #create an instance of workstation/seats specified by the user
-//        $numOfSeats = request('numOfSeats');
-//        for($i = 0;$i<$numOfSeats;$i++)
-//        {
-//            $workstation = new Workstation();
-//
-//            $workstation->room_name = $room_name_input;
-//            $workstation->institution_name = $institute;
-//
-//            $workstation->seat_name = $i+1;
-//            $workstation->coord_x = 0; //used in javascript map
-//            $workstation->coord_y = 0; //used in javascript map
-//
-//            $workstation->save();
-//
-//        }
-
-        #redirected to edit room so the user can edit details about the workstations
-        return redirect('/rooms/edit');
     }
 
     #select which room to edit
@@ -211,45 +165,34 @@ class RoomsController extends Controller
         $room = $request->session()->get('selected_room');
 
 
-        $seats = "";
-
-        if($value != NULL)
-        {
+        if($value != NULL) {
             $request->session()->put('selected_room',$value);
             return redirect(route('rooms.edit'));
         }
-        elseif( $institute == "")
-        {
-            return redirect('/institution');
-        }
-        elseif($room == "" ) {
-            return redirect('/rooms/selectEdit');
-        }
+
+        elseif( $institute == ""){  return redirect('/institution'); }
+
+        elseif($room == "" ) {   return redirect('/rooms/selectEdit'); }
+
         else
         {
             $rooms  = Rooms::
-                    where('institution_name',$institute)
-                    ->where('room_name',$room)
-                    ->first();
+                where('institution_name',$institute)
+                ->where('room_name',$room)
+                ->first();
 
             $seats = Workstation::
-                    where('room_name',$room)
-                    ->where('institution_name',$institute)
-                    ->get();
-            #spaces are converted to - so they can be names in the HTML form
-            foreach($seats as $seat)
-            {
-                $inputBoxName = str_replace(' ','_', $seat->seat_name);
-                $seat->seat_name = $inputBoxName;
-            };
+                where('room_name',$room)
+                ->where('institution_name',$institute)
+                ->get();
         }
-
 
         return view('rooms.edit')
             ->with('seats',$seats)
             ->with('rooms',$rooms);
     }
-    #Once room is selected to edit
+
+    #edit the seats of a selected room
     public function editSeats(Request $request)
     {
         $value   = request("submit");
@@ -258,8 +201,7 @@ class RoomsController extends Controller
         $room = $request->session()->get('selected_room');
 
 
-        $seats = "";
-
+        #checks if the user has selected a room
         if($value != NULL)
         {
             $request->session()->put('selected_room',$value);
@@ -291,9 +233,9 @@ class RoomsController extends Controller
             ->with('rooms',$rooms);
     }
 
+    #save the details of the seats
     public function saveSeats(Request $request)
     {
-        $value = request("submit");
         $room = $request->session()->get('selected_room');
         $institute = $request->session()->get('institution_name');
 
@@ -304,17 +246,15 @@ class RoomsController extends Controller
 
         foreach($seats as $seat)
         {
-            #revert the -'s back to spaces
-            $inputBoxName = str_replace(' ','_', $seat->seat_name);
-            $seat_details = request("detailsFor_$inputBoxName");
+            $seat_details = request("detailsFor_$seat->seat_name");
 
-            #only update name if a new name has been inputted by user
-                Workstation::
+            Workstation::
                 where('room_name',$seat->room_name)
-                    ->where('institution_name',$seat->institution_name)
-                    ->where('seat_name',"$seat->seat_name")
-                    ->update(['seat_details'=>$seat_details]);
+                ->where('institution_name',$seat->institution_name)
+                ->where('seat_name',"$seat->seat_name")
+                ->update(['seat_details'=>$seat_details]);
         }
+
         #blank the session data
         $request->session()->put('selected_room', "");
         $request->session()->put('open_time',"");
@@ -379,6 +319,7 @@ class RoomsController extends Controller
     }
 
     #delete a room
+    #deletes the room and all of its corresponing bookings
     public function destroy($room_name,Request $request){
         $institute = $request->session()->get('institution_name');
 

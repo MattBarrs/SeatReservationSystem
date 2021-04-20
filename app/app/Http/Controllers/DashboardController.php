@@ -5,8 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Bookings;
 use App\Models\Institution;
 use App\Models\User_Booking;
-use App\Models\Rooms;
-use Illuminate\Http\Request;
+
 use Illuminate\Support\Facades\Auth;
 use Carbon\Carbon;
 
@@ -34,7 +33,7 @@ class DashboardController extends Controller
                 ->take(5)
                 ->get();
 
-        #if the user has a booking
+        #if the user has a booking get the 1st
         if($user_booking != "")
         {
             $bookingID = $user_booking->id;
@@ -51,21 +50,6 @@ class DashboardController extends Controller
         $institutes_all = Institution::select('institution_name')->orderBy('institution_name','ASC')->get();
 
         return view('dashboard', ['booking' => $booking, 'institutes'=>$institutes_all, 'upcoming_bookings'=>$upcoming_bookings]);
-    }
-
-    public function sandbox(Request $request){
-        $institute = $request->session()->get('institution_name');
-        $roomSelected = $request->session()->get('selected_room');
-
-        $rooms  = Rooms::
-            where('institution_name',$institute)
-            ->where('room_name',$roomSelected)
-            ->first();
-//        error_log($institute);
-//        error_log($roomSelected);
-//        error_log($rooms->room_canvas);
-        return view('sandbox')
-            ->with('rooms',$rooms);
     }
 
 }
