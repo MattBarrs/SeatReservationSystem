@@ -16,3 +16,6 @@ app/package-lock.json
 app/package.json
 app/public/js/app.js
 app/public/uploads
+node_modules/
+node_modules/vue2-timepicker
+
