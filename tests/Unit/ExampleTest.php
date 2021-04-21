@@ -19,6 +19,7 @@ class ExampleTest extends TestCase
 //        $response = $this->actingAs($user)
 //            ->withSession(['foo' => 'bar'])
 //            ->get('/');
-        $this->assertTrue(true);
+//        $this->assertTrue(true);
+        $this->assertResponseOk();
     }
 }
