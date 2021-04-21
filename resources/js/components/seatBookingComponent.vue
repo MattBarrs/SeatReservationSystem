@@ -16,7 +16,7 @@ import showCanvasComponent from "./showRoomComponent.js";
                 <b-card-text>
 
                 <div class="inline-block">
-                <div class='sampleBox darkGreen'/>
+                <div class='sampleBox darkGreen'/>-
                     &nbsp;Selected
                 </div>
                 <br/>

@@ -11,3 +11,16 @@ Homestead.json
 Homestead.yaml
 npm-debug.log
 yarn-error.log
+.idea/modules.xml
+.idea/phpunit.xml
+.idea/SeatReservationSystem.iml
+app/.idea/app.iml
+app/.idea/misc.xml
+app/.idea/modules.xml
+app/.idea/php.xml
+app/.idea/vcs.xml
+app/.idea/workspace.xml
+.idea/misc.xml
+.idea/php.xml
+phpDocumentor.phar
+public/js/app.js
