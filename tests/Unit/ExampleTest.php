@@ -14,14 +14,11 @@ class ExampleTest extends TestCase
      */
     public function testBasicTest()
     {
-        $this->assertTrue(true);
-        public function testApplication()
-        {
-            $user = factory(User::class)->create();
+        $user = factory(User::class)->create();
 
-            $response = $this->actingAs($user)
-                ->withSession(['foo' => 'bar'])
-                ->get('/');
-        }
+        $response = $this->actingAs($user)
+            ->withSession(['foo' => 'bar'])
+            ->get('/');
+        $this->assertTrue(true);
     }
 }
