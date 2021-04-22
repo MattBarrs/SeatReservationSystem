@@ -179,6 +179,8 @@ export default {
     },
 
     props:['roomcanvas', 'opentime','closetime'],
+    //roomcanvas == canvas object
+    //opetime and close is the open/close of the room
 
     watch: {
 
@@ -187,8 +189,6 @@ export default {
         'date_input':function(newVal, oldVal){
             let hidden_time = document.getElementById('hidden_date');
             let date = newVal.getUTCFullYear() +"/"+ (newVal.getUTCMonth()+1) +"/"+ newVal.getUTCDate();
-            // console.log(newVal);
-            // console.log(date);
             hidden_time.value = date;
             hidden_time.dispatchEvent(new Event('change'));
         },
@@ -677,6 +677,10 @@ export default {
 
         },
 
+
+        //checks that the time given doesnt:
+            // go past closing time
+            // is not before open time
         checkAvailable(eventData) {
 
             if (!(eventData['displayTime'].includes("H")) && !(eventData['displayTime'].includes("h")) && !(eventData['displayTime'].includes("newVal")) && eventData['displayTime'] != "") {

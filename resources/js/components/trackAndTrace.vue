@@ -56,7 +56,6 @@ export default {
 
     data() {
         return {
-            // timeFormat: 'hh:mm',
             date_input:null,
             time_input:null,
             room_input:null,
@@ -77,11 +76,6 @@ export default {
 
         var rooms = this.rooms;
         rooms.forEach( element=>  this.addOption(element,"rooms"));
-
-        // temp_split = this.input_opentime.split(":");
-        // this.timeOpen = temp_split[0];
-        // temp_split = this.input_closetime.split(":");
-        // this.timeClose = temp_split[0];
     },
 
     methods: {
@@ -108,17 +102,15 @@ export default {
             var room = this.room_input;
             var institute = this.institute_input;
             this.postData(date,time,room,institute).then((result)=> {
-                console.log(result.data);
-                // console.log(result.data[0]);
+
                 var temp = result.data[0];
-                // console.log(temp);
+
                 if (temp.length >= 1){
                     document.getElementById("noContacts").style.visibility = "hidden";
                     document.getElementById("isContact").style.visibility = "visible";
 
                     this.contactEmails = [];
                     temp.forEach(element => this.contactEmails.push(element)  );
-                    // console.log(this.contactEmails);
 
                     var addresses = this.contactEmails;//between the speech mark goes the receptient. Seperate addresses with a ;
                     var body = "To Whom It May Concern," +

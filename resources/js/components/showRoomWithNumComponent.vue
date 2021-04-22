@@ -142,60 +142,13 @@
 
 export default {
 
-
-        components: {
-            // VueTimepicker,
-            // Datepicker,
-        },
+        // components: {},
+        // data() { return{  isChanged: true, }},
+        // methods:{        },
 
 
         props:['input_roomcanvas'],
 
-        data() {
-            return{
-                // isChanged: true,
-            }
-        },
-
-        methods:{
-            checkAvailable(eventData)
-            {
-                if( !(eventData['displayTime'].includes("H")) && !(eventData['displayTime'].includes("h")) && !(eventData['displayTime'].includes("m") ) &&  eventData['displayTime'] != ""  ){
-                    var timeInterval = 59;
-
-                    var temp_split = eventData['displayTime'].split(":");
-
-                    var temp_hh, temp_mm;
-                    temp_split[0] = parseInt(temp_split[0]);
-                    temp_split[1] = parseInt(temp_split[1]);
-
-                    if( temp_split[1] + timeInterval > 60)
-                    {
-                        // console.log("IF");
-                        temp_mm = temp_split[1] + timeInterval;
-                        var remainder = temp_mm % 60;
-                        var divisions = (temp_mm - remainder)/60;
-
-                        temp_hh = temp_split[0] + divisions;
-                        temp_mm = remainder;
-                        if(temp_hh>=24) temp_hh= temp_hh%24;
-
-                    }
-                    else{
-                        temp_hh = parseInt(temp_split[0]);
-                        temp_mm = parseInt(temp_split[1]) + timeInterval;
-                    }
-
-                    this.time_end['hh'] = temp_hh;
-                    this.time_end['mm'] = temp_mm;
-
-                    var endTime = temp_hh + ":"+ temp_mm;
-
-                    document.getElementById("time_end").placeholder = endTime;
-
-                }
-            },
-        },
 
         mounted: function(){
 
@@ -327,56 +280,6 @@ export default {
                 this.setViewportTransform(this.viewportTransform);
                 this.isDragging = false;
                 this.selection = true;
-            });
-
-            canvas.on('selection:created', (e) => {
-                // console.log(previousColourState);
-
-                canvas.forEachObject(function(object) {
-                    if( object.get('type') != "group") return;
-
-                    var index = object.get('name');
-                    var colour = previousColourState[index];
-
-                    // console.log(colour);
-                    // console.log("NAME:", index);
-
-                    object.item(0).set('fill',colour);
-                });
-
-
-                if(e.target.type === 'activeSelection') {
-                    canvas.discardActiveObject();
-                } else {
-                    e.target.item(0).set('fill',seatSelected);
-                }
-            })
-
-            canvas.on('selection:updated', (e) => {
-                canvas.forEachObject(function(object) {
-                    if( object.get('type') != "group") return;
-
-                    var index = object.get('name');
-                    var colour = previousColourState[index];
-
-                    object.item(0).set('fill',colour);
-                });
-
-                if(e.target.type === 'activeSelection') {
-                    canvas.discardActiveObject();
-                } else {
-                    e.target.item(0).set('fill',seatSelected);
-                }
-            })
-            canvas.on('selection:cleared', function() {
-                canvas.forEachObject(function(object) {
-                    if( object.get('type') != "group") return;
-
-                    var index = object.get('name');
-                    var colour = previousColourState[index];
-
-                    object.item(0).set('fill',colour);
-                });
             });
 
         },
