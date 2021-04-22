@@ -13,6 +13,7 @@
                         <div class="accordion" role="tablist">
 
                             <b-card no-body class="mb-1">
+
                                 <b-card-header header-tag="header" class="p-1" role="tab">
                                      <b-button block v-b-toggle.accordion-0 variant="info" id="accordion-0">Step 1: Set Reference Length </b-button>
                                 </b-card-header>
@@ -91,7 +92,7 @@
                                         <br/>
                                         <br/>
 
-                                        <div id="referenceIsZero" style="visibility:hidden;">
+                                        <div id="referenceIsZero" class="yellowBackground "  style="visibility:hidden;border-radius:15px;border:2px solid black;"">
                                             Warning reference Length is 0!
                                         </div>
 
@@ -272,8 +273,7 @@
     import { fabric } from 'fabric';
     import VueSlider from 'vue-slider-component'
     import 'vue-slider-component/theme/antd.css'
-    // import { VBToggle } from 'bootstrap-vue'
-    //  Vue.directive('b-toggle', VBToggle)
+
     import { VBTogglePlugin } from 'bootstrap-vue'
     Vue.use(VBTogglePlugin)
     export default {
@@ -282,9 +282,9 @@
             VueSlider
         },
 
-
+        //previous canvas is used if the room already has a  canvas representation with seats
+        //image name is used for the background
         props:['image_name', 'previouscanvas'],
-        //all lower case as does not like uppercase
 
         data() {
             return{
@@ -293,7 +293,6 @@
                 isError: false,
                 isChanged: true,
                 counter_seats: 0,
-                // csrf: document.head.querySelector('meta[name="csrf-token"]').content,
             }
         },
 
@@ -301,16 +300,17 @@
 
         mounted: function(){
             // // Define variables
-            let distanceFactor=0;
+            let distanceFactor=0; //used to calculate real life distances
             let counter_seats = 1;
-            let objectRadius = 1;
+            let objectRadius = 1;  //used to scale the seats
             let seatingAreaSet = false; //used for when the client sets the seating/exlusions areas
-            let referenceSet = false; //used for when the client sets the seating/exlusions areas
+
             let counter_seatingArea = 0;
             let counter_exclusionArea = 0;
-            let seatColour = '#baf312';
-            let seatColour_clash = '#ff0000';
-            // let saveCanvasVar = null;
+            let seatColour = '#baf312'; //inital seat available colour
+            let seatColour_clash = '#ff0000';//inital seat NOT  available colour
+
+            //used to show status of saves/changes
             let isError = false;
             let isChanged = true;
 
@@ -319,10 +319,14 @@
             const ref = this.$refs.can;
             const canvas = new fabric.Canvas(ref);
 
+            //if there is a previously saved canvas then load it otherwise set the background to the image provided in props
             if(this.previouscanvas != "None" ){
+
                 canvas.loadFromJSON(this.previouscanvas, canvas.renderAll.bind(canvas));
                 seatingAreaSet = true;
+
                 canvas.requestRenderAll();
+
                 document.getElementById("unsetSeatArea").style.visibility = "visible";
                 document.getElementById("setSeatArea").style.visibility = "hidden";
                 document.getElementById("addmore_seatingArea").style.visibility = "hidden";
@@ -334,7 +338,8 @@
             else{
                 let backgroundURL = "/uploads/floor_plan/" + this.image_name;
                 canvas.setBackgroundImage(backgroundURL, canvas.renderAll.bind(canvas));
-                // //////////Draw Shapes
+
+                //reference length is used to translate real world lengths to virtual lengths
                 let referenceLength = new fabric.Line([75,0,0,0],{
                         left:170,
                         top:150,
@@ -356,23 +361,24 @@
                 referenceLength.hasControls = false;
             }
 
+            //set the canvas size
             let width = (window.innerWidth > 0) ? window.innerWidth : screen.width;
             let height = (window.innerHeight > 0) ? window.innerHeight : screen.height;
             width = width*0.6;
             height = height*0.6;
             if(width>900) width=900;
-
             canvas.setWidth(width);
             canvas.setHeight(height);
 
-
+            //used to watch elements on the page
             let $ = function(id){return document.getElementById(id)};
             fabric.Object.prototype.transparentCorners = false;
 
+            //for the social distance checking
             let value_length = $('length_value');
             let social_distance = $('social_distance');
 
-
+            //changes the X length of the reference length
             let referenceControl = $('reference-control');
             referenceControl.oninput = function(options) {
                 let objects = canvas.getObjects();
@@ -387,6 +393,8 @@
                 canvas.requestRenderAll();
             };
 
+
+            //used to rotate the reference length
             let rotateControl = $('rotate-control');
             rotateControl.oninput = function(options) {
                 let objects = canvas.getObjects();
@@ -400,10 +408,12 @@
                 canvas.requestRenderAll();
             };
 
+            //used to scale the size of the seats
             let scaleControl = $('scale-control');
             scaleControl.oninput = function(options) {
                 let objects = canvas.getObjects();
                 for (let i in objects) {
+                    //only seats have type==group
                     if (objects[i].type == 'group'){
                         objects[i].scaleX = this.value;
                         objects[i].scaleY = this.value;
@@ -414,10 +424,11 @@
                 canvas.requestRenderAll();
             };
 
+            //when the user has set the reference length it is hidden
+            //It also calculates how many pixels represent 1 metre in the real world
             function setReferenceLength(){
 
                 if (value_length.value >= 0.001) {
-                    // console.log(value_length.value)
 
                     canvas.forEachObject(function (object) {
                         if (object.get('name') != "referenceLength") return;
@@ -430,6 +441,7 @@
                         document.getElementById("unsetReference").style.visibility = "visible";
                         document.getElementById("accordion-1").click();
 
+                        //hide the line
                         canvas.forEachObject(function (objx) {
                             if (objx.get('name') != "referenceLength") return;
                             canvas.sendToBack(objx);
@@ -443,7 +455,9 @@
                 setReferenceLength();
             }
 
+            //unsets the reference length
             function unsetReferenceLength(){
+                //changes visibilty
                 document.getElementById("setReference").style.visibility = "visible";
                 document.getElementById("step1div").style.visibility = "visible";
                 document.getElementById("unsetReference").style.visibility = "hidden";
@@ -462,7 +476,10 @@
 
 
             loadcanvas.onclick = function() {
+                //when the canvas is loaded from db
+
                 canvas.forEachObject(function(object) {
+                    //intialise the shapes in the canvas
                     object.toObject = (function(toObject) {
                         return function() {
                             return fabric.util.object.extend(toObject.call(this), {
@@ -471,13 +488,7 @@
                         };
                     })(object.toObject);
 
-                    // console.log( object.get('name') );
-
-
-                    // if (object.get('name') == 'referenceLength') {
-                    //     object.visible = false;
-                    //
-                    // } else
+                    //count how many seats/seatingareas/exclusionareas there are
                     if (object.get('name') == 'seatingArea') {
                         counter_seatingArea = counter_seatingArea + 1;
                         canvas.sendToBack(object);
@@ -495,6 +506,8 @@
                         object.hasControls = false;
                     }
                 });
+
+                //when loaded from db the seatingarea/Exclusion area is hidden by defaulk
                 canvas.forEachObject(function(objx) {
                     // console.log(objx.get('name'));
                     if( objx.get('type') != "rect") return;
@@ -503,11 +516,15 @@
                 });
             }
 
+
+            //adds a seating area to the canvas
             addmore_seatingArea.onclick = function() {
 
+                // ensures the seating area has not already been set
                 if(seatingAreaSet == false){
                     document.getElementById("setSeatArea").style.visibility = "visible";
 
+                    //shape details
                     let rectangle = new fabric.Rect({
                         left: 100,
                         top: 100,
@@ -519,6 +536,7 @@
                         fill: 'rgba(0,125,0,0.1)',
                     });
 
+                    //gives the shape a name attribute of seatingArea
                     rectangle.toObject = (function(toObject) {
                         return function() {
                             return fabric.util.object.extend(toObject.call(this), {
@@ -527,9 +545,9 @@
                         };
                     })(rectangle.toObject);
 
+                    //adds to canvas and increments counter
                     canvas.add(rectangle);
                     rectangle.name = 'seatingArea';
-                    // console.log(rectangle.name);
                     counter_seatingArea = counter_seatingArea + 1;
                 }
                 else{
@@ -538,9 +556,13 @@
                 }
             }
 
+            //adds an exclusion area to the canvas
             addmore_exclusionArea.onclick = function() {
+
+                // ensures the seating area has not already been set
                 if(seatingAreaSet == false){
 
+                    //shape details
                     let rectangle = new fabric.Rect({
                         left: 100,
                         top: 100,
@@ -552,6 +574,8 @@
                         strokeWidth: 8,
                         fill: 'rgba(125,0,0,0.1)',
                     });
+
+                    //gives the shape a name attribute of seatingArea
                     rectangle.toObject = (function(toObject) {
                         return function() {
                             return fabric.util.object.extend(toObject.call(this), {
@@ -560,6 +584,7 @@
                         };
                     })(rectangle.toObject);
 
+                    //adds to canvas and increments counter
                     canvas.add(rectangle);
                     rectangle.name = 'exclusionArea';
                     counter_exclusionArea = counter_exclusionArea + 1;
@@ -571,19 +596,25 @@
             }
 
 
-
+            //function that checks seating area when set.
             function setSeatingArea(){
+
+                //checks that there is a seating zone on the canvas
                 if(counter_seatingArea>0)
                 {
                     let overlaps = false;
                     canvas.discardActiveObject();
 
                     try{
+
+                        //checks that every seating area does not overlap with an exlusion zone
                         canvas.forEachObject(function(objx) {
                             if( objx.get('type') != "rect") return;
 
                             if( objx.get('name') == 'seatingArea'){
+
                                 canvas.forEachObject(function(objy) {
+
                                     if((objy.get('name') == 'exclusionArea') && (objx.intersectsWithObject(objy)) ){
                                         alert("A Seating Area overlaps with an Exclusion zone please change!");
                                         overlaps = true;
@@ -599,13 +630,14 @@
 
                     }
 
-
+                    //if there are no errors
                     if(overlaps==false){
                         document.getElementById("unsetSeatArea").style.visibility = "visible";
                         document.getElementById("setSeatArea").style.visibility = "hidden";
                         document.getElementById("addmore_seatingArea").style.visibility = "hidden";
                         document.getElementById("addmore_exclusionArea").style.visibility = "hidden";
 
+                        //sends them to the back and makes them unselectable
                         canvas.forEachObject(function(objx) {
                             if( objx.get('type') != "rect") return;
                             canvas.sendToBack(objx);
@@ -625,13 +657,18 @@
             setSeatArea.onclick = function() {
                 setSeatingArea();
             }
+
             unsetSeatArea.onclick = function() {
                 canvas.discardActiveObject();
+
+                //enable selection
                 canvas.forEachObject(function(object) {
                     if( object.get('type') != "rect") return;
                     object.selectable = true;
                 });
                 seatingAreaSet = false;
+
+                //set visibility of buttons
                 document.getElementById("unsetSeatArea").style.visibility = "hidden";
                 document.getElementById("setSeatArea").style.visibility = "visible";
                 document.getElementById("addmore_seatingArea").style.visibility = "visible";
@@ -652,7 +689,8 @@
                         strokeWidth: 2,
                         stroke: "black",
                     });
-                    //add name to seat
+
+                    //add text
                     let seatName = counter_seats.toString();
                     let text = new fabric.Text(seatName,{
                         top:125,
@@ -663,8 +701,10 @@
                         fontSize: 20,
                     });
 
+                    //pair the circle and the text together to create a seat
                     let seat = new fabric.Group([circle,text]);
 
+                    //add the  name attribute to  the seat
                     seat.toObject = (function(toObject) {
                         return function() {
                             return fabric.util.object.extend(toObject.call(this), {
@@ -674,10 +714,14 @@
                     })(seat.toObject);
 
                     canvas.add(seat);
+                    //set name of the seat
                     seat.name = counter_seats;
 
+                    //scale the seat
                     seat.scaleX = objectRadius;
                     seat.scaleY = objectRadius;
+
+                    //so the user cannot rescale individual seats
                     seat.hasControls = false;
 
                     counter_seats = counter_seats + 1;
@@ -687,61 +731,56 @@
                 }
             };
 
+
+            //used to check the distance from seat to seat
             function checkDistance(){
                 let distanceFail = false;
 
+                //checks all seats within each seating area
                 canvas.forEachObject(function (objA) {
-
                     if( objA.get('name') != "seatingArea") return;
 
+                    //find seat within the area
                     canvas.forEachObject(function(seatA) {
                         if (! (seatA.isContainedWithinObject(objA)) )return;
                         if( seatA.get('type') != "group") return;
 
-                        // console.log("Object data :: " , seatA);
-                        let temp_x1 = seatA.left;
-                        let temp_y1 = seatA.top;
+                        //get coordinates of seat A
+                        let coordsA = seatA.getCenterPoint();
+                        let temp_x1 = coordsA['x'];
+                        let temp_y1 = coordsA['y'];
 
                         canvas.forEachObject(function (seatB) {
-                            if (seatA === seatB) return;
-                            if( seatB.get('type') != "group") return;
                             if (! (seatB.isContainedWithinObject(objA)) )return;
-                            // console.log("Comparing :: ", seatA.get('name') ,' :: ', seatB.get('name'));
+                            if( seatB.get('type') != "group") return;
+                            if (seatA === seatB) return;
 
-                            let temp_x2 = seatB.left;
-                            let temp_y2 = seatB.top;
+                            //get coordinates of seat B
+                            let coordsB = seatB.getCenterPoint();
+                            let temp_x2 = coordsB['x'];
+                            let temp_y2 = coordsB['y'];
 
+                            //use pythagorus to find out the distance in pixels between the two
                             let a = temp_x1 - temp_x2;
                             let b = temp_y1 - temp_y2;
                             let digitalDistance = Math.sqrt( a*a + b*b );
-                            // let distanceInReality = distanceFactor*digitalDistance;
+
+                            //convert distance from digital to real length
                             let social_distanceOnCanvas = social_distance.value * distanceFactor;
 
 
-                            // console.log("digital distance"  , digitalDistance);
-                            // console.log(" real distance " , distanceInReality);
-                            // console.log("social distance on canvas" , social_distanceOnCanvas);
-
+                            //if too close
                             if(digitalDistance < social_distanceOnCanvas){
                                 seatA.item(0).set('fill', seatColour_clash);
                                 seatB.item(0).set('fill', seatColour_clash);
                                 distanceFail = true;
                             }
-                            // console.log(digitalDistance);
                         });
                     });
-
-
-
-
                 });
-
-
-
-
-
                 return distanceFail;
             };
+
 
             checkCanvas.onclick = function(){
                 isError = false;
@@ -751,10 +790,10 @@
                 document.getElementById("editSeats").style.visibility = "hidden";
                 document.getElementById("referenceIsZero").style.visibility = "hidden";
 
-                // let outOfBounds = false;
                 let withinASeatingArea = false;
                 let errorWhatIsWrong = "Could not save as: \n ";
 
+                //warn user if the reference length is 0
                 if( value_length.value == 0){
                     document.getElementById("referenceIsZero").style.visibility = "visible";
                 }
@@ -770,6 +809,8 @@
                 }
 
                 if(isError == false){
+
+                    //checks that every seat is contained within a seating area
                     canvas.forEachObject(function(objx) {
                         withinASeatingArea = false;
 
@@ -784,16 +825,10 @@
                         });
 
                         try {
-
+                            //checks if seat intersects with an exclusion zone
                             canvas.forEachObject(function (objy) {
-
                                 if (objx === objy) return;
-                                // if (errorFound == true) return;
-
-
-
                                 if ((objy.get('name') == 'exclusionArea') && (objx.intersectsWithObject(objy))) {
-
                                     objx.item(0).set('fill', seatColour_clash);
                                     isError = true;
                                     errorWhatIsWrong = errorWhatIsWrong + "\n  - A seat overlaps with an exclusion zone";
@@ -802,7 +837,7 @@
 
                                 }
 
-                                // if ((objy.get('name') == 'seatingArea') && !(objx.isContainedWithinObject(objy)) && (withinASeatingArea == false)) {
+                                //if the seat isnt within a seating area
                                 if (withinASeatingArea == false) {
                                     objx.item(0).set('fill', seatColour_clash);
                                     isError = true;
@@ -812,6 +847,8 @@
                                     throw new Error('SeatPositionException');
 
                                 }
+
+                                //check to see if seats overlap
                                 if ((objy.get('type') == "group") && (objx.intersectsWithObject(objy))) {
                                     objx.item(0).set('fill', seatColour_clash);
                                     isError = true;
@@ -841,52 +878,47 @@
                 }
 
                 if(isError == true){
-                    // document.getElementById("saveButton").style.visibility = "hidden";
                     alert(errorWhatIsWrong);
                 }
                 else {
                     isError = false;
 
+                    //reference length made visible so it is saved
+                    canvas.forEachObject(function (object) {
+
+                        object.visible = true;
+                    });
+
+                    //save current colours
                     let temp = [];
                     temp.push(seatColour);
                     temp.push(seatColour_clash);
 
-                    canvas.forEachObject(function (object) {
-                        object.visible = true;
-                    });
-
+                    //set colours back to default before saving
                     changeColours('#baf312','#ff0000');
 
                     this.saveCanvasVar = JSON.stringify(canvas);
-                    // console.log(this.saveCanvasVar);
+
+                    //change colours back
                     changeColours(temp[0],temp[1]);
+
                     canvas.forEachObject(function (object) {
                         if (object.get('name') != 'referenceLength') return;
                         object.visible = false;
                     });
-                    // console.log(JSON.stringify(canvas));
-                    // console.log(this.saveCanvasVar);
-                    // document.getElementById("saveButton").style.visibility = "visible";
+
                     try{
                         let obj = this;
                         obj.isChanged = true;
 
                         axios.post('/rooms/saveCanvas', {
                             canvas: obj.saveCanvasVar,
-                            // canvas: canvasObject,
                         }).then(function(response) {
-                            // console.log("Save Success");
-                            // console.log(response);
                         }).catch(function(error) {
-                            // console.log("Error with Save");
-                            // console.log(error);
                         })
 
                     }
-                    catch(err)
-                    {
-                        isError = true;
-                    }
+                    catch(err) {isError = true;}
                     finally {
                         isChanged = false;
                         document.getElementById("isSaved").style.visibility = "visible";
@@ -897,6 +929,7 @@
                 }
             }
 
+            //delete a seating/exclusion area
             deleteArea.onclick = function() {
                 if (!canvas.getActiveObject()) { return; }
                 let object = canvas.getActiveObject();
@@ -913,6 +946,8 @@
             }
 
 
+
+            //delete a seat
             deleteSeat.onclick = function() {
                 if (!canvas.getActiveObject()) { return; }
                 let object = canvas.getActiveObject();
@@ -921,22 +956,17 @@
                     canvas.remove( canvas.getActiveObject()) ;
                     counter_seats = counter_seats - 1;
                 }
-                // counter_seats = counter_seats - 1;
 
-                // console.log(object.item(0));
+                //rename all of the seats so that isnt a gap in numbering
                 let counter = 1;
                 canvas.forEachObject(function(object) {
                     if( object.get('type') != "group") return;
 
                     object.set('name',counter.toString());
                     object.item(1).set('text',counter.toString());
-                    // object.item(1).setText(counter);
-                    counter = counter + 1;
-                    console.log(object.get('name'));
-                    console.log(object.item(1).get('text'));
-                });
 
-                // console.log(object.item(1).get('text'));
+                    counter = counter + 1;
+                });
             }
 
             discard.onclick = function() {
@@ -962,7 +992,7 @@
 
                 canvas.forEachObject(function(object) {
                     if( object.get('type') != "group") return;
-                    // console.log(object.item(0));
+
                     if(object.item(0).get('fill') == seatColour){
                         object.item(0).set('fill' ,colour1);
                     }
@@ -979,17 +1009,21 @@
 
             }
 
-
+            //stops group selection
             canvas.on('selection:created', (e) => {
                 if(e.target.type === 'activeSelection') {
                     canvas.discardActiveObject();
                 }
             })
+
+            //used for zoom
             canvas.on('mouse:wheel', function(opt) {
                 let delta = opt.e.deltaY;
 
                 let zoom = canvas.getZoom();
                 zoom *= 0.999 ** delta;
+
+                //stop maximium zoom in and out
                 if (zoom > 8 ) zoom = 8;
                 if (zoom < 0.25) zoom = 0.25;
 
@@ -999,7 +1033,8 @@
             });
 
 
-
+            //moving camera via.
+            //alt key must be used
             canvas.on('mouse:down', function(opt) {
                 let evt = opt.e;
                 if (evt.altKey === true) {
@@ -1009,7 +1044,6 @@
                     this.lastPosY = evt.clientY;
                 }
             });
-
 
             canvas.on('mouse:move', function(opt) {
                 if (this.isDragging) {
@@ -1032,6 +1066,7 @@
                 this.selection = true;
             });
 
+            //when theres a change infomr the user that its not saved
             function onChange(options) {
                 if(isChanged == false){
                     document.getElementById("isSaved").style.visibility = "hidden";

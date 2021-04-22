@@ -146,12 +146,6 @@ export default {
             },
 
             checkVariables(event){
-                // console.log(this.validName);
-                // console.log("validName");
-                // console.log(this.validFile);
-                // console.log("validFile");
-                // console.log(this.validTime);
-                // console.log("validTime");
 
                 if( this.validFile && this.validTime && this.validName){
                     document.getElementById("submitButton").style.visibility = "visible";
@@ -177,13 +171,8 @@ export default {
             checkUpload(event){
                 this.validFile = false;
 
-                // console.log("chcking upload ");
-
                 this.floor_plan = event.target.files[0];
                 var uploadedFile =  document.getElementById("floor_plan").value;
-
-                // console.log(uploadedFile);
-
 
                 if( (uploadedFile != null) && (uploadedFile!="")   ) {
                     this.validFile = true;
@@ -194,12 +183,10 @@ export default {
                 let temp_otime_hh = this.openingtime['HH'];
                 let temp_otime_mm = this.openingtime['mm'];
                 let openTime = temp_otime_hh +  ":" + temp_otime_mm;
-                // console.log(openTime);
 
                 let temp_ctime_hh = this.closingtime['HH'];
                 let temp_ctime_mm = this.closingtime['mm'];
                 let closeTime = temp_ctime_hh +  ":" + temp_ctime_mm;
-                // console.log(closeTime);
 
                 const data = new FormData();
                 data.append('floor_plan', this.floor_plan);
@@ -240,11 +227,7 @@ export default {
                 if (!(open_hh.includes("H")) && !(open_hh.includes("h")) &&  (open_hh !="") ) {
                     this.minclosingtime = parseInt(open_hh);
                 }
-                // if (!(open_hh.includes("H")) && !(open_hh.includes("h")) && !(open_mm.includes("m")) && (open_mm != "") && (open_hh !="") ) {
-                //     document.getElementById("closingtime").disabled = false;
-                // }
             }
-            // console.log(this.closingtime);
 
             if (closeTime != null){
                 close_hh = closeTime['HH'];
@@ -259,7 +242,6 @@ export default {
                     };
                 }
             }
-            // console.log(this.closingtime);
 
         },
 
