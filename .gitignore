@@ -24,3 +24,4 @@ app/.idea/workspace.xml
 .idea/php.xml
 phpDocumentor.phar
 public/js/app.js
+node_modules
