@@ -104,9 +104,9 @@
                             </b-card>
                         </div>
                         <div id="status box" style="width:75%;margin:auto;">
-                            <div id="isUnsaved"  class="yellowBackground "  style="visibility:visible;border-radius:15px;border:2px solid black;">Unsaved Changes</div>
-                            <div id="isSaved"  class="greenBackground"  style="visibility:hidden;border-radius:15px;border:2px solid black;" >Saved</div>
-                            <div id="isError" class="redBackground" style="visibility:hidden;border-radius:15px;border:2px solid black;">Error</div>
+                            <div id="isUnsaved"  class="yellowBackground "  style="display:block;border-radius:15px;border:2px solid black;">Unsaved Changes</div>
+                            <div id="isSaved"  class="greenBackground"  style="display:none;border-radius:15px;border:2px solid black;" >Saved</div>
+                            <div id="isError" class="redBackground" style="display:none;border-radius:15px;border:2px solid black;">Error</div>
                         </div>
                     </b-card>
                 </b-collapse>
@@ -385,7 +385,6 @@
                 for (let i in objects) {
                     if (objects[i].name == 'referenceLength'){
                         objects[i].scaleX = this.value;
-                        // objects[i].scaleY = this.value;
                     }
                 }
 
@@ -607,7 +606,7 @@
 
                     try{
 
-                        //checks that every seating area does not overlap with an exlusion zone
+                        //checks that every seating area does not overlap with an exclusion zone
                         canvas.forEachObject(function(objx) {
                             if( objx.get('type') != "rect") return;
 
@@ -742,8 +741,7 @@
 
                     //find seat within the area
                     canvas.forEachObject(function(seatA) {
-                        if (! (seatA.isContainedWithinObject(objA)) )return;
-                        if( seatA.get('type') != "group") return;
+                        if (! (seatA.isContainedWithinObject(objA)) ||  seatA.get('type') != "group") return;
 
                         //get coordinates of seat A
                         let coordsA = seatA.getCenterPoint();
@@ -751,9 +749,7 @@
                         let temp_y1 = coordsA['y'];
 
                         canvas.forEachObject(function (seatB) {
-                            if (! (seatB.isContainedWithinObject(objA)) )return;
-                            if( seatB.get('type') != "group") return;
-                            if (seatA === seatB) return;
+                            if (! (seatB.isContainedWithinObject(objA)) || ( seatB.get('type') != "group") || (seatA === seatB) )return;
 
                             //get coordinates of seat B
                             let coordsB = seatB.getCenterPoint();
@@ -784,9 +780,9 @@
 
             checkCanvas.onclick = function(){
                 isError = false;
-                document.getElementById("isError").style.visibility = "visible";
-                document.getElementById("isSaved").style.visibility = "hidden";
-                document.getElementById("isUnsaved").style.visibility = "hidden";
+                document.getElementById("isError").style.display = "block";
+                document.getElementById("isSaved").style.display = "none";
+                document.getElementById("isUnsaved").style.display = "none";
                 document.getElementById("editSeats").style.visibility = "hidden";
                 document.getElementById("referenceIsZero").style.visibility = "hidden";
 
@@ -818,8 +814,7 @@
                         objx.item(0).set('fill' ,seatColour);
 
                         canvas.forEachObject(function (objz) {
-                            if (objz.get('name') != 'seatingArea') return;
-                            if (objx === objz) return;
+                            if ( (objz.get('name') != 'seatingArea') || (objx === objz) ) return;
 
                             if (objx.isContainedWithinObject(objz)){ withinASeatingArea = true; }
                         });
@@ -828,6 +823,7 @@
                             //checks if seat intersects with an exclusion zone
                             canvas.forEachObject(function (objy) {
                                 if (objx === objy) return;
+
                                 if ((objy.get('name') == 'exclusionArea') && (objx.intersectsWithObject(objy))) {
                                     objx.item(0).set('fill', seatColour_clash);
                                     isError = true;
@@ -921,10 +917,10 @@
                     catch(err) {isError = true;}
                     finally {
                         isChanged = false;
-                        document.getElementById("isSaved").style.visibility = "visible";
                         document.getElementById("editSeats").style.visibility = "visible";
-                        document.getElementById("isUnsaved").style.visibility = "hidden";
-                        document.getElementById("isError").style.visibility = "hidden";
+                        document.getElementById("isSaved").style.display = "block";
+                        document.getElementById("isUnsaved").style.display = "none";
+                        document.getElementById("isError").style.display = "none"
                     }
                 }
             }

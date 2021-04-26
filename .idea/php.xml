@@ -119,6 +119,21 @@
       <path value="$PROJECT_DIR$/vendor/laravel/fortify" />
       <path value="$PROJECT_DIR$/vendor/pragmarx/google2fa" />
       <path value="$PROJECT_DIR$/vendor/jenssegers/agent" />
+      <path value="$PROJECT_DIR$/vendor/laravel-DESKTOP-VOUNORD/ui" />
+      <path value="$PROJECT_DIR$/vendor/league-DESKTOP-VOUNORD/mime-type-detection" />
+      <path value="$PROJECT_DIR$/vendor/laravel-DESKTOP-VOUNORD/jetstream" />
+      <path value="$PROJECT_DIR$/vendor/nikic-DESKTOP-VOUNORD/php-parser" />
+      <path value="$PROJECT_DIR$/vendor/brick-DESKTOP-VOUNORD/math" />
+      <path value="$PROJECT_DIR$/vendor/egulias-DESKTOP-VOUNORD/email-validator" />
+      <path value="$PROJECT_DIR$/vendor/vlucas-DESKTOP-VOUNORD/phpdotenv" />
+      <path value="$PROJECT_DIR$/vendor/symfony/css-selector-DESKTOP-VOUNORD" />
+      <path value="$PROJECT_DIR$/vendor/symfony/polyfill-php80-DESKTOP-VOUNORD" />
+      <path value="$PROJECT_DIR$/vendor/symfony/polyfill-php73-DESKTOP-VOUNORD" />
+      <path value="$PROJECT_DIR$/vendor/symfony/process-DESKTOP-VOUNORD" />
+      <path value="$PROJECT_DIR$/vendor/erusev/parsedown" />
+      <path value="$PROJECT_DIR$/vendor/symfony/dom-crawler" />
+      <path value="$PROJECT_DIR$/vendor/erusev/parsedown-extra" />
+      <path value="$PROJECT_DIR$/vendor/binarytorch/larecipe" />
     </include_path>
   </component>
   <component name="PhpProjectSharedConfiguration" php_language_level="7.3" />

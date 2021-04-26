@@ -153,7 +153,6 @@ export default {
 
         postData : async(date,time,room,institute) => {
             const data = new FormData();
-            // console.log(date);
             const json = JSON.stringify({
                 'date': date,
                 'room': room,

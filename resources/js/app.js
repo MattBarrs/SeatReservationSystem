@@ -21352,7 +21352,7 @@ window.Vue = require('vue').default;
  */
 
 Vue.component('uploadroom-component',require('./components/uploadRoomComponent.vue').default);
-Vue.component('createroom-component',require('./components/createRoomComponent.vue').default);
+Vue.component('createroom-component',require('./components/editRoomCanvasComponent.vue').default);
 
 Vue.component('showroomwithnum-component', require('./components/showRoomWithNumComponent.vue').default);
 

@@ -14,6 +14,25 @@ use Illuminate\Support\Facades\Storage;
 
 class RoomsController extends Controller
 {
+    private function checkPermission($request)
+    {
+        $user = $request->user();
+        if($user->id === 1){
+            return true;
+        }
+
+
+        $teams = $user->allTeams();
+        foreach ($teams as $team) {
+            if ($team->name == "Local Admins" and $team->membership != "") {
+                if (($team->membership->role == "Local Admin" or $team->membership->role == "Administrator ") and $user->hasTeamPermission($team, 'room:create')) ;
+                {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
 
     #show selected room
     public function show($id)
@@ -39,325 +58,348 @@ class RoomsController extends Controller
     }
 
     public function saveCanvas(Request $request){
+        if($this->checkPermission($request) == true){
 
-        #extract the canvas object
-        $canvasObject = $request->get('canvas');
 
-        #count number of cirlces/each cirlce is a seat
-        $numOfSeats = substr_count($canvasObject,"circle");
+            #extract the canvas object
+            $canvasObject = $request->get('canvas');
 
-        #get institute and room name
-        $institute = $request->session()->get('institution_name');
-        $room = $request->session()->get('selected_room');
+            #count number of cirlces/each cirlce is a seat
+            $numOfSeats = substr_count($canvasObject, "circle");
 
-        #attach the canvas to the room
-        Rooms::where('institution_name',$institute)->where('room_name',$room)->update(['room_canvas'=>$canvasObject]);;
-        Workstation::where('room_name', '=', $room)->where('institution_name','=',$institute)->delete();
+            #get institute and room name
+            $institute = $request->session()->get('institution_name');
+            $room = $request->session()->get('selected_room');
 
-        #create instances of seats
-        for($i = 0;$i<$numOfSeats;$i++)
-        {
-            $findWorkstation = Workstation::where('room_name', '=', $room)
-                            ->where('institution_name','=',$institute)
-                            ->where('seat_name','=',$i+1)
-                            ->first();
-            if($findWorkstation === null){
-                $workstation = new Workstation();
+            #attach the canvas to the room
+            Rooms::where('institution_name', $institute)->where('room_name', $room)->update(['room_canvas' => $canvasObject]);;
+            Workstation::where('room_name', '=', $room)->where('institution_name', '=', $institute)->delete();
 
-                $workstation->room_name = $room;
-                $workstation->institution_name = $institute;
+            #create instances of seats
+            for ($i = 0; $i < $numOfSeats; $i++) {
+                $findWorkstation = Workstation::where('room_name', '=', $room)
+                    ->where('institution_name', '=', $institute)
+                    ->where('seat_name', '=', $i + 1)
+                    ->first();
+                if ($findWorkstation === null) {
+                    $workstation = new Workstation();
 
-                $workstation->seat_name = $i+1;
+                    $workstation->room_name = $room;
+                    $workstation->institution_name = $institute;
 
-                $workstation->save();
+                    $workstation->seat_name = $i + 1;
+
+                    $workstation->save();
+                }
+
             }
 
+
+            return response()->json([$request->all()]);
+        }else{
+
+            return redirect('/')->with('mssg','You do not have permission to view this.');
         }
-
-
-        return response()->json([$request->all()]);
     }
 
     public function saveRoom(Request $request)
     {
+        if($this->checkPermission($request) == true){
 
-        #retrieve post data and convert to string
-        $stringData = strval($request['data'] );
+            #retrieve post data and convert to string
+            $stringData = strval($request['data']);
 
-        $request['data'] = json_decode($stringData,true);
-        $data = json_decode($stringData,true);
+            $request['data'] = json_decode($stringData, true);
+            $data = json_decode($stringData, true);
 
-        #asign to variables
-        $open_time = $data['open_time'];
-        $close_time = $data['close_time'];
-        $room_name = $data['room_name'];
-        $room_details = $data['details'];
+            #asign to variables
+            $open_time = $data['open_time'];
+            $close_time = $data['close_time'];
+            $room_name = $data['room_name'];
+            $room_details = $data['details'];
 
-        #get name and institute data
-        $institute = $request->session()->get('institution_name');
-        $request->session()->put('selected_room', $room_name);
-
-
-        #validate the data
-        $request->validate([
-            'data.room_name' => 'unique:Rooms,room_name',
-//            'data.room_name' => [Rule::unique('Rooms')->where('institution_name', $institute)],
-//            'data.room_name' => ['required|unique:Rooms,[room_name,)'],//            > ['required',],
-            'data.open_time' => 'required',
-            'data.close_time' => 'required|after:open_time',
-            'floor_plan' => 'required|mimes:jpg,jpeg,png,bmp,pdf',
-        ]);
+            #get name and institute data
+            $institute = $request->session()->get('institution_name');
+            $request->session()->put('selected_room', $room_name);
 
 
-        #new instance of room
-        $room = new Rooms();
-
-        #add data to the room instance
-        $room->institution_name = $institute;
-        $room->room_name = $room_name;
-        $room->open_time =  $open_time;
-        $room->close_time = $close_time;
-        $room->room_details = $room_details;
-        $room->room_canvas = "None";
-
-        #request uesrs uploaded file then store
-        $file = $request['floor_plan'];
-        $contents = file_get_contents($file->path());
-        Storage::disk('public')->put('floor_plan', $file,'public');
-
-        // Store the record, using the new file hashname which will be it's new filename identity.
-        $room->floor_plan =$file->HashName();
-
-        #attempt to save room
-        try{
-            $room->save();
-        }catch(Exception $e){}
+            #validate the data
+            $request->validate([
+                'data.room_name' => 'unique:Rooms,room_name',
+                //            'data.room_name' => [Rule::unique('Rooms')->where('institution_name', $institute)],
+                //            'data.room_name' => ['required|unique:Rooms,[room_name,)'],//            > ['required',],
+                'data.open_time' => 'required',
+                'data.close_time' => 'required|after:open_time',
+                'floor_plan' => 'required|mimes:jpg,jpeg,png,bmp,pdf',
+            ]);
 
 
-        return response()->json([$data]);
+            #new instance of room
+            $room = new Rooms();
+
+            #add data to the room instance
+            $room->institution_name = $institute;
+            $room->room_name = $room_name;
+            $room->open_time = $open_time;
+            $room->close_time = $close_time;
+            $room->room_details = $room_details;
+            $room->room_canvas = "None";
+
+            #request uesrs uploaded file then store
+            $file = $request['floor_plan'];
+            $contents = file_get_contents($file->path());
+            Storage::disk('public')->put('floor_plan', $file, 'public');
+
+            // Store the record, using the new file hashname which will be it's new filename identity.
+            $room->floor_plan = $file->HashName();
+
+            #attempt to save room
+            try {
+                $room->save();
+            } catch (Exception $e) {
+            }
+
+
+            return response()->json([$data]);
+        }else{
+
+            return redirect('/')->with('mssg','You do not have permission to view this.');
+        }
     }
+
 
     #select which room to edit
     public function selectEdit(Request $request)
     {
-        #ensures the user has an institute selected
-        $institute = $request->session()->get('institution_name');
+        if($this->checkPermission($request) == true){
+            #ensures the user has an institute selected
+            $institute = $request->session()->get('institution_name');
 
-        if( $institute == NULL)
-        {
-            return redirect('/institution');
-        }
-        else
-        {
-            $rooms = Rooms::
+            if( $institute == NULL) {
+                return redirect('/institution');
+            } else {
+                $rooms = Rooms::
                 where('institution_name', $institute)
-                ->get();
+                    ->get();
+            }
+            return view('rooms.selectEdit', ['rooms'=>$rooms]);
         }
-        return view('rooms.selectEdit', ['rooms'=>$rooms]);
+        else{
+            return redirect('/')->with('mssg','You do not have permission to view this.');
+        }
     }
 
     #Once room is selected to edit
     public function edit(Request $request)
     {
-        $value   = request("submit");
+        if($this->checkPermission($request) == true) {
+            $value = request("submit");
 
-        $institute = $request->session()->get('institution_name');
-        $room = $request->session()->get('selected_room');
+            $institute = $request->session()->get('institution_name');
+            $room = $request->session()->get('selected_room');
 
 
-        if($value != NULL) {
-            $request->session()->put('selected_room',$value);
-            return redirect(route('rooms.edit'));
+            if ($value != NULL) {
+                $request->session()->put('selected_room', $value);
+                return redirect(route('rooms.edit'));
+            } elseif ($institute == "") {
+                return redirect('/institution');
+            } elseif ($room == "") {
+                return redirect('/rooms/selectEdit');
+            } else {
+                $rooms = Rooms::
+                where('institution_name', $institute)
+                    ->where('room_name', $room)
+                    ->first();
+
+                $seats = Workstation::
+                where('room_name', $room)
+                    ->where('institution_name', $institute)
+                    ->get();
+            }
+
+            return view('rooms.edit')
+                ->with('seats', $seats)
+                ->with('rooms', $rooms);
+        }else{
+
+            return redirect('/')->with('mssg','You do not have permission to view this.');
         }
 
-        elseif( $institute == ""){  return redirect('/institution'); }
-
-        elseif($room == "" ) {   return redirect('/rooms/selectEdit'); }
-
-        else
-        {
-            $rooms  = Rooms::
-                where('institution_name',$institute)
-                ->where('room_name',$room)
-                ->first();
-
-            $seats = Workstation::
-                where('room_name',$room)
-                ->where('institution_name',$institute)
-                ->get();
-        }
-
-        return view('rooms.edit')
-            ->with('seats',$seats)
-            ->with('rooms',$rooms);
     }
 
     #edit the seats of a selected room
     public function editSeats(Request $request)
     {
-        $value   = request("submit");
+        if ($this->checkPermission($request) == true) {
+            $value = request("submit");
 
-        $institute = $request->session()->get('institution_name');
-        $room = $request->session()->get('selected_room');
+            $institute = $request->session()->get('institution_name');
+            $room = $request->session()->get('selected_room');
 
 
-        #checks if the user has selected a room
-        if($value != NULL)
-        {
-            $request->session()->put('selected_room',$value);
-            return redirect(route('rooms.edit'));
+            #checks if the user has selected a room
+            if ($value != NULL) {
+                $request->session()->put('selected_room', $value);
+                return redirect(route('rooms.edit'));
+            } elseif ($institute == "") {
+                return redirect('/institution');
+            } elseif ($room == "") {
+                return redirect('/rooms/selectEdit');
+            } else {
+                $rooms = Rooms::
+                where('institution_name', $institute)
+                    ->where('room_name', $room)
+                    ->first();
+
+                $seats = Workstation::
+                where('room_name', $room)
+                    ->where('institution_name', $institute)
+                    ->get();
+            }
+
+
+            return view('rooms.editseats')
+                ->with('seats', $seats)
+                ->with('rooms', $rooms);
+        }else{
+
+            return redirect('/')->with('mssg','You do not have permission to view this.');
         }
-        elseif( $institute == "")
-        {
-            return redirect('/institution');
-        }
-        elseif($room == "" ) {
-            return redirect('/rooms/selectEdit');
-        }
-        else
-        {
-            $rooms  = Rooms::
-            where('institution_name',$institute)
-                ->where('room_name',$room)
-                ->first();
-
-            $seats = Workstation::
-            where('room_name',$room)
-                ->where('institution_name',$institute)
-                ->get();
-        }
-
-
-        return view('rooms.editseats')
-            ->with('seats',$seats)
-            ->with('rooms',$rooms);
     }
 
     #save the details of the seats
     public function saveSeats(Request $request)
     {
-        $room = $request->session()->get('selected_room');
-        $institute = $request->session()->get('institution_name');
+        if($this->checkPermission($request) == true) {
+            $room = $request->session()->get('selected_room');
+            $institute = $request->session()->get('institution_name');
 
-        $seats = Workstation::
-        where('room_name',$room)
-            ->where('institution_name',$institute)
-            ->get();
+            $seats = Workstation::
+            where('room_name', $room)
+                ->where('institution_name', $institute)
+                ->get();
 
-        foreach($seats as $seat)
-        {
-            $seat_details = request("detailsFor_$seat->seat_name");
+            foreach ($seats as $seat) {
+                $seat_details = request("detailsFor_$seat->seat_name");
 
-            Workstation::
-                where('room_name',$seat->room_name)
-                ->where('institution_name',$seat->institution_name)
-                ->where('seat_name',"$seat->seat_name")
-                ->update(['seat_details'=>$seat_details]);
+                Workstation::
+                where('room_name', $seat->room_name)
+                    ->where('institution_name', $seat->institution_name)
+                    ->where('seat_name', "$seat->seat_name")
+                    ->update(['seat_details' => $seat_details]);
+            }
+
+            #blank the session data
+            $request->session()->put('selected_room', "");
+            $request->session()->put('open_time', "");
+            $request->session()->put('close_time', "");
+
+            return redirect('/')->with('mssg', 'Room Details Updated Successfully');
+        }else{
+
+            return redirect('/')->with('mssg','You do not have permission to view this.');
         }
-
-        #blank the session data
-        $request->session()->put('selected_room', "");
-        $request->session()->put('open_time',"");
-        $request->session()->put('close_time',"");
-
-        return redirect('/')->with('mssg','Room Details Updated Successfully');
-
     }
 
     #save the details of the room once the user has inputted the new data
     public function saveEdit(Request $request)
     {
-        $room = $request->session()->get('selected_room');
-        $institute = $request->session()->get('institution_name');
+        if($this->checkPermission($request) == true) {
+            $room = $request->session()->get('selected_room');
+            $institute = $request->session()->get('institution_name');
 
-        $seats = Workstation::
-            where('room_name',$room)
-            ->where('institution_name',$institute)
-            ->get();
+            $seats = Workstation::
+            where('room_name', $room)
+                ->where('institution_name', $institute)
+                ->get();
 
-        foreach($seats as $seat)
-        {
-            #revert the -'s back to spaces
-            $inputBoxName = str_replace(' ','_', $seat->seat_name);
-            $stringForInput = "seatInputFor_$inputBoxName";
-            $seat_name_input = request($stringForInput);
-            $seat_details = request("detailsFor_$inputBoxName");
+            foreach ($seats as $seat) {
+                #revert the -'s back to spaces
+                $inputBoxName = str_replace(' ', '_', $seat->seat_name);
+                $stringForInput = "seatInputFor_$inputBoxName";
+                $seat_name_input = request($stringForInput);
+                $seat_details = request("detailsFor_$inputBoxName");
 
-            #only update name if a new name has been inputted by user
-            if ($seat_name_input == "")
-            {
-                Workstation::
-                    where('room_name',$seat->room_name)
-                    ->where('institution_name',$seat->institution_name)
-                    ->where('seat_name',"$seat->seat_name")
-                    ->update(['seat_details'=>$seat_details]);
+                #only update name if a new name has been inputted by user
+                if ($seat_name_input == "") {
+                    Workstation::
+                    where('room_name', $seat->room_name)
+                        ->where('institution_name', $seat->institution_name)
+                        ->where('seat_name', "$seat->seat_name")
+                        ->update(['seat_details' => $seat_details]);
+                } else {
+                    Workstation::
+                    where('room_name', $seat->room_name)
+                        ->where('institution_name', $seat->institution_name)
+                        ->where('seat_name', $seat->seat_name)
+                        ->update(['seat_details' => $seat_details, 'seat_name' => $seat_name_input]);
+                }
+
             }
-            else
-            {
-                Workstation::
-                    where('room_name',$seat->room_name)
-                    ->where('institution_name',$seat->institution_name)
-                    ->where('seat_name',$seat->seat_name)
-                    ->update(['seat_details'=>$seat_details, 'seat_name'=>$seat_name_input]);
-            }
+            #blank the session data
+            $request->session()->put('selected_room', "");
+            $request->session()->put('open_time', "");
+            $request->session()->put('close_time', "");
 
+            return redirect('/')->with('mssg', 'Room Details Updated Successfully');
+        }else{
+
+            return redirect('/')->with('mssg','You do not have permission to view this.');
         }
-        #blank the session data
-        $request->session()->put('selected_room', "");
-        $request->session()->put('open_time',"");
-        $request->session()->put('close_time',"");
-
-        return redirect('/')->with('mssg','Room Details Updated Successfully');
     }
 
-    public function workstationDelete($id){
-        #delete a seat/work
-        $seat = Workstation::findOrFail($id);
-        $seat->delete();
-
-        return redirect(route('rooms.edit'));
-    }
+//    public function workstationDelete($id){
+//        #delete a seat/work
+//        $seat = Workstation::findOrFail($id);
+//        $seat->delete();
+//
+//        return redirect(route('rooms.edit'));
+//    }
 
     #delete a room
     #deletes the room and all of its corresponing bookings
     public function destroy($room_name,Request $request){
-        $institute = $request->session()->get('institution_name');
+        if($this->checkPermission($request) == true) {
+            $institute = $request->session()->get('institution_name');
 
-        $room = Rooms::
-            where('room_name',$room_name)
-            ->where('institution_name',$institute);
+            $room = Rooms::
+            where('room_name', $room_name)
+                ->where('institution_name', $institute);
 
-        $bookings = Bookings::
-            where('room_name',$room_name)
-            ->where('institution_name',$institute);
+            $bookings = Bookings::
+            where('room_name', $room_name)
+                ->where('institution_name', $institute);
 
 
+            $workstations = Workstation::
+            where('room_name', $room_name)
+                ->where('institution_name', $institute);
 
-        $workstations = Workstation::
-            where('room_name',$room_name)
-            ->where('institution_name',$institute);
+            $user_bookingsSearch = Bookings::
+            where('room_name', $room_name)
+                ->where('institution_name', $institute)
+                ->get();
 
-        $user_bookingsSearch = Bookings::
-        where('room_name',$room_name)
-            ->where('institution_name',$institute)
-            ->get();
+            foreach ($user_bookingsSearch as $booking) {
+                $user_bookings = User_Booking::
+                where('id', $booking->id);
+                $user_bookings->delete();
+            }
 
-        foreach($user_bookingsSearch as $booking)
-        {
-            $user_bookings = User_Booking::
-                where('id',$booking->id);
-            $user_bookings->delete();
+            $workstations->delete();
+            $bookings->delete();
+            $room->delete();
+
+            #blank the session data
+            $request->session()->put('selected_room', "");
+            $request->session()->put('open_time', "");
+            $request->session()->put('close_time', "");
+
+            return redirect('/')->with('mssg', 'Room Deleted');
+        }else{
+
+            return redirect('/')->with('mssg','You do not have permission to view this.');
         }
-
-        $workstations->delete();
-        $bookings->delete();
-        $room->delete();
-
-        #blank the session data
-        $request->session()->put('selected_room', "");
-        $request->session()->put('open_time',"");
-        $request->session()->put('close_time',"");
-
-        return redirect(route('rooms.index'));
     }
 }

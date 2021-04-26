@@ -8,6 +8,7 @@ use App\Models\User_Booking;
 
 use Illuminate\Support\Facades\Auth;
 use Carbon\Carbon;
+use App\Models\User;
 
 
 #controller for the main page - known as  dashboard

@@ -49,6 +49,8 @@ class JetstreamServiceProvider extends ServiceProvider
 
         Jetstream::role('admin', __('Administrator'), [
             'create',
+            'room:create',
+            'room:update',
             'read',
             'update',
             'delete',
@@ -59,5 +61,11 @@ class JetstreamServiceProvider extends ServiceProvider
             'create',
             'update',
         ])->description(__('Editor users have the ability to read, create, and update.'));
+
+        Jetstream::role('Local Admin', __('Local Admin'), [
+            'read',
+            'room:create',
+            'room:update',
+        ])->description(__('Local Admin users users have the ability to read, create, and update rooms.'));
     }
 }

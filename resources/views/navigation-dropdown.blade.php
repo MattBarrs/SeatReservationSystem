@@ -28,8 +28,19 @@
                         {{ __('View Bookings') }}
                     </x-jet-nav-link>
 
+                    @if( Auth::user()->id  ==1 )
+                    <x-jet-nav-link href="{{ route('covid.trackAndTrace') }}" :active="request()->routeIs('covid.trackAndTrace') " style="text-decoration: none;">
+                        {{ __('Track and Trace') }}
+                    </x-jet-nav-link>
+
+                    @endif
+
                     @foreach (Auth::user()->allTeams() as $team)
-                        @if( $team->name == "SuperUser's Team")
+                        @if( $team->name == "Local Admins")
+                        <x-jet-nav-link href="/docs/overview" :active="request()->routeIs('/docs')" style="text-decoration: none;">
+                            {{ __('System Documentation') }}
+                        </x-jet-nav-link>
+
                         <div class="hidden sm:flex sm:items-center sm:ml-6">
                             <x-jet-dropdown align="right" width="48" style="text-decoration: none;">
                                 <x-slot name="trigger">
@@ -66,9 +77,7 @@
                                     {{ __('Edit Room') }}
                                 </x-jet-dropdown-link>
 
-                                <x-jet-dropdown-link href="{{ route('covid.trackAndTrace') }}" :active="request()->routeIs('covid.trackAndTrace') " style="text-decoration: none;">
-                                    {{ __('Track and Trace') }}
-                                </x-jet-dropdown-link>
+
 
                                 <div class="border-t border-gray-100"></div>
 
