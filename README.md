@@ -47,16 +47,148 @@ We would like to extend our thanks to the following sponsors for funding Laravel
 
 ## Contributing
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
 
-## Code of Conduct
+# Installation
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+---
 
-## Security Vulnerabilities
+- [Step One: XAMPP](#section-1)
+- [Step Two: Composer](#section-2)
+- [Step Three: NPM](#section-3)
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+<a name="section-1"></a>
+## Step One: XAMPP 
+Install XAMPP onto your system, 
+- (Download Link) : https://www.apachefriends.org/download.html
+- (Alternate Download Link) : https://www.apachefriends.org/index.html
+    - These links have installers for Windows, MacOS and Linux
 
-## License
+<a name="section-2"></a>
+##Step Two: Composer
+Install Composer onto your system
+Composer is a package manager for PHP 
+- (Download link + Tutorial) : https://getcomposer.org/download/
+    - Links has information on how to install for Windows, MacOS and Linux -
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+- Once downloaded run command  `composer -V` to ensure it is installed correctly
+
+<a name="section-3"></a>
+##Step Three: NPM 
+- Ensure that NPM is installed on the system
+
+
+# Create an Account
+
+---
+
+
+- [Register](#section-1)
+- [Local Admins](#section-2)
+
+<a name="section-1"></a>
+## Register
+- Click the ‘Register’ Button,
+- Enter your details
+- Press the ‘Register’ button once the details are entered.
+- Ensure that the dashboard is displayed
+
+![image](../../img/image1.png)
+
+<a name="section-2"></a>
+##Local Admins
+- If they need to be made a  Local administrator pleases see "[Add a local admin](/{{route}}/{{version}}/add_localAdmin)" 
+
+
+
+# Create a Booking
+
+---
+- [Prerequisite](#section-1)
+- [Select the Room](#section-2)
+- [Input Date/Time](#section-3)
+- [Select Seat](#section-4)
+  
+<a name="section-1"></a>
+## Prerequisite
+- Ensure that you have the correct institution selected.
+  ![image](../../img/image2.png)
+
+<a name="section-2"></a>
+## Select the Room
+- Select the `Book a Seat` link in the top navigation bar
+- If you do not have a room selected it will show a list of rooms below
+  ![image](../../img/image5.jpg)
+
+<a name="section-3"></a>
+## Input Date/Time
+![image](../../img/image4.png)
+
+<a name="section-4"></a>
+##Select Seat 
+- The rooms floorplan will then be displayed
+- The default colour are 
+    - `Red` : `Not Available` 
+    - `Green` : `Available`
+- Colour scheme can be changed through `Colour Options`
+- Select the seat to book
+- A `Book Seat` should appear, select it 
+- System will notify the user about the status: Successful/Error 
+![image](../../img/image6.png)
+
+
+
+# Create an Institution
+
+---
+- [Prerequisites](#section-1)
+- [Creat an Institution](#section-2)
+
+
+<a name="section-1"></a>
+## Prerequisistes
+- Ensure that user has been added to the  'Local Admins` team.
+    - Within the top right dropdown select `Team Settings`
+    - The users teams are listed within the `Switch Teams` section of the dropdown
+    - See "[Add a local admin](/{{route}}/{{version}}/add_localAdmin)" for more details   
+
+<a name="section-2"></a>
+## Create an Institution
+- Within `Extra` select the `Add Institution` option
+- Input the name and the passcode
+    - Passcode is used to access an institution to make a booking
+![image](../../img/image9.jpg)
+
+
+#Add Local Admin
+
+---
+
+- [Prerequisites](#section-1)
+- [Adding Permissions](#section-2)
+
+<a name="section-1"></a>
+## Prerequisistes
+- Ensure you are logged in as the main Administration account
+- Within the top right dropdown select `Team Settings`
+
+  
+<a name="section-2"></a>
+##Adding Permissions
+- Ensure that the currently selected team under `Team Name` is `Local Admins`
+- Under the `Add Team Member` section enter the local admins email address
+- There are three options for their role, select the `Local Admin` role
+> {danger} Ensure that you do not select `Administrator` or `Editor` this will give them the incorrect permission
+> 
+- Select the `Add` button to add them to the `Local Admins` team.
+
+
+##Removing Permissions 
+- Ensure that the currently selected team under `Team Name` is `Local Admins`
+- Under the `Team Members` section find the user that needs their permissions removed
+- Select `Remove` on the far right to remove, select `Remove` on the pop-up to confirm 
+
+
+
+
+
+
