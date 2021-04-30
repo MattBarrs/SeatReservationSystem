@@ -29,7 +29,7 @@ Install XAMPP onto your system,
     - These links have installers for Windows, MacOS and Linux
 
 <a name="section-1-2"></a>
-##Step Two: Composer
+## Step Two: Composer
 Install Composer onto your system
 Composer is a package manager for PHP 
 - (Download link + Tutorial) : https://getcomposer.org/download/
@@ -38,7 +38,7 @@ Composer is a package manager for PHP
 - Once downloaded run command  `composer -V` to ensure it is installed correctly
 
 <a name="section-1-3"></a>
-##Step Three: NPM 
+## Step Three: NPM 
 - Ensure that NPM is installed on the system
 
 
@@ -68,7 +68,7 @@ Composer is a package manager for PHP
 
 
 <a name="section-3"></a>
-#Add Local Admin
+# Add Local Admin
 
 - [Prerequisites](#section-3-1)
 - [Adding Permissions](#section-3-2)
@@ -80,7 +80,7 @@ Composer is a package manager for PHP
 
   
 <a name="section-3-2"></a>
-##Adding Permissions
+## Adding Permissions
 - Ensure that the currently selected team under `Team Name` is `Local Admins`
 - Under the `Add Team Member` section enter the local admins email address
 - There are three options for their role, select the `Local Admin` role
@@ -89,7 +89,7 @@ Composer is a package manager for PHP
 - Select the `Add` button to add them to the `Local Admins` team.
 
 
-##Removing Permissions 
+## Removing Permissions 
 - Ensure that the currently selected team under `Team Name` is `Local Admins`
 - Under the `Team Members` section find the user that needs their permissions removed
 - Select `Remove` on the far right to remove, select `Remove` on the pop-up to confirm 
@@ -134,7 +134,6 @@ Composer is a package manager for PHP
 - Ensure you are within the `Local Admins` team.
 - This can be found by selecting the dropdown in the top right, the users teams will be displayed in the `Switch Teams` section.
 - Ensure that you have the correct institution selected.
-![image](../../img/image2.png)
 
 <a name="section-5-2"></a>
 ## Creating a room
@@ -148,15 +147,15 @@ Composer is a package manager for PHP
 
 
 <a name="section-5-3"></a>
-##Select Room to Edit
+## Select Room to Edit
 - Within the `Extra` dropdown select the `Edit Room` option.
 - Select room that needs editing.
 
 
 <a name="section-5-4"></a>
-##Step by Step guide
+## Step by Step guide
 
-###How to use the canvas
+### How to use the canvas
 - 'ALT' + 'Left Click': Move view of canvas
 - 'Mouse wheel': Changes level of zoom
 - 'Alter Slider': Changes size of shapes
@@ -222,7 +221,7 @@ Composer is a package manager for PHP
 ![image](../../img/image4.png)
 
 <a name="section-6-4"></a>
-##Select Seat 
+## Select Seat 
 - The rooms floorplan will then be displayed
 - The default colour are 
     - `Red` : `Not Available` 
@@ -231,7 +230,6 @@ Composer is a package manager for PHP
 - Select the seat to book
 - A `Book Seat` should appear, select it 
 - System will notify the user about the status: Successful/Error 
-![image](../../img/image6.png)
 
 
 
@@ -258,7 +256,7 @@ Composer is a package manager for PHP
 
 <a name="section-7-2"></a>
 
-##View Results 
+## View Results 
 - The system will give you a list of emails to contact
 - The system should also open your local email client and create a generic email informing the users of the incident
   ![image](../../img/image8.png)
