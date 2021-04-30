@@ -100,7 +100,6 @@ Composer is a package manager for PHP
 <a name="section-4"></a>
 # Create an Institution
 
----
 - [Prerequisites](#section-4-1)
 - [Creat an Institution](#section-4-2)
 
@@ -208,17 +207,14 @@ Composer is a package manager for PHP
 <a name="section-6-1"></a>
 ## Prerequisite
 - Ensure that you have the correct institution selected.
-  ![image](../../img/image2.png)
 
 <a name="section-6-2"></a>
 ## Select the Room
 - Select the `Book a Seat` link in the top navigation bar
 - If you do not have a room selected it will show a list of rooms below
-  ![image](../../img/image5.jpg)
 
 <a name="section-6-3"></a>
 ## Input Date/Time
-![image](../../img/image4.png)
 
 <a name="section-6-4"></a>
 ## Select Seat 
@@ -239,7 +235,6 @@ Composer is a package manager for PHP
 <a name="section-7"></a>
 # Track & Trace
 
----
 - [Input Data](#section-7-1)
 - [View Results](#section-7-2)
 
@@ -252,14 +247,12 @@ Composer is a package manager for PHP
 - Select the Room
 - Input the start time of the booking
 - Click `Submit`
-![image](../../img/image7.jpg)
 
 <a name="section-7-2"></a>
 
 ## View Results 
 - The system will give you a list of emails to contact
 - The system should also open your local email client and create a generic email informing the users of the incident
-  ![image](../../img/image8.png)
 
 
 
