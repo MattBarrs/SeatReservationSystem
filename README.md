@@ -108,7 +108,7 @@ Composer is a package manager for PHP
 - Ensure that user has been added to the  'Local Admins` team.
     - Within the top right dropdown select `Team Settings`
     - The users teams are listed within the `Switch Teams` section of the dropdown
-    - See "[Add a local admin](/{{route}}/{{version}}/add_localAdmin)" for more details   
+    - See [Add Local Admin](#section-3) for more details   
 
 <a name="section-4-2"></a>
 ## Create an Institution
