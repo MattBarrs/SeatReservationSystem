@@ -61,8 +61,7 @@ Composer is a package manager for PHP
 
 <a name="section-2-2"></a>
 ## Local Admins
-- If they need to be made a  Local administrator pleases see "[Add a local admin](/{{route}}/{{version}}/add_localAdmin)" 
-
+- If they need to be made a  Local administrator pleases see [Add Local Admin](#section-3)
 
 
 
