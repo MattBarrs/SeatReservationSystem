@@ -474,8 +474,8 @@
 
 
 
+            //when the canvas is loaded from db
             loadcanvas.onclick = function() {
-                //when the canvas is loaded from db
 
                 canvas.forEachObject(function(object) {
                     //intialise the shapes in the canvas
@@ -982,7 +982,12 @@
                 canvas.setViewportTransform([1,0,0,1,0,0]);
             }
 
-
+            /**
+             *changes the colour of the seats
+             * @param colour1 :: seat selected colour
+             * @param colour2 :: seats  Available colour
+             * @param colour3 :: seats not Available colour
+             */
             function changeColours(colour1,colour2){
                 canvas.discardActiveObject();
 
@@ -1054,9 +1059,9 @@
             });
 
 
+            // on mouse up we want to recalculate new interaction
+            // for all objects, so we call setViewportTransform
             canvas.on('mouse:up', function(opt) {
-                // on mouse up we want to recalculate new interaction
-                // for all objects, so we call setViewportTransform
                 this.setViewportTransform(this.viewportTransform);
                 this.isDragging = false;
                 this.selection = true;

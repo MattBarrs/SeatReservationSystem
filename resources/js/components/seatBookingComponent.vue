@@ -179,13 +179,17 @@ export default {
     },
 
     props:['roomcanvas', 'opentime','closetime'],
-    //roomcanvas == canvas object
     //opetime and close is the open/close of the room
 
     watch: {
 
         //watch and hidden fields used as the canvas can only be run in mounted
         //in order to pass dynamic variables to mounted a hidden field is used
+        /**
+         *
+         * @param newVal
+         * @param oldVal
+         */
         'date_input':function(newVal, oldVal){
             let hidden_time = document.getElementById('hidden_date');
             let date = newVal.getUTCFullYear() +"/"+ (newVal.getUTCMonth()+1) +"/"+ newVal.getUTCDate();
@@ -193,7 +197,11 @@ export default {
             hidden_time.dispatchEvent(new Event('change'));
         },
 
-
+        /**
+         *
+         * @param newVal
+         * @param oldVal
+         */
         'time_start': function(newVal, oldVal){
             let hidden_time_hh = document.getElementById('hidden_time_start_hh');
             let hidden_time_mm = document.getElementById('hidden_time_start_mm');
@@ -203,6 +211,11 @@ export default {
             hidden_time_mm.dispatchEvent(new Event('change'));
         },
 
+        /**
+         *
+         * @param newVal
+         * @param oldVal
+         */
         'time_end': function(newVal, oldVal){
             let hidden_time_hh = document.getElementById('hidden_time_end_hh');
             let hidden_time_mm = document.getElementById('hidden_time_end_mm');
@@ -212,6 +225,11 @@ export default {
             hidden_time_mm.dispatchEvent(new Event('change'));
         },
 
+        /**
+         *
+         * @param newVal
+         * @param oldVal
+         */
         'input_seatsTaken':function(newVal, oldVal){
             this.seatsTaken = [];
 
@@ -298,7 +316,10 @@ export default {
             fabric.Group.prototype.lockMovementX = true; //stops group movement x
             fabric.Group.prototype.lockMovementY = true; //stops group movement y
 
-            //locks the seats which are not available
+            /**
+             * locks the seats which are not available
+             * @param options
+             */
             let seatsTakenArray = $('inputSeatsTaken');
             seatsTakenArray.onchange = function(options) {
 
@@ -359,7 +380,12 @@ export default {
 
             }
 
-            //send booking details via axios post
+
+            /**
+             *  send booking details via axios post
+             *
+             * @returns {Promise<AxiosResponse<any>>}
+             */
             bookSeat.onclick = function(){
 
                 //get values for post
@@ -435,11 +461,14 @@ export default {
 
 
 
-            //changes the colour of the seats
+
+            /**
+             *changes the colour of the seats
+             * @param colour1 :: seat selected colour
+             * @param colour2 :: seats  Available colour
+             * @param colour3 :: seats not Available colour
+             */
             function changeColours(colour1,colour2,colour3){
-                //colour 1 = seat selected colour
-                //colour 2 = seats  Available colour
-                //colour 3 = seats not Available colour
                 canvas.discardActiveObject();
 
                 canvas.forEachObject(function(object) {
@@ -584,7 +613,10 @@ export default {
         },
 
         methods: {
-            //gets the seats that are taken for the given data/time
+            /**
+             * gets the seats that are taken for the given data/time
+             * @param value
+             */
             getAvailabilty(value){
                     this.postData(value).then((result)=>{ this.input_seatsTaken = result.data[0];});
             },
@@ -615,10 +647,11 @@ export default {
                 });
 
             },
-
+        /**
+         * ensures variables are valid
+         * @param event
+         */
         checkVariables (event){
-            //ensures variables are valid
-                // console.log("CheckVariables :: Activated");
             try{
                 document.getElementById("isTimeError").style.visibility = "hidden";
                 document.getElementById("isDateError").style.visibility = "hidden";
@@ -633,7 +666,6 @@ export default {
                     document.getElementById("isTimeError").style.visibility = "visible";
                 }
                 else if( (temp_hh.includes("H") ) || (temp_hh.includes("h")) || (temp_mm.includes("newVal")) ){
-                    // console.log("Error Found 2");
                     errorFound = true;
                     document.getElementById("isTimeError").style.visibility = "visible";
                 }
@@ -678,9 +710,13 @@ export default {
         },
 
 
-        //checks that the time given doesnt:
-            // go past closing time
-            // is not before open time
+
+            /**
+            *   checks that the time given doesnt:
+            *    go past closing time
+            *    is not before open time
+            * @param eventData
+            */
         checkAvailable(eventData) {
 
             if (!(eventData['displayTime'].includes("H")) && !(eventData['displayTime'].includes("h")) && !(eventData['displayTime'].includes("newVal")) && eventData['displayTime'] != "") {

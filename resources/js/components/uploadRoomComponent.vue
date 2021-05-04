@@ -84,12 +84,27 @@ export default {
     },
 
     watch: {
+
+        /**
+         * @param val
+         * @param oldVal
+         */
         'validName': function(val,oldVal){
             this.checkVariables();
         },
+
+        /**
+         * @param val
+         * @param oldVal
+         */
         'validTime': function(val,oldVal) {
             this.checkVariables();
         },
+
+        /**
+         * @param val
+         * @param oldVal
+         */
         'validFile': function(val,oldVal) {
             this.checkVariables();
         },
@@ -124,27 +139,11 @@ export default {
     },
 
         methods: {
-
-
-
-            toggle(source) {
-                var checkboxes = document.getElementsByName('room_details');
-                // console.log(checkboxes);
-                for(var i=0, n=checkboxes.length;i<n;i++) {
-                    // console.log(checkboxes[i].checked);
-                    checkboxes[i].checked = true;
-                }
-            },
-
-            untoggle(source) {
-                var checkboxes = document.getElementsByName('room_details');
-                // console.log(checkboxes);
-                for(var i=0, n=checkboxes.length;i<n;i++) {
-                    // console.log(checkboxes[i].checked);
-                    checkboxes[i].checked = false;
-                }
-            },
-
+            /**
+             *  checks variables
+             *
+             * @param event
+             */
             checkVariables(event){
 
                 if( this.validFile && this.validTime && this.validName){
@@ -157,7 +156,10 @@ export default {
                     document.getElementById("missingFields").style.visibility= "visible";
                 }
             },
-
+            /**
+             * checks name is non empty
+             * @param event
+             */
             checkName(event){
                 if((this.room_name == null) || (this.room_name==="") ){
                     this.validName = false;
@@ -167,7 +169,10 @@ export default {
                 }
             },
 
-
+            /**
+             *
+             * @param event
+             */
             checkUpload(event){
                 this.validFile = false;
 
@@ -178,6 +183,13 @@ export default {
                     this.validFile = true;
                 }
             },
+
+            /**
+             * when the user submits the details
+             * posts it to the server
+             *
+             * @param event
+             */
             submit (event) {
 
                 let temp_otime_hh = this.openingtime['HH'];
@@ -208,7 +220,10 @@ export default {
                 });
             },
 
-
+        /**
+         * checks that the times given dont fall outside the open/time
+         * @param eventData
+         */
         checkTime(eventData) {
             this.validTime = false;
 

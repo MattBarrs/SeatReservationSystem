@@ -4,40 +4,50 @@ namespace App\Http\Controllers;
 
 use App\Models\Bookings;
 use App\Models\Institution;
-use App\Models\User_Booking;
+use App\Models\UserBooking;
 
 use Illuminate\Support\Facades\Auth;
 use Carbon\Carbon;
 use App\Models\User;
 
 
-#controller for the main page - known as  dashboard
+
+
+/**
+ * controller for the main page - known as  dashboard
+ *
+ * Class DashboardController
+ * @package App\Http\Controllers
+ */
 class DashboardController extends Controller
 {
 
+    /**
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
+     */
     public function show()
     {
         #get user ID
         $userId = Auth::id();
 
         #find their latest booking
-        $user_booking = User_Booking::
+        $UserBooking = UserBooking::
                 where('user_id',$userId)
                 ->orderby('created_at','desc')
                 ->first();
 
         #find up to 5 bookings after current day
-        $upcoming_bookings = User_Booking::
-                join('bookings','bookings.id','=','user_Bookings.id')
+        $upcoming_bookings = UserBooking::
+                join('bookings','bookings.id','=','UserBookings.id')
                 ->where('user_id',$userId)
                 ->where('bookings.start_date','>=',Carbon::today())
                 ->take(5)
                 ->get();
 
         #if the user has a booking get the 1st
-        if($user_booking != "")
+        if($UserBooking != "")
         {
-            $bookingID = $user_booking->id;
+            $bookingID = $UserBooking->id;
             $booking = Bookings::where('id', $bookingID)->first();
         }
         #if user has no bookings

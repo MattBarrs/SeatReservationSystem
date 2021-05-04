@@ -6,9 +6,17 @@ use App\Models\Institution;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rule;
 
-
+/**
+ * Class InstitutionController
+ * @package App\Http\Controllers
+ */
 class InstitutionController extends Controller
 {
+    /**
+     * Used to ensure the user has the correct permissions
+     * @param $request :: data from the request/ user
+     * @return bool :: do they have permission True or False
+     */
     private function checkPermission($request)
     {
         $user = $request->user();
@@ -30,14 +38,26 @@ class InstitutionController extends Controller
         return false;
     }
 
-    #when user is selecting an institution
+
+    /**
+     * when user is selecting an institution
+     *
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
+     */
     public function select()
     {
         $institutes_all = Institution::select('institution_name')->orderBy('institution_name','ASC')->get();
         return view('institution.select', ['institutes'=>$institutes_all]);
     }
 
-    #save the users selection
+
+
+    /**
+     * save the users selection
+     *
+     * @param Request $request :: data from the request/ user
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
+     */
     public function save(Request $request)
     {
         $institute_input = request('institution');
@@ -73,13 +93,25 @@ class InstitutionController extends Controller
         }
     }
 
-    #creating a new instance of an institute
+    /**
+     * creating a new instance of an institute
+     *
+     * @param Request $request:: data from the request/ user
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
+     */
     public function create(Request $request)
     {
         return view('institution.create');
     }
 
-    #store the institute being created
+
+    /**
+     * store the institute being created
+     *
+     * @param Request $request :: data from the request/ user
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
+     * @throws \Illuminate\Validation\ValidationException
+     */
     public function store(Request $request)
     {
         error_log("Beging");

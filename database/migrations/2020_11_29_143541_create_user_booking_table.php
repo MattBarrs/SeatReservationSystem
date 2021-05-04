@@ -13,7 +13,7 @@ class CreateUserBookingTable extends Migration
      */
     public function up()
     {
-        Schema::create('user_bookings', function (Blueprint $table) {
+        Schema::create('UserBookings', function (Blueprint $table) {
             $table->id();
             $table->string('user_id');
             $table->timestamps();
@@ -27,6 +27,6 @@ class CreateUserBookingTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('user_bookings');
+        Schema::dropIfExists('UserBookings');
     }
 }

@@ -4,16 +4,23 @@ namespace App\Http\Controllers;
 
 use App\Models\Rooms;
 use App\Models\Bookings;
-use App\Models\User_Booking;
+use App\Models\UserBooking;
 use App\Models\Workstation;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Carbon\Carbon;
 use function Symfony\Component\String\s;
 
-
+/**
+ * Class BookingsController
+ * @package App\Http\Controllers
+ */
 class BookingsController extends Controller
 {
+    /**
+     * @param Request $request
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
+     */
     #Shows the user all of their bookings
     public function index(Request $request)
     {
@@ -23,9 +30,9 @@ class BookingsController extends Controller
         #Returns the relevant details to be displayed
         $pastBookings = Bookings::
         join('Rooms','Bookings.room_name','Rooms.room_name')
-            ->join('User_Bookings','Bookings.id','User_Bookings.id')
+            ->join('UserBookings','Bookings.id','UserBookings.id')
 
-            ->where('User_Bookings.user_id',$sessionId)
+            ->where('UserBookings.user_id',$sessionId)
             ->where('Bookings.start_date','<',Carbon::today())
 
             ->select('Bookings.seat_name','Bookings.start_date','Bookings.start_time','Bookings.end_time','Bookings.id','Rooms.room_name', 'Bookings.institution_name')
@@ -35,9 +42,9 @@ class BookingsController extends Controller
 
         $futureBookings = Bookings::
         join('Rooms','Bookings.room_name','Rooms.room_name')
-            ->join('User_Bookings','Bookings.id','User_Bookings.id')
+            ->join('UserBookings','Bookings.id','UserBookings.id')
 
-            ->where('User_Bookings.user_id',$sessionId)
+            ->where('UserBookings.user_id',$sessionId)
             ->where('bookings.start_date','>=',Carbon::today())
 
             ->select('Bookings.seat_name','Bookings.start_date','Bookings.start_time','Bookings.end_time','Bookings.id','Rooms.room_name', 'Bookings.institution_name' )
@@ -52,15 +59,23 @@ class BookingsController extends Controller
 
     }
 
-    #Show individual booking, takes the booking ID as input
+    #
+
+    /**
+     * Show individual booking, takes the booking ID as input
+     *
+     * @param Request $request :: data from the request/ user
+     * @param $id :: booking they want to see
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|\Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
+     */
     public function show(Request $request,$id)
     {
-        $user_bookings = User_Booking::find($id);
+        $UserBookings = UserBooking::find($id);
         $sessionId = Auth::id();
 
         #finds the user booking that the user requested
         #will only show to the user if the userID
-        if( $user_bookings->user_id == $sessionId)
+        if( $UserBookings->user_id == $sessionId)
         {
             $booking = Bookings::findOrFail($id);
             return view('bookings.show',['Booking' => $booking]);
@@ -77,6 +92,11 @@ class BookingsController extends Controller
         return view('bookings.institution');
     }
 
+    /**
+     * saves the booking the user creates
+     * @param Request $request :: data from the request/ user
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function saveBooking(Request $request){
 
         #retrive data from the axios post and convert to string then assign to variables
@@ -110,9 +130,9 @@ class BookingsController extends Controller
         $sessionId = Auth::id();
 
         $findBookings = Bookings::
-            join('User_Bookings','Bookings.id','User_Bookings.id')
+            join('UserBookings','Bookings.id','UserBookings.id')
 
-            ->where('User_Bookings.user_id',$sessionId)
+            ->where('UserBookings.user_id',$sessionId)
             ->where('Bookings.start_date', '=',$date)
 
             ->where(function($query) use ($endTime, $startTime)
@@ -143,14 +163,14 @@ class BookingsController extends Controller
 
             $booking->save();
 
-            $user_booking = new User_Booking();
+            $UserBooking = new UserBooking();
 
             $bookingID= Bookings::latest('created_at')->first()->id;
             $userId = Auth::id();
-            $user_booking->id = $bookingID;
-            $user_booking->user_id = $userId;
+            $UserBooking->id = $bookingID;
+            $UserBooking->user_id = $userId;
 
-            $user_booking->save();
+            $UserBooking->save();
         }
         else{
 
@@ -168,7 +188,10 @@ class BookingsController extends Controller
 
     }
 
-    #Creating a new booking
+    /** Creating a new booking page
+     * @param Request $request
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|\Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
+     */
     public function  create(Request $request){
         #get the room name and the institution name
         $institution = $request->session()->get('institution_name');
@@ -202,7 +225,13 @@ class BookingsController extends Controller
         }
     }
 
-    #storing the data for the new booking
+    /**
+     * storing the data for the new booking
+     *
+     * @param Request $request :: data from the request/ user
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
+     * @throws \Illuminate\Validation\ValidationException
+     */
     public function store(Request $request){
 
         #get the room name and the institution name
@@ -248,15 +277,15 @@ class BookingsController extends Controller
 
         $booking->save();
 
-        #create new instance of User_bookings, assign the data from the user and then save to table.
-        $user_booking = new User_Booking();
+        #create new instance of UserBookings, assign the data from the user and then save to table.
+        $UserBooking = new UserBooking();
 
         $bookingID= Bookings::latest('created_at')->first()->id;
         $userId = Auth::id();
-        $user_booking->id = $bookingID;
-        $user_booking->user_id = $userId;
+        $UserBooking->id = $bookingID;
+        $UserBooking->user_id = $userId;
 
-        $user_booking->save();
+        $UserBooking->save();
 
         return redirect('/dashboard')->with('mssg',"Booking Successful");
 
@@ -302,39 +331,16 @@ class BookingsController extends Controller
         }
     }
 
-    public function filterRooms(Request $request)
-    {
-        #used to filter out rooms which do/don't meet certain crieria
-        $value   = request("room_details");
-        $asJSON = json_encode($value);
-
-        $institution = $request->session()->get('institution_name');
-
-        #find correct rooms
-        $filteredRooms = Rooms::
-            where('institution_name',$institution)
-            ->where('room_details','like',$asJSON)
-            ->get();
-
-
-        if($value != null)
-        {
-            return view('bookings.selectRoom', ['rooms' => $filteredRooms]);
-        }
-        else
-        {
-            return redirect('bookings/create/rooms')->withErrors('No criteria selected for filter.');;
-        }
-    }
+    
 
     public function destroy($id){
         #delete booking from the bookings table
-        #as well as the user_bookings table as they're linked
+        #as well as the UserBookings table as they're linked
         $booking = Bookings::findOrFail($id);
         $booking->delete();
 
-        $user_booking = User_Booking::findOrFail($id);
-        $user_booking->delete();
+        $UserBooking = UserBooking::findOrFail($id);
+        $UserBooking->delete();
 
         return redirect('/dashboard')->with('mssg','Booking Deleted Successfully');
     }

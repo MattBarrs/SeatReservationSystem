@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Bookings;
-use App\Models\User_Booking;
+use App\Models\UserBooking;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
 use App\Models\Rooms;
@@ -11,9 +11,18 @@ use App\Models\Workstation;
 use Illuminate\Support\Facades\Storage;
 
 
-
+/**
+ * Class RoomsController
+ * @package App\Http\Controllers
+ */
 class RoomsController extends Controller
 {
+    /**
+     * Used to ensure the user has the correct permissions
+     * @param $request :: data from the request/ user
+     * @return bool :: do they have permission True or False
+     */
+
     private function checkPermission($request)
     {
         $user = $request->user();
@@ -34,14 +43,26 @@ class RoomsController extends Controller
         return false;
     }
 
-    #show selected room
+    /**
+     * show selected room
+     *
+     * @param $id :: data from the request/ user - the ID of the room
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
+     */
     public function show($id)
     {
         $room = Rooms::findOrFail($id);
         return view('rooms.show',['Room' => $room]);
     }
 
-    #creating a room
+
+
+    /**
+     * creating a room
+     *
+     * @param Request $request :: data from the request/ user
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|\Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
+     */
     public function  create(Request $request){
 
         #get users selected institute
@@ -57,6 +78,12 @@ class RoomsController extends Controller
         }
     }
 
+    /**
+     * Saving the fabric js canvas
+     *
+     * @param Request $request :: data from the request/ user
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Http\JsonResponse|\Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
+     */
     public function saveCanvas(Request $request){
         if($this->checkPermission($request) == true){
 
@@ -102,6 +129,12 @@ class RoomsController extends Controller
         }
     }
 
+    /**
+     * saving the intial details of the room
+     *
+     * @param Request $request :: data from the request/ user
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Http\JsonResponse|\Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
+     */
     public function saveRoom(Request $request)
     {
         if($this->checkPermission($request) == true){
@@ -168,7 +201,12 @@ class RoomsController extends Controller
     }
 
 
-    #select which room to edit
+    /**
+     * select which room to edit
+     *
+     * @param Request $request :: data from the request/ user
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|\Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
+     */
     public function selectEdit(Request $request)
     {
         if($this->checkPermission($request) == true){
@@ -189,7 +227,14 @@ class RoomsController extends Controller
         }
     }
 
-    #Once room is selected to edit
+
+
+    /**
+     * Once room is selected to edit
+     *
+     * @param Request $request :: data from the request/ user
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|\Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
+     */
     public function edit(Request $request)
     {
         if($this->checkPermission($request) == true) {
@@ -228,7 +273,13 @@ class RoomsController extends Controller
 
     }
 
-    #edit the seats of a selected room
+
+    /**
+     * edit the seats of a selected room
+     *
+     * @param Request $request :: data from the request/ user
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|\Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
+     */
     public function editSeats(Request $request)
     {
         if ($this->checkPermission($request) == true) {
@@ -268,7 +319,12 @@ class RoomsController extends Controller
         }
     }
 
-    #save the details of the seats
+    /**
+     * save the details of the seats
+     *
+     * @param Request $request :: data from the request/ user
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
+     */
     public function saveSeats(Request $request)
     {
         if($this->checkPermission($request) == true) {
@@ -302,7 +358,12 @@ class RoomsController extends Controller
         }
     }
 
-    #save the details of the room once the user has inputted the new data
+    /**
+     * save the details of the room once the user has inputted the new data
+     *
+     * @param Request $request :: data from the request/ user
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
+     */
     public function saveEdit(Request $request)
     {
         if($this->checkPermission($request) == true) {
@@ -349,16 +410,14 @@ class RoomsController extends Controller
         }
     }
 
-//    public function workstationDelete($id){
-//        #delete a seat/work
-//        $seat = Workstation::findOrFail($id);
-//        $seat->delete();
-//
-//        return redirect(route('rooms.edit'));
-//    }
 
-    #delete a room
-    #deletes the room and all of its corresponing bookings
+    /**
+     * delete a room
+     * deletes the room and all of its corresponing bookings
+     * @param $room_name :: name of the room
+     * @param Request $request  :: the data from the user
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
+     */
     public function destroy($room_name,Request $request){
         if($this->checkPermission($request) == true) {
             $institute = $request->session()->get('institution_name');
@@ -376,15 +435,15 @@ class RoomsController extends Controller
             where('room_name', $room_name)
                 ->where('institution_name', $institute);
 
-            $user_bookingsSearch = Bookings::
+            $UserBookingsSearch = Bookings::
             where('room_name', $room_name)
                 ->where('institution_name', $institute)
                 ->get();
 
-            foreach ($user_bookingsSearch as $booking) {
-                $user_bookings = User_Booking::
+            foreach ($UserBookingsSearch as $booking) {
+                $UserBookings = UserBooking::
                 where('id', $booking->id);
-                $user_bookings->delete();
+                $UserBookings->delete();
             }
 
             $workstations->delete();

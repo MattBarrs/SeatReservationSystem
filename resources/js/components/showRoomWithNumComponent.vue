@@ -142,16 +142,9 @@
 
 export default {
 
-        // components: {},
-        // data() { return{  isChanged: true, }},
-        // methods:{        },
-
-
         props:['input_roomcanvas'],
 
-
         mounted: function(){
-
 
             //Define + create canvas
             const ref = this.$refs.can;
@@ -187,6 +180,7 @@ export default {
 
             }
 
+            //when the canvas is loaded from db
             loadcanvas.onclick = function() {
                 canvas.forEachObject(function(object) {
                     if( object.get('type') == "rect") object.visible = false;
@@ -212,7 +206,12 @@ export default {
 
             resetColours.onclick = function() { changeColours('#808080','#baf312','#ff0000');}
 
-
+            /**
+             *changes the colour of the seats
+             * @param colour1 :: seat selected colour
+             * @param colour2 :: seats  Available colour
+             * @param colour3 :: seats not Available colour
+             */
             function changeColours(colour1,colour2,colour3){
                 canvas.discardActiveObject();
 
@@ -239,11 +238,14 @@ export default {
                 canvas.requestRenderAll();
             }
 
+            //used for zoom
             canvas.on('mouse:wheel', function(opt) {
                 var delta = opt.e.deltaY;
 
                 var zoom = canvas.getZoom();
                 zoom *= 0.999 ** delta;
+
+               //stop maximium zoom in and out
                 if (zoom > 8 ) zoom = 8;
                 if (zoom < 0.25) zoom = 0.25;
 
@@ -253,7 +255,8 @@ export default {
             });
 
 
-
+            //moving camera via.
+            //alt key must be used
             canvas.on('mouse:down', function(opt) {
                 var evt = opt.e;
                 this.isDragging = true;
@@ -275,7 +278,8 @@ export default {
                 }
             });
 
-
+            // on mouse up we want to recalculate new interaction
+            // for all objects, so we call setViewportTransform
             canvas.on('mouse:up', function(opt) {
                 this.setViewportTransform(this.viewportTransform);
                 this.isDragging = false;

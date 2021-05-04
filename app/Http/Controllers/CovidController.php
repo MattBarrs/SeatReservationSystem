@@ -6,13 +6,22 @@ use App\Models\Bookings;
 use App\Models\Institution;
 
 use App\Models\User;
-use App\Models\User_Booking;
+use App\Models\UserBooking;
 use App\Models\Workstation;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
+/**
+ * Class CovidController
+ * @package App\Http\Controllers
+ */
 class CovidController extends Controller
 {
+    /**
+     * Used to ensure the user has the correct permissions
+     * @param $request :: data from the request/ user
+     * @return bool :: do they have permission True or False
+     */
     private function checkPermission($request)
     {
         $user = $request->user();
@@ -25,22 +34,16 @@ class CovidController extends Controller
 
     }
 
+    /**
+     * if they have permission get all the institues and rooms in the db  for the drop downs
+     * @param Request $request :: data from the request/ user
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|\Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
+     */
     public function trackAndTrace(Request $request)
     {
         if($this->checkPermission($request) == true) {
-            $sessionId = Auth::id(); #gets user ID from session
             $institutes_all = Institution::select('institution_name')->orderBy('institution_name', 'ASC')->get();
             $rooms_all = Rooms::select('room_name')->orderBy('room_name', 'ASC')->get();
-
-            #Joins user bookings and bookings tables,
-            #finds where the bookings belong to user
-            #Returns the relevant details to be displayed
-            $booking = Bookings::
-            join('Rooms', 'Bookings.room_name', 'Rooms.room_name')
-                ->join('User_Bookings', 'Bookings.id', 'User_Bookings.id')
-                ->where('User_Bookings.user_id', $sessionId)
-                ->select('Bookings.seat_name', 'Bookings.start_date', 'Bookings.start_time', 'Bookings.end_time', 'Bookings.id', 'Rooms.room_name')
-                ->get();
 
             return view('covid.trackAndTrace', ['institutes' => $institutes_all, 'rooms' => $rooms_all]);
         }
@@ -50,6 +53,11 @@ class CovidController extends Controller
         }
     }
 
+    /**
+     *      retrieve the emails of everyone who was in the room at the date/time given
+     * @param Request $request
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Http\JsonResponse|\Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
+     */
     public function returnContacts(Request $request){
         if($this->checkPermission($request) == true) {
 
@@ -80,7 +88,7 @@ class CovidController extends Controller
 
             $userIDs = Bookings::
             join('Rooms', 'Bookings.room_name', '=', 'Rooms.room_name')
-                ->join('User_Bookings', 'Bookings.id', '=', 'User_Bookings.id')
+                ->join('UserBookings', 'Bookings.id', '=', 'UserBookings.id')
                 ->where('Bookings.room_name', '=', $room)
                 ->where('Bookings.institution_name', '=', $institute)
                 ->where(function ($query) use ($end_time, $start_time) {
@@ -94,7 +102,7 @@ class CovidController extends Controller
                         });
                 })
                 ->where('Bookings.start_date', '=', $date)
-                ->select('User_Bookings.user_id')
+                ->select('UserBookings.user_id')
                 ->get();
 
 
