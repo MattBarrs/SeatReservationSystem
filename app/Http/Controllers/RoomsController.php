@@ -40,6 +40,7 @@ class RoomsController extends Controller
                 }
             }
         }
+        error_log("Denied");
         return false;
     }
 
@@ -138,12 +139,12 @@ class RoomsController extends Controller
     public function saveRoom(Request $request)
     {
         if($this->checkPermission($request) == true){
-
             #retrieve post data and convert to string
             $stringData = strval($request['data']);
 
             $request['data'] = json_decode($stringData, true);
             $data = json_decode($stringData, true);
+            error_log("permissions ok ");
 
             #asign to variables
             $open_time = $data['open_time'];
@@ -166,6 +167,7 @@ class RoomsController extends Controller
                 'floor_plan' => 'required|mimes:jpg,jpeg,png,bmp,pdf',
             ]);
 
+            error_log("ABC ok ");
 
             #new instance of room
             $room = new Rooms();
@@ -176,15 +178,20 @@ class RoomsController extends Controller
             $room->open_time = $open_time;
             $room->close_time = $close_time;
             $room->room_details = $room_details;
+            $room->reference_length = 0;
+
             $room->room_canvas = "None";
+            error_log("EGF ok ");
 
             #request uesrs uploaded file then store
             $file = $request['floor_plan'];
             $contents = file_get_contents($file->path());
             Storage::disk('public')->put('floor_plan', $file, 'public');
+            error_log("weraefge ok ");
 
             // Store the record, using the new file hashname which will be it's new filename identity.
             $room->floor_plan = $file->HashName();
+            error_log("awdaqw dw ok ");
 
             #attempt to save room
             try {
@@ -435,15 +442,15 @@ class RoomsController extends Controller
             where('room_name', $room_name)
                 ->where('institution_name', $institute);
 
-            $UserBookingsSearch = Bookings::
+            $User_BookingsSearch = Bookings::
             where('room_name', $room_name)
                 ->where('institution_name', $institute)
                 ->get();
 
-            foreach ($UserBookingsSearch as $booking) {
-                $UserBookings = UserBooking::
+            foreach ($User_BookingsSearch as $booking) {
+                $User_Bookings = UserBooking::
                 where('id', $booking->id);
-                $UserBookings->delete();
+                $User_Bookings->delete();
             }
 
             $workstations->delete();

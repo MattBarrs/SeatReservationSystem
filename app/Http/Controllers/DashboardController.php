@@ -38,7 +38,7 @@ class DashboardController extends Controller
 
         #find up to 5 bookings after current day
         $upcoming_bookings = UserBooking::
-                join('bookings','bookings.id','=','UserBookings.id')
+                join('bookings','bookings.id','=','User_Bookings.id')
                 ->where('user_id',$userId)
                 ->where('bookings.start_date','>=',Carbon::today())
                 ->take(5)

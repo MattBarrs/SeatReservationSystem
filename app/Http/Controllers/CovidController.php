@@ -88,7 +88,7 @@ class CovidController extends Controller
 
             $userIDs = Bookings::
             join('Rooms', 'Bookings.room_name', '=', 'Rooms.room_name')
-                ->join('UserBookings', 'Bookings.id', '=', 'UserBookings.id')
+                ->join('User_Bookings', 'Bookings.id', '=', 'User_Bookings.id')
                 ->where('Bookings.room_name', '=', $room)
                 ->where('Bookings.institution_name', '=', $institute)
                 ->where(function ($query) use ($end_time, $start_time) {
@@ -102,7 +102,7 @@ class CovidController extends Controller
                         });
                 })
                 ->where('Bookings.start_date', '=', $date)
-                ->select('UserBookings.user_id')
+                ->select('User_Bookings.user_id')
                 ->get();
 
 

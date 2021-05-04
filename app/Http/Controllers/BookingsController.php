@@ -30,9 +30,9 @@ class BookingsController extends Controller
         #Returns the relevant details to be displayed
         $pastBookings = Bookings::
         join('Rooms','Bookings.room_name','Rooms.room_name')
-            ->join('UserBookings','Bookings.id','UserBookings.id')
+            ->join('User_Bookings','Bookings.id','User_Bookings.id')
 
-            ->where('UserBookings.user_id',$sessionId)
+            ->where('User_Bookings.user_id',$sessionId)
             ->where('Bookings.start_date','<',Carbon::today())
 
             ->select('Bookings.seat_name','Bookings.start_date','Bookings.start_time','Bookings.end_time','Bookings.id','Rooms.room_name', 'Bookings.institution_name')
@@ -42,9 +42,9 @@ class BookingsController extends Controller
 
         $futureBookings = Bookings::
         join('Rooms','Bookings.room_name','Rooms.room_name')
-            ->join('UserBookings','Bookings.id','UserBookings.id')
+            ->join('User_Bookings','Bookings.id','User_Bookings.id')
 
-            ->where('UserBookings.user_id',$sessionId)
+            ->where('User_Bookings.user_id',$sessionId)
             ->where('bookings.start_date','>=',Carbon::today())
 
             ->select('Bookings.seat_name','Bookings.start_date','Bookings.start_time','Bookings.end_time','Bookings.id','Rooms.room_name', 'Bookings.institution_name' )
@@ -70,12 +70,12 @@ class BookingsController extends Controller
      */
     public function show(Request $request,$id)
     {
-        $UserBookings = UserBooking::find($id);
+        $User_Bookings = UserBooking::find($id);
         $sessionId = Auth::id();
 
         #finds the user booking that the user requested
         #will only show to the user if the userID
-        if( $UserBookings->user_id == $sessionId)
+        if( $User_Bookings->user_id == $sessionId)
         {
             $booking = Bookings::findOrFail($id);
             return view('bookings.show',['Booking' => $booking]);
@@ -130,9 +130,9 @@ class BookingsController extends Controller
         $sessionId = Auth::id();
 
         $findBookings = Bookings::
-            join('UserBookings','Bookings.id','UserBookings.id')
+            join('User_Bookings','Bookings.id','User_Bookings.id')
 
-            ->where('UserBookings.user_id',$sessionId)
+            ->where('User_Bookings.user_id',$sessionId)
             ->where('Bookings.start_date', '=',$date)
 
             ->where(function($query) use ($endTime, $startTime)
@@ -277,7 +277,7 @@ class BookingsController extends Controller
 
         $booking->save();
 
-        #create new instance of UserBookings, assign the data from the user and then save to table.
+        #create new instance of User_Bookings, assign the data from the user and then save to table.
         $UserBooking = new UserBooking();
 
         $bookingID= Bookings::latest('created_at')->first()->id;
@@ -331,11 +331,11 @@ class BookingsController extends Controller
         }
     }
 
-    
+
 
     public function destroy($id){
         #delete booking from the bookings table
-        #as well as the UserBookings table as they're linked
+        #as well as the User_Bookings table as they're linked
         $booking = Bookings::findOrFail($id);
         $booking->delete();
 

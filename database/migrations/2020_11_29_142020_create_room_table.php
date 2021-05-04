@@ -18,7 +18,6 @@ class CreateRoomTable extends Migration
             $table->string('institution_name');
             $table->time('close_time');
             $table->time('open_time');
-            $table->float('reference_length');
             $table->string('floor_plan');
             $table->json('room_details')->nullable();// change to details
 

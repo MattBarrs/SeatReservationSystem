@@ -2,19 +2,19 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="2e378d71-369d-4d26-95f8-8ac1e65f3fce" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/database/seeders/AdminSeeder.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/database/seeders/InstituteSeeder.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/Http/Controllers/BookingsController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/BookingsController.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/Http/Controllers/CovidController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/CovidController.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/Http/Controllers/DashboardController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/DashboardController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/InstitutionController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/InstitutionController.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/Http/Controllers/RoomsController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/RoomsController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Models/User_Booking.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Models/User_Booking.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Models/User_Booking.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Models/UserBooking.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/database/migrations/2020_11_29_142020_create_room_table.php" beforeDir="false" afterPath="$PROJECT_DIR$/database/migrations/2020_11_29_142020_create_room_table.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/database/migrations/2020_11_29_143541_create_user_booking_table.php" beforeDir="false" afterPath="$PROJECT_DIR$/database/migrations/2020_11_29_143541_create_user_booking_table.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/js/components/editRoomCanvasComponent.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/editRoomCanvasComponent.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/js/components/seatBookingComponent.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/seatBookingComponent.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/js/components/showRoomWithNumComponent.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/showRoomWithNumComponent.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/js/components/uploadRoomComponent.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/uploadRoomComponent.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/routes/web.php" beforeDir="false" afterPath="$PROJECT_DIR$/routes/web.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/database/seeders/DatabaseSeeder.php" beforeDir="false" afterPath="$PROJECT_DIR$/database/seeders/DatabaseSeeder.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/js/app.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/js/app.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/docs/1.0/Installation.md" beforeDir="false" afterPath="$PROJECT_DIR$/resources/docs/1.0/Installation.md" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -174,9 +174,11 @@
     <option name="showLibraryContents" value="true" />
   </component>
   <component name="PropertiesComponent">
+    <property name="ASKED_ADD_EXTERNAL_FILES" value="true" />
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="aspect.path.notification.shown" value="true" />
     <property name="node.js.detected.package.eslint" value="true" />
     <property name="node.js.detected.package.tslint" value="true" />
     <property name="node.js.path.for.package.eslint" value="project" />
@@ -199,7 +201,8 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1620137576234</updated>
-      <workItem from="1620137580101" duration="1637000" />
+      <workItem from="1620137580101" duration="3816000" />
+      <workItem from="1620141579528" duration="2000" />
     </task>
     <servers />
   </component>
@@ -207,6 +210,18 @@
     <option name="version" value="3" />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
     <option name="oldMeFiltersMigrated" value="true" />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
   </component>
 </project>
