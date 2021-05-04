@@ -17,19 +17,25 @@
 <a name="section-1"></a>
 # Installation
 
-- [Step One: XAMPP](#section-1-1)
-- [Step Two: Composer](#section-1-2)
-- [Step Three: NPM](#section-1-3)
+---
+
+- [Step 1: XAMPP](#section-1-1)
+- [Step 2: Composer](#section-1-2)
+- [Step 3: NPM](#section-1-3)
+- [Step 4: Clone Git Repo](#section-1-4)
+- [Step 5: Install Dependencies](#section-1-5)
+- [Step 6: Create and Connect Database](#section-1-6)
+- [Step 7: Migrate and Seed Database](#section-1-7)
 
 <a name="section-1-1"></a>
-## Step One: XAMPP 
+## Step 1: XAMPP 
 Install XAMPP onto your system, 
 - (Download Link) : https://www.apachefriends.org/download.html
 - (Alternate Download Link) : https://www.apachefriends.org/index.html
     - These links have installers for Windows, MacOS and Linux
 
 <a name="section-1-2"></a>
-## Step Two: Composer
+## Step 2: Composer
 Install Composer onto your system
 Composer is a package manager for PHP 
 - (Download link + Tutorial) : https://getcomposer.org/download/
@@ -38,10 +44,67 @@ Composer is a package manager for PHP
 - Once downloaded run command  `composer -V` to ensure it is installed correctly
 
 <a name="section-1-3"></a>
-## Step Three: NPM 
+## Step 3: NPM 
 - Ensure that NPM is installed on the system
 
+<a name="section-1-4"></a>
+## Step 4: Clone Git Repo
+- Open a command line interface 
+- Navigate to the directory you would like the application to be 
+- Use the command `git clone https://github.com/compSci-sc17mtab/SeatReservationSystem.git`
+    - Git URL: https://github.com/compSci-sc17mtab/SeatReservationSystem.git
 
+<a name="section-1-5"></a>
+## Step 5: Install Dependencies 
+- Run command `php artisan install` to install Laravel dependencies
+- Run command  `npm install && npm run dev` to install JS dependencies
+
+<a name="section-1-6"></a>
+## Step 6: Create and Connect Database
+### Create Database
+A database can be created using two methods 
+#### Method 1 
+> Ensure you have the MySQL path in your variables
+- Open a command line interface and enter command  `mysql -u root`
+- Once logged in use `create database app;` to create the database
+
+#### Method 2 
+- Start `XAMPP`
+- Start `MySQL` and `Apache` servers
+- Open `phpMyAdmin` through XAMPP
+- Create a new database called `app`
+
+### Connect to Database
+- Open the `.env` file 
+    - If there is no `.env` file then rename the '.env.example' to '.env' and use  that
+- Find the `DB_DATABASE=` line. 
+- Change this to `DB_DATABASE=app`
+- Run the command `php artisan serve` command. It should automatically connect to the database
+
+<a name="section-1-7"></a>
+## Step 7: Migrate and Seed Database
+>  If you have just run `php artisan serve` ensure that this is stopped before proceeding!
+
+### Migrate 
+- Use the command `php artisan migrate` to migrate the database
+
+- Find the file `SeatReservationSystem/database/AdminSeeder.php`
+- This file will create the administrator account 
+- Change the email from `PleaseChangeThis@gmail.com` to the email address of the chosen administrator 
+- Please change the password from `PleaseChange` to what you would like. 
+
+> If in production change this password once database is seeded 
+
+
+- The database can populate the database with example data to help with testing, if you would like this, tun the command  `php artisan db:seed`
+- If you do not want these examples use the command `php artisan db:seed --class=AdminSeed` to only seed the admin account.  
+
+- The example data creates:
+    - Example Institute called `Example Institute`
+    - Example Room called `Example Room`
+    - Multiple bookings on `25/07/2021` at `7:00` 
+
+    
 
 
 
@@ -83,8 +146,8 @@ Composer is a package manager for PHP
 - Ensure that the currently selected team under `Team Name` is `Local Admins`
 - Under the `Add Team Member` section enter the local admins email address
 - There are three options for their role, select the `Local Admin` role
-> {danger} Ensure that you do not select `Administrator` or `Editor` this will give them the incorrect permission
-> 
+>  Ensure that you do not select `Administrator` or `Editor` this will give them the incorrect permission
+
 - Select the `Add` button to add them to the `Local Admins` team.
 
 
@@ -141,7 +204,7 @@ Composer is a package manager for PHP
 
 - Input the `Room Name`, `Opening Time` and the `Closing Time`
 - Upload the rooms floor plan
-> {danger} Ensure that the floor plan is correctly scaled or the social distancing safety feature will not work
+>  Ensure that the floor plan is correctly scaled or the social distancing safety feature will not work
 
 
 <a name="section-5-3"></a>
