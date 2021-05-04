@@ -178,7 +178,6 @@ class RoomsController extends Controller
             $room->open_time = $open_time;
             $room->close_time = $close_time;
             $room->room_details = $room_details;
-            $room->reference_length = 0;
 
             $room->room_canvas = "None";
             error_log("EGF ok ");

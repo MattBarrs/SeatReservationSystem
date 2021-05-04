@@ -18,26 +18,7 @@ import showCanvasComponent from "./showRoomComponent.js";
             <div id="isTimeError" class="redBackground hiddenError" style="width:100%">Invalid Time</div>
         </table>
         <br/>
-
-        <br/><br/>
-        <div style="font-size:1.5em">Room Facilities & Details (Optional)</div>
-        <button class="clickable" @click="toggle"> Select All</button>
-        <button class="clickable" @click="untoggle"> De-Select All</button><br/>
-        &nbsp;&nbsp;<input type="checkbox" name="room_details" v-model="room_details" value="Catering" id="Catering"> Catering
         <br/>
-        &nbsp;&nbsp;<input type="checkbox" name="room_details" v-model="room_details" value="Disabled Toilets" id="Disabled Toilets"> Disabled Toilets
-        <br/>
-        &nbsp;&nbsp;<input type="checkbox" name="room_details" v-model="room_details" value="Guide-dog Friendly" id="Guide-dog Friendly"> Guide Dog Friendly
-        <br/>
-        &nbsp;&nbsp;<input type="checkbox" name="room_details" v-model="room_details" value="Wheelchair Access" id="Wheelchair Access"> Wheel Chair Access
-        <br/>
-        &nbsp;&nbsp;<input type="checkbox" name="room_details" v-model="room_details" value="Lifts" id="Lifts"> Lifts
-        <br/>
-        &nbsp;&nbsp;<input type="checkbox" name="room_details" v-model="room_details" value="Prayer Room" id="Prayer Room"> Prayer Room
-        <br/>
-        &nbsp;&nbsp;<input type="checkbox" name="room_details" v-model="room_details" value="Quiet Room" id="Quiet Room"> Quiet Room
-        <br/>
-        &nbsp;&nbsp;<input type="checkbox" name="room_details" v-model="room_details" value="Toilets" id="Toilets"> Toilets
 
         <br/><br/>
         <div style="font-size:1.5em">Upload floor plan of room</div>

@@ -16,7 +16,7 @@ class InstituteSeeder extends Seeder
     public function run()
     {
         DB::table('institutions')->insert([
-            'institution_name' => "Example Institute",
+            'institution_name' => 'Example Institute',
             'access_code' => Hash::make('12345'),
 
         ]);
