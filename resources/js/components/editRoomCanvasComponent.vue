@@ -508,7 +508,6 @@
 
                 //when loaded from db the seatingarea/Exclusion area is hidden by defaulk
                 canvas.forEachObject(function(objx) {
-                    // console.log(objx.get('name'));
                     if( objx.get('type') != "rect") return;
                     canvas.sendToBack(objx);
                     objx.selectable = false;

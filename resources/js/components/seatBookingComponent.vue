@@ -234,7 +234,6 @@ export default {
             this.seatsTaken = [];
 
             if(newVal.length >= 1) {
-                newVal.forEach(element => console.log(element['seat_name']));
                 newVal.forEach(element => this.seatsTaken.push(element['seat_name']));
             }
 

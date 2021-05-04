@@ -40,7 +40,6 @@ class RoomsController extends Controller
                 }
             }
         }
-        error_log("Denied");
         return false;
     }
 
@@ -144,7 +143,6 @@ class RoomsController extends Controller
 
             $request['data'] = json_decode($stringData, true);
             $data = json_decode($stringData, true);
-            error_log("permissions ok ");
 
             #asign to variables
             $open_time = $data['open_time'];
@@ -167,7 +165,6 @@ class RoomsController extends Controller
                 'floor_plan' => 'required|mimes:jpg,jpeg,png,bmp,pdf',
             ]);
 
-            error_log("ABC ok ");
 
             #new instance of room
             $room = new Rooms();
@@ -180,17 +177,14 @@ class RoomsController extends Controller
             $room->room_details = $room_details;
 
             $room->room_canvas = "None";
-            error_log("EGF ok ");
 
             #request uesrs uploaded file then store
             $file = $request['floor_plan'];
             $contents = file_get_contents($file->path());
             Storage::disk('public')->put('floor_plan', $file, 'public');
-            error_log("weraefge ok ");
 
             // Store the record, using the new file hashname which will be it's new filename identity.
             $room->floor_plan = $file->HashName();
-            error_log("awdaqw dw ok ");
 
             #attempt to save room
             try {

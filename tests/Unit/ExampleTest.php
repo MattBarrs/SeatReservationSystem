@@ -14,15 +14,6 @@ class ExampleTest extends TestCase
      */
     public function testBasicTest()
     {
-        $user = \App\Models\User::factory()->make();
-//
-//        $response = $this->actingAs($user)
-//        $response = $this->actingAs($user)
-//            ->withSession(['foo' => 'bar'])
-//            ->get('/');
-        $this->actingAs(\App\Models\User::factory()->make());
         $this->assertTrue(true);
-//        $this->assertResponseOk();
-//        $user = factory(User::class)->create();
     }
 }

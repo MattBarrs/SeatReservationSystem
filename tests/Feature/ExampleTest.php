@@ -14,20 +14,8 @@ class ExampleTest extends TestCase
      */
     public function testBasicTest()
     {
-//        $response = $this->get('/');
-//        $response = $this->get('/dashboard');
-//        $response = $this->get('/dashboard');
-//        $response = $this->get('/dashboard');
-//        $response = $this->get('/dashboard');
-//        $response = $this->get('/dashboard');
-//        $response = $this->get('/dashboard');
-//        $response = $this->get('/dashboard');
-//        $response = $this->get('/dashboard');
-//        $response = $this->get('/dashboard');
-//        $response = $this->get('/dashboard');
+        $response = $this->get('/');
 
-//        $response->assertStatus(200);
-        $this->assertTrue(true);
-
+        $response->assertStatus(302);
     }
 }

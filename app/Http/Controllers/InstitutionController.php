@@ -114,10 +114,8 @@ class InstitutionController extends Controller
      */
     public function store(Request $request)
     {
-        error_log("Beging");
         if($this->checkPermission($request) == true) {
             $institute = request('institution_name');
-            error_log("Has Permission");
 
             #validation rules
             $rules = [
