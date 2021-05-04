@@ -35,7 +35,7 @@ Install XAMPP onto your system,
     - These links have installers for Windows, MacOS and Linux
 
 <a name="section-1-2"></a>
-##Step 2: Composer
+## Step 2: Composer
 Install Composer onto your system
 Composer is a package manager for PHP 
 - (Download link + Tutorial) : https://getcomposer.org/download/
@@ -44,23 +44,23 @@ Composer is a package manager for PHP
 - Once downloaded run command  `composer -V` to ensure it is installed correctly
 
 <a name="section-1-3"></a>
-##Step 3: NPM 
+## Step 3: NPM 
 - Ensure that NPM is installed on the system
 
 <a name="section-1-4"></a>
-##Step 4: Clone Git Repo
+## Step 4: Clone Git Repo
 - Open a command line interface 
 - Navigate to the directory you would like the application to be 
 - Use the command `git clone https://github.com/compSci-sc17mtab/SeatReservationSystem.git`
     - Git URL: https://github.com/compSci-sc17mtab/SeatReservationSystem.git
 
 <a name="section-1-5"></a>
-##Step 5: Install Dependencies 
+## Step 5: Install Dependencies 
 - Run command `php artisan install` to install Laravel dependencies
 - Run command  `npm install && npm run dev` to install JS dependencies
 
 <a name="section-1-6"></a>
-##Step 6: Create and Connect Database
+## Step 6: Create and Connect Database
 ### Create Database
 A database can be created using two methods 
 #### Method 1 
@@ -83,7 +83,7 @@ A database can be created using two methods
 
 <a name="section-1-7"></a>
 ## Step 7: Migrate and Seed Database
-> {danger}  If you have just run `php artisan serve` ensure that this is stopped before proceeding!
+>  If you have just run `php artisan serve` ensure that this is stopped before proceeding!
 
 ### Migrate 
 - Use the command `php artisan migrate` to migrate the database
@@ -93,7 +93,7 @@ A database can be created using two methods
 - Change the email from `PleaseChangeThis@gmail.com` to the email address of the chosen administrator 
 - Please change the password from `PleaseChange` to what you would like. 
 
-> {danger} If in production change this password once database is seeded 
+> If in production change this password once database is seeded 
 
 
 - The database can populate the database with example data to help with testing, if you would like this, tun the command  `php artisan db:seed`
@@ -146,8 +146,8 @@ A database can be created using two methods
 - Ensure that the currently selected team under `Team Name` is `Local Admins`
 - Under the `Add Team Member` section enter the local admins email address
 - There are three options for their role, select the `Local Admin` role
-> {danger} Ensure that you do not select `Administrator` or `Editor` this will give them the incorrect permission
-> 
+>  Ensure that you do not select `Administrator` or `Editor` this will give them the incorrect permission
+
 - Select the `Add` button to add them to the `Local Admins` team.
 
 
@@ -204,7 +204,7 @@ A database can be created using two methods
 
 - Input the `Room Name`, `Opening Time` and the `Closing Time`
 - Upload the rooms floor plan
-> {danger} Ensure that the floor plan is correctly scaled or the social distancing safety feature will not work
+>  Ensure that the floor plan is correctly scaled or the social distancing safety feature will not work
 
 
 <a name="section-5-3"></a>
