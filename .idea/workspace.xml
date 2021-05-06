@@ -2,19 +2,9 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="2e378d71-369d-4d26-95f8-8ac1e65f3fce" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/tests/Feature/authenticationTest.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/tests/Feature/bookingShowTest.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/tests/Feature/getTest.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/tests/Feature/postErrorTest.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/tests/Feature/redirectTest.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/tests/Feature/showRoomsTest.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/InstitutionController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/InstitutionController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/RoomsController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/RoomsController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/js/components/editRoomCanvasComponent.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/editRoomCanvasComponent.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/js/components/seatBookingComponent.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/seatBookingComponent.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tests/Feature/ExampleTest.php" beforeDir="false" afterPath="$PROJECT_DIR$/tests/Feature/ExampleTest.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tests/Unit/ExampleTest.php" beforeDir="false" afterPath="$PROJECT_DIR$/tests/Unit/ExampleTest.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/docs/1.0/Installation.md" beforeDir="false" afterPath="$PROJECT_DIR$/resources/docs/1.0/Installation.md" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -198,19 +188,6 @@
     </key>
   </component>
   <component name="RunManager">
-    <configuration default="true" type="ArquillianTestNG" factoryName="" nameIsGenerated="true">
-      <option name="arquillianRunConfiguration">
-        <value>
-          <option name="containerStateName" value="" />
-        </value>
-      </option>
-      <option name="TEST_OBJECT" value="CLASS" />
-      <properties />
-      <listeners />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
     <configuration name="phpunit.xml" type="PHPUnitRunConfigurationType" factoryName="PHPUnit">
       <TestRunner scope="XML" />
       <method v="2" />
@@ -228,6 +205,9 @@
       <workItem from="1620141579528" duration="2000" />
       <workItem from="1620147005554" duration="5095000" />
       <workItem from="1620155923782" duration="6520000" />
+      <workItem from="1620237905069" duration="167000" />
+      <workItem from="1620283960717" duration="1800000" />
+      <workItem from="1620311196215" duration="2865000" />
     </task>
     <servers />
   </component>

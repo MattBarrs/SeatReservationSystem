@@ -9,6 +9,8 @@
 - [Booking a seat](#section-6)
 - [Track and Trace](#section-7)
 
+>User Documentation  can be found within /resources/docs/1.0
+
 
 
 
@@ -56,8 +58,9 @@ Composer is a package manager for PHP
 
 <a name="section-1-5"></a>
 ## Step 5: Install Dependencies 
-- Run command `php artisan install` to install Laravel dependencies
-- Run command  `npm install && npm run dev` to install JS dependencies
+- Ensure you are within the project directory 
+- Run command `composer install` to install Laravel dependencies
+- Run command  `npm install` to install JS dependencies
 
 <a name="section-1-6"></a>
 ## Step 6: Create and Connect Database
