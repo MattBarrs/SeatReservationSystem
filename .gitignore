@@ -28,3 +28,4 @@ public/vendor/binarytorch/larecipe/*
 /public/uploads/floor_plan/
 !/public/uploads/floor_plan/0eY1wyZ5q1EogQtIRgbfQQfG6kqRcqqr39fdxAO7.png
 /out/
+.idea
