@@ -2,9 +2,10 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="2e378d71-369d-4d26-95f8-8ac1e65f3fce" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/public/uploads/floor_plan/K9768OrfB76z18Rg44PIiKnI5Xx2sX7lfTR3MIBF.jpg" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/docs/1.0/Installation.md" beforeDir="false" afterPath="$PROJECT_DIR$/resources/docs/1.0/Installation.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/database/migrations/2021_03_26_162715_add_canvas_to_room.php" beforeDir="false" afterPath="$PROJECT_DIR$/database/migrations/2021_03_26_162715_add_canvas_to_room.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/database/seeders/RoomSeeder.php" beforeDir="false" afterPath="$PROJECT_DIR$/database/seeders/RoomSeeder.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -173,6 +174,7 @@
     <property name="node.js.detected.package.eslint" value="true" />
     <property name="node.js.detected.package.tslint" value="true" />
     <property name="node.js.path.for.package.eslint" value="project" />
+    <property name="node.js.path.for.package.tslint" value="project" />
     <property name="node.js.selected.package.eslint" value="(autodetect)" />
     <property name="node.js.selected.package.tslint" value="(autodetect)" />
     <property name="nodejs_package_manager_path" value="npm" />
@@ -208,6 +210,11 @@
       <workItem from="1620237905069" duration="167000" />
       <workItem from="1620283960717" duration="1800000" />
       <workItem from="1620311196215" duration="2865000" />
+      <workItem from="1620419488292" duration="1219000" />
+      <workItem from="1620465548885" duration="1912000" />
+      <workItem from="1620481340271" duration="754000" />
+      <workItem from="1620499206968" duration="606000" />
+      <workItem from="1620548231247" duration="2291000" />
     </task>
     <servers />
   </component>
